@@ -1,25 +1,38 @@
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import { ThemeProvider } from '@material-ui/styles';
+import { createTheme } from '@material-ui/core/styles'
 import './App.css';
+import Routes from './routes'
+import { green } from '@material-ui/core/colors'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const theme = createTheme({
+  palette: {
+    secondary: {
+      main: green[50]
+    },
+    primary: {
+      main: green[400]
+    }
+  },
+  typography: {
+    fontFamily: [
+      '"Lato"',
+      'sans-serif'
+    ].join(',')
+  }
+});
+
+
+class App extends Component {
+  render() {
+    return (
+      <div>
+        <ThemeProvider theme={theme}>
+          <Routes />
+        </ThemeProvider>
+      </div>
+    );
+  }
 }
 
 export default App;
