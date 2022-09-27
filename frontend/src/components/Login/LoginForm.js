@@ -19,7 +19,7 @@ const LoginForm = () => {
       <Paper>
         <Grid
           container
-          spacing={3}
+          spacing={0}
           direction={'column'}
           justify={'center'}
           alignItems={'center'}
