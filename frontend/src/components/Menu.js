@@ -1,21 +1,25 @@
 const Menu = [
-    {
-      label: "Home",
-      pathname: "/"
-    },
-    {
-      label: "Signup",
-      pathname: "/signup"
-    },
-    {
-      label: "My QRs",
-      pathname: "/my-qrs"
-    },
-    {
-      label: "Create QR",
-      pathname: "/create-qr"
-    }
-  
-  ];
-  
-  export default Menu;
+  {
+    label: "Home",
+    pathname: "/"
+  },
+  {
+    label: "My QRs",
+    pathname: "/my-qrs"
+  },
+  {
+    label: "Create QR",
+    pathname: "/create-qr"
+  },
+  {
+    label: "Signup",
+    pathname: "/signup"
+  },
+  {
+    label: "Login",
+    pathname: "/login"
+  },
+
+];
+
+export default Menu;
