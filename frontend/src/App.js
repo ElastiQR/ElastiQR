@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { ThemeProvider } from '@material-ui/styles';
 import './App.css';
 import Routes from './routes'
-import { green } from '@material-ui/core/colors'
-
 import { theme } from './theme';
 
 class App extends Component {
