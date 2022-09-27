@@ -1,0 +1,3 @@
+## Connecting to Google Cloud SQL
+
+You'll need to visit the elastiqr-db instance under the **SQL** tab in Google Cloud. Next, you need to start the instance in the overview page. **Make sure that you stop the instance once you're finished testing to reduce uptime costs.** Go to the **Connections** tab and authorize your local network in the **Authorized Networks** section. You should now be able to connect!
