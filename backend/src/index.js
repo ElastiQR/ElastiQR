@@ -1,5 +1,8 @@
 require("dotenv").config()
+<<<<<<< HEAD
 const mysql = require("mysql")
+=======
+>>>>>>> main
 const express = require("express");
 var bodyParser = require('body-parser')
 
@@ -11,6 +14,7 @@ const app = express();
 app.use(express.json())
 app.use(bodyParser.json());
 
+<<<<<<< HEAD
 /* Create Database */
 const DB_HOST = process.env.DB_HOST
 const DB_USER = process.env.DB_USER
@@ -32,6 +36,8 @@ db.getConnection( (err, connection)=> {
   console.log ("DB connected successful: " + connection.threadId)
 })
 
+=======
+>>>>>>> main
 /* Public Routes */
 app.get("/", (req, res) => {
   res.send("Hello World!");
@@ -39,8 +45,14 @@ app.get("/", (req, res) => {
 
 app.use('/auth', authRouter)
 
+<<<<<<< HEAD
 
 /* Start Application */
 const port = process.env.PORT
 app.listen(port, ()=> console.log(`Server Started on port ${port}...`))
 
+=======
+/* Start Application */
+const port = process.env.PORT
+app.listen(port, ()=> console.log(`Server Started on port ${port}...`))
+>>>>>>> main

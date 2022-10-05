@@ -5,7 +5,6 @@ import { withRouter } from "react-router-dom";
 import NavBar from "./Navbar";
 
 const styles = theme => ({
-  
 });
 
 class CreatePage extends Component {

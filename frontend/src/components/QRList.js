@@ -6,13 +6,8 @@ import List from "@material-ui/core/List";
 import QRListItem from "./QRListItem";
 import MOCK_DATA from "../MOCK_DATA.json";
 
-const styles = theme => ({
-});
-
 class QRList extends Component {
   render() {
-    const { classes } = this.props;
-
     return (
       <List>
         {MOCK_DATA.map((item, index) => (
@@ -23,4 +18,4 @@ class QRList extends Component {
   }
 }
 
-export default withRouter(withStyles(styles)(QRList));
+export default withRouter(QRList);
