@@ -1,10 +1,7 @@
 const jwt = require("jsonwebtoken")
 const bcrypt = require('bcryptjs')
-<<<<<<< HEAD
-=======
 const mysql = require("mysql")
 const db = require("../helpers/database")
->>>>>>> main
 
 function generateAccessToken (user) {
     return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "15m"})
@@ -18,15 +15,9 @@ module.exports = {
         db.getConnection( async (err, connection) => {
             if (err) throw (err)
         
-<<<<<<< HEAD
-            const sqlSearch = "SELECT * FROM userTable WHERE user = ?"
-            const search_query = mysql.format(sqlSearch,[user])
-            const sqlInsert = "INSERT INTO userTable VALUES (0,?,?)"
-=======
             const sqlSearch = "SELECT * FROM users WHERE username = ? LIMIT 1"
             const search_query = mysql.format(sqlSearch,[user])
             const sqlInsert = "INSERT INTO users (username, password) VALUES (?,?)"
->>>>>>> main
         
             const insert_query = mysql.format(sqlInsert,[user, passwordHash])
         
@@ -61,11 +52,7 @@ module.exports = {
         db.getConnection ( async (err, connection)=> {
             if (err) throw (err)
 
-<<<<<<< HEAD
-            const sqlSearch = "Select * from userTable where user = ?"
-=======
             const sqlSearch = "SELECT * FROM users WHERE username = ? LIMIT 1"
->>>>>>> main
             const search_query = mysql.format(sqlSearch,[user])
 
             await connection.query (search_query, async (err, result) => {
@@ -92,8 +79,4 @@ module.exports = {
             }) 
         }) 
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> main
