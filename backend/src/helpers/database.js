@@ -18,9 +18,4 @@ const db = mysql.createPool({
   // socketPath: `/cloudsql/${INSTANCE_CONNECTION_NAME}`,
 });
 
-db.getConnection( (err, connection)=> {
-  if (err) throw (err);
-  console.log ("DB connected successful: " + connection.threadId);
-});
-
 module.exports = db;
