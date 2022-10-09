@@ -45,11 +45,11 @@ const SignupForm = () => {
                 <Checkbox
                   checked={checked}
                   onChange={handleChange}
-                  label={'Keep me logged in'}
+                  label={'Receive Notifications'}
                   inputProps={{ 'aria-label': 'primary checkbox' }}
                 />
               }
-              label="Keep me logged in"
+              label="Receive Notifications"
             />
           </Grid>
           <Grid item xs={12}>
