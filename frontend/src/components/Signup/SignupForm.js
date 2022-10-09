@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useState} from 'react';
+import PasswordChecklist from 'react-password-checklist'
 import {
   Checkbox,
   Grid,
@@ -14,6 +15,9 @@ const SignupForm = () => {
     setChecked(event.target.checked);
   };
 
+  const [password, setPassword] = useState("");
+  const [confirmpassword, setconfirmPassword] = useState("");
+
   return (
     <div style={{ padding: 30 }}>
       <Paper>
@@ -28,22 +32,24 @@ const SignupForm = () => {
             <TextField label="Username"></TextField>
           </Grid>
           <Grid item xs={12}>
-            <TextField label="Password" type={'password'}></TextField>
+            <TextField label="Password" type={'password'} onChange={e => setPassword(e.target.value)}> </TextField>
           </Grid>
           <Grid item xs={12}>
-            <TextField label="Confirm Password" type={'password'}></TextField>
+            <TextField label="Confirm Password" type={'password'} onChange={e => setconfirmPassword(e.target.value)}></TextField>
           </Grid>
+          <PasswordChecklist rules={["minlength", "specialChar", "number", "capital", "match"]} minLength={8} value={password} valueAgain={confirmpassword}
+          />
           <Grid item xs={12}>
             <FormControlLabel
               control={
                 <Checkbox
                   checked={checked}
                   onChange={handleChange}
-                  label={'Receive Notifications'}
+                  label={'Keep me logged in'}
                   inputProps={{ 'aria-label': 'primary checkbox' }}
                 />
               }
-              label="Receive Notifications"
+              label="Keep me logged in"
             />
           </Grid>
           <Grid item xs={12}>
