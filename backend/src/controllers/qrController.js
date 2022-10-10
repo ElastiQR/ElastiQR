@@ -59,7 +59,6 @@ module.exports = {
             res.send(response)
             // Send HTTP status 200 and indicate success
             console.log("--------> Requested QR Code has been found successfully")
-            res.sendStatus(200)
           } else {
             console.log("--------> Error, could not find the requested QR Code")
             res.sendStatus(400)
