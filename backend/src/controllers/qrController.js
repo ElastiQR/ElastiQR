@@ -56,10 +56,13 @@ module.exports = {
               url:result[0].qrURL,
               userID:result[0].userID
             }
-            res.end(JSON.stringify(response))
+            res.send(response)
             // Send HTTP status 200 and indicate success
+            console.log("--------> Requested QR Code has been found successfully")
+            res.sendStatus(200)
           } else {
-            // Couldn't find the requested qr code, http status 400
+            console.log("--------> Error, could not find the requested QR Code")
+            res.sendStatus(400)
           }
         })
       })
