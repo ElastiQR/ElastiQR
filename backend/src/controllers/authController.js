@@ -35,9 +35,9 @@ module.exports = {
                 await connection.query (insert_query, (err, result)=> {
                 connection.release()
                 if (err) throw (err)
-                console.log ("--------> Created new User")
-                console.log(result.insertId)
-                res.sendStatus(201)
+                    console.log ("--------> Created new User")
+                    console.log(result.insertId)
+                    res.sendStatus(201)
                 })
             }
             }) 
