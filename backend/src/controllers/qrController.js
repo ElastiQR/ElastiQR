@@ -1,17 +1,21 @@
-const { Router } = require('express')
-
+const mysql = require("mysql")
+const db = require("../helpers/database")
 
 module.exports = {
     createQRController: (req, res)=> {
       const qrname = req.body.name
+      const qrURL = req.body.url 
+      const userID = req.body.userID
   
       db.getConnection ( async (err, connection)=> {
         if (err) throw (err)
   
-        const sqlSearch = "Select * from QRTable where qrname = ?"
-        const search_query = mysql.format(sqlSearch, [qrname])
-        const sqlInsert = "INSERT INTO QRTable VALUES (?)"
-        const insert_query = mysql.format(sqlInsert, [qrname])
+        const sqlSearch = `SELECT * FROM QRCodes 
+                           where qrname = ? AND userID = ? LIMIT 1`
+        const search_query = mysql.format(sqlSearch, [qrname, userID])
+        const sqlInsert = `INSERT INTO QRCodes (qrID, qrname, qrURL, userID)
+                           VALUES (NULL, ?, ?, ?)`
+        const insert_query = mysql.format(sqlInsert, [qrname, qrURL, userID])
   
         await connection.query (search_query, async (err, result)=> {
           if (err) throw (err)
