@@ -37,10 +37,31 @@ module.exports = {
       })
     },
     retrieveQRController: (req,res)=> {
-      response = {
-        qr_name:req.query.name
-      }
-      console.log(response)
-      res.end(JSON.stringify(response))
+      const qrname = req.query.name
+
+      db.getConnection(async (err, connection) => {
+        if (err) throw (err)
+
+        const sqlSearch = 'SELECT * FROM QRCodes WHERE qrname = ? LIMIT 1'
+        const search_query = mysql.format(sqlSearch, [qrname])
+
+        await connection.query(search_query, async (err, result)=> {
+          if (err) throw (err)
+          connection.release()
+
+          if (result.length != 0) {
+            const response = {
+              id:result[0].qrID,
+              name:result[0].qrname,
+              url:result[0].qrURL,
+              userID:result[0].userID
+            }
+            res.end(JSON.stringify(response))
+            // Send HTTP status 200 and indicate success
+          } else {
+            // Couldn't find the requested qr code, http status 400
+          }
+        })
+      })
     }
   }
