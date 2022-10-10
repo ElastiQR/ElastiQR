@@ -1,3 +1,6 @@
+const { Router } = require('express')
+
+//new module export for get request named codes
 module.exports = {
     createQRController: (req, res)=> {
       const qrname = req.body.name
@@ -28,5 +31,19 @@ module.exports = {
           }
         })
       })
-    },
+    } /*,
+
+    codes: (req, res)=> {
+      var express = require('express');  
+      var app = express();  
+      app.use(express.static('public'));  
+
+      app.get('/getQRCodes', function (req, res) {  
+        response = {  
+          qr_name:req.query.qrname,   
+        };  
+        console.log(response);  
+        res.end(JSON.stringify(response));  
+      })   
+    }*/
   }
