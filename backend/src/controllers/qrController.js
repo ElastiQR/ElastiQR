@@ -1,3 +1,6 @@
+const { Router } = require('express')
+
+
 module.exports = {
     createQRController: (req, res)=> {
       const qrname = req.body.name
@@ -29,4 +32,11 @@ module.exports = {
         })
       })
     },
+    retrieveQRController: (req,res)=> {
+      response = {
+        qr_name:req.query.name
+      }
+      console.log(response)
+      res.end(JSON.stringify(response))
+    }
   }
