@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Checkbox,
   Grid,
@@ -7,12 +7,38 @@ import {
   Paper,
   Button
 } from '@material-ui/core';
+import { useHistory } from "react-router-dom";
+
 const LoginForm = () => {
+  let history = useHistory();
+
   const [checked, setChecked] = React.useState(true);
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
+
+  function loginUser() {
+    let credentials = {
+      "name" : username, 
+      "password": password
+    };
+
+    fetch('http://localhost:3000/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(credentials)
+    })
+      .then(data => data.json())
+
+    history.push('/')
+
+  }
 
   return (
     <div style={{ padding: 30 }}>
@@ -25,10 +51,10 @@ const LoginForm = () => {
           alignItems={'center'}
         >
           <Grid item xs={12}>
-            <TextField label="Username"></TextField>
+            <TextField label="Username" onChange={e => setUsername(e.target.value)}></TextField>
           </Grid>
           <Grid item xs={12}>
-            <TextField label="Password" type={'password'}></TextField>
+            <TextField label="Password" type={'password'} onChange={e => setPassword(e.target.value)}></TextField>
           </Grid>
           <Grid item xs={12}>
             <FormControlLabel
@@ -44,7 +70,7 @@ const LoginForm = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <Button fullWidth> Login </Button>
+            <Button onClick={loginUser} fullWidth>Login</Button>
           </Grid>
         </Grid>
       </Paper>

@@ -8,15 +8,41 @@ import {
   Paper,
   Button
 } from '@material-ui/core';
+import { useHistory } from "react-router-dom";
+
 const SignupForm = () => {
+  let history = useHistory();
+
   const [checked, setChecked] = React.useState(true);
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
 
+  
+  const [username, setUsername] = useState("");
+
   const [password, setPassword] = useState("");
   const [confirmpassword, setconfirmPassword] = useState("");
+
+  function createUser() {
+    let credentials = {
+      "name" : username, 
+      "password": password
+    };
+
+    fetch('http://localhost:3000/auth/createUser', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(credentials)
+    })
+      .then(data => data.json())
+
+    history.push('/login')
+
+  }
 
   return (
     <div style={{ padding: 30 }}>
@@ -29,7 +55,7 @@ const SignupForm = () => {
           alignItems={'center'}
         >
           <Grid item xs={12}>
-            <TextField label="Username"></TextField>
+            <TextField label="Username" onChange={e => setUsername(e.target.value)}></TextField>
           </Grid>
           <Grid item xs={12}>
             <TextField label="Password" type={'password'} onChange={e => setPassword(e.target.value)}> </TextField>
@@ -53,7 +79,7 @@ const SignupForm = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <Button fullWidth> Sign Up </Button>
+            <Button onClick={createUser} fullWidth > Sign Up </Button>
           </Grid>
         </Grid>
       </Paper>
