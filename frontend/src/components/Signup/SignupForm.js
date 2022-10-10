@@ -8,7 +8,11 @@ import {
   Paper,
   Button
 } from '@material-ui/core';
+import { useHistory } from "react-router-dom";
+
 const SignupForm = () => {
+  let history = useHistory();
+
   const [checked, setChecked] = React.useState(true);
 
   const handleChange = (event) => {
@@ -23,8 +27,8 @@ const SignupForm = () => {
 
   function createUser() {
     let credentials = {
-      "name" : "username", 
-      "password": "password"
+      "name" : username, 
+      "password": password
     };
 
     fetch('http://localhost:3000/auth/createUser', {
@@ -35,6 +39,9 @@ const SignupForm = () => {
       body: JSON.stringify(credentials)
     })
       .then(data => data.json())
+
+    history.push('/login')
+
   }
 
   return (
