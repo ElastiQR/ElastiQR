@@ -63,7 +63,7 @@ const SignupForm = () => {
           <Grid item xs={12}>
             <TextField label="Confirm Password" type={'password'} onChange={e => setconfirmPassword(e.target.value)}></TextField>
           </Grid>
-          <PasswordChecklist rules={["minlength", "specialChar", "number", "capital", "match"]} minLength={8} value={password} valueAgain={confirmpassword}
+          <PasswordChecklist rules={["minLength", "specialChar", "number", "capital", "match"]} minLength={8} value={password} valueAgain={confirmpassword}
           />
           <Grid item xs={12}>
             <FormControlLabel
