@@ -1,0 +1,433 @@
+ElactiQR/frontend/src/components/login/LoginForm.js
+
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  2) import {
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  3)   Checkbox,
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  4)   Grid,
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  5)   TextField,
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  6)   FormControlLabel,
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  7)   Paper,
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  8)   Button
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  9) } from '@material-ui/core';
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 12) const LoginForm = () => {
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 15)   const [checked, setChecked] =
+React.useState(true);
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 16)
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 20)   const handleChange = (event) => {       
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 21)     setChecked(event.target.checked);     
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 22)   };
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 23)
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 43)   return (
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 44)     <div style={{ padding: 30 }}>
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 45)       <Paper>
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 46)         <Grid
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 47)           container
+f4d45831 (jacobking61 2022-09-27 09:38:43 -0400 48)           spacing={0}
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 49)           direction={'column'}
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 50)           justify={'center'}
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 51)           alignItems={'center'}
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 52)         >
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 53)           <Grid item xs={12}>
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 55)           </Grid>
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 56)           <Grid item xs={12}>
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 58)           </Grid>
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 59)           <Grid item xs={12}>
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 60)             <FormControlLabel
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 61)               control={
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 62)                 <Checkbox
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 63)                   checked={checked}       
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 64)                   onChange={handleChange} 
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 65)                   label={'Keep me logged  
+in'}
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 66)                   inputProps={{
+'aria-label': 'primary checkbox' }}
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 67)                 />
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 68)               }
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 69)               label="Keep me logged in"   
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 70)             />
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 71)           </Grid>
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 72)           <Grid item xs={12}>
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 74)           </Grid>
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 75)         </Grid>
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 76)       </Paper>
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 77)     </div>
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 78)   );
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 79) };
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 80)
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 81) export default LoginForm;
+
+ElactiQR/frontend/src/components/Login/index.js
+
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400   1) import React, { Component } from 
+"react";
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400   2) import withStyles from
+"@material-ui/styles/withStyles";
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400   3) import { withRouter } from
+"react-router-dom";
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400   4) import CssBaseline from
+"@material-ui/core/CssBaseline";
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400   5) import Paper from
+"@material-ui/core/Paper";
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400   6) import Typography from
+"@material-ui/core/Typography";
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400   7) import Grid from
+"@material-ui/core/Grid";
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400   8) import Button from
+"@material-ui/core/Button";
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400   9) import LoginForm from "./LoginForm";     
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  10) import Navbar from "../Navbar";
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  11) import LoginPage from "./LoginForm";     
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  12)
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  13) const backgroundShape =
+require("../../images/shape.svg");
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  14)
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  15) const styles = theme => ({
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  16)   root: {
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  17)     flexGrow: 1,
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  18)     backgroundColor:
+theme.palette.grey["100"],
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  19)     overflow: "hidden",
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  20)     background:
+`url(${backgroundShape}) no-repeat`,
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  21)     backgroundSize: "cover",
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  22)     backgroundPosition: "0 400px",       
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  23)     paddingBottom: 200
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  24)   },
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  25)   grid: {
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  26)     width: 1200,
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  27)     marginTop: 40,
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  28)     [theme.breakpoints.down("sm")]: {    
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  29)       width: "calc(100% - 20px)"
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  30)     }
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  31)   },
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  32)   paper: {
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  33)     padding: theme.spacing(3),
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  34)     textAlign: "left",
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  35)     color: theme.palette.text.secondary  
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  36)   },
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  37)   rangeLabel: {
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  38)     display: "flex",
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  39)     justifyContent: "space-between",
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  40)     paddingTop: theme.spacing(2)
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  41)   },
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  42)   navBar: {
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  43)     display: "flex",
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  44)     justifyContent: "space-between",     
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  45)     alignItems: "center",
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  46)     marginTop: 32
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  47)   },
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  48)   outlinedButtom: {
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  49)     textTransform: "uppercase",
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  50)     margin: theme.spacing(1)
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  51)   },
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  52)   actionButtom: {
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  53)     textTransform: "uppercase",
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  54)     margin: theme.spacing(1),
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  55)     width: 152
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  56)   },
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  57)   blockCenter: {
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  58)     padding: theme.spacing(2),
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  59)     textAlign: "center"
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  60)   },
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  61)   block: {
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  62)     padding: theme.spacing(2)
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  63)   },
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  64)   box: {
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  65)     marginBottom: 40,
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  66)     height: 65
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  67)   },
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  68)   inlining: {
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  69)     display: "inline-block",
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  70)     marginRight: 10
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  71)   },
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  72)   buttonBar: {
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  73)     display: "flex"
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  74)   },
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  75)   alignRight: {
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  76)     display: "flex",
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  77)     justifyContent: "flex-end"
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  78)   },
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  79)   noBorder: {
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  80)     borderBottomStyle: "hidden"
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  81)   },
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  82)   loadingState: {
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  83)     opacity: 0.05
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  84)   },
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  85)   loadingMessage: {
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  86)     position: "absolute",
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  87)     top: "40%",
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  88)     left: "40%"
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  89)   }
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  90) });
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  91)
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  92) class Login extends Component {
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  93)   state = {
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  94)     learnMoredialog: false,
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  95)     getStartedDialog: false
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  96)   };
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  97)
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  98)   componentDidMount() {}
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  99)
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 100)   render() {
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 101)     const { classes } = this.props;      
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 102)     return (
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 103)       <React.Fragment>
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 104)         <CssBaseline />
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 105)         <Navbar />
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 106)         <div className={classes.root}>   
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 107)           <Grid container
+justify="center">
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 108) 
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 109)             <LoginForm />
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 110)           </Grid>
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 111)         </div>
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 112)       </React.Fragment>
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 113)     );
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 114)   }
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 115) }
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 116)
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 117) export default
+withRouter(withStyles(styles)(Login));
+
+ElactiQR/frontend/src/components/signup/index.js
+
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400   1) import React, { Component } from 
+"react";
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400   2) import withStyles from
+"@material-ui/styles/withStyles";
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400   3) import { withRouter } from
+"react-router-dom";
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400   4) import CssBaseline from
+"@material-ui/core/CssBaseline";
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400   5) import Paper from
+"@material-ui/core/Paper";
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400   6) import Typography from
+"@material-ui/core/Typography";
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400   7) import Grid from
+"@material-ui/core/Grid";
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400   8) import Button from
+"@material-ui/core/Button";
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400   9) import Navbar from "../Navbar";
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  10) import SignupForm from "./SignupForm";   
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  11) 
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  12) const backgroundShape =
+require("../../images/shape.svg");
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  13)
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  14) const styles = theme => ({
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  15)   root: {
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  16)     flexGrow: 1,
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  17)     backgroundColor:
+theme.palette.grey["100"],
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  18)     overflow: "hidden",
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  19)     background:
+`url(${backgroundShape}) no-repeat`,
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  20)     backgroundSize: "cover",
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  21)     backgroundPosition: "0 400px",       
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  22)     paddingBottom: 200
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  23)   },
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  24)   grid: {
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  25)     width: 1200,
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  26)     marginTop: 40,
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  27)     [theme.breakpoints.down("sm")]: {    
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  28)       width: "calc(100% - 20px)"
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  29)     }
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  30)   },
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  31)   paper: {
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  32)     padding: theme.spacing(3),
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  33)     textAlign: "left",
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  34)     color: theme.palette.text.secondary  
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  35)   },
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  36)   rangeLabel: {
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  37)     display: "flex",
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  38)     justifyContent: "space-between",     
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  39)     paddingTop: theme.spacing(2)
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  40)   },
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  41)   navBar: {
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  42)     display: "flex",
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  43)     justifyContent: "space-between",     
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  44)     alignItems: "center",
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  45)     marginTop: 32
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  46)   },
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  47)   outlinedButtom: {
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  48)     textTransform: "uppercase",
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  49)     margin: theme.spacing(1)
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  50)   },
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  51)   actionButtom: {
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  52)     textTransform: "uppercase",
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  53)     margin: theme.spacing(1),
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  54)     width: 152
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  55)   },
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  56)   blockCenter: {
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  57)     padding: theme.spacing(2),
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  58)     textAlign: "center"
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  59)   },
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  60)   block: {
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  61)     padding: theme.spacing(2)
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  62)   },
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  63)   box: {
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  64)     marginBottom: 40,
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  65)     height: 65
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  66)   },
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  67)   inlining: {
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  68)     display: "inline-block",
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  69)     marginRight: 10
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  70)   },
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  71)   buttonBar: {
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  72)     display: "flex"
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  73)   },
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  74)   alignRight: {
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  75)     display: "flex",
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  76)     justifyContent: "flex-end"
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  77)   },
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  78)   noBorder: {
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  79)     borderBottomStyle: "hidden"
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  80)   },
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  81)   loadingState: {
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  82)     opacity: 0.05
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  83)   },
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  84)   loadingMessage: {
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  85)     position: "absolute",
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  86)     top: "40%",
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  87)     left: "40%"
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  88)   }
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  89) });
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  90)
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  91) class Signup extends Component {
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  92)   state = {
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  93)     learnMoredialog: false,
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  94)     getStartedDialog: false
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  95)   };
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  96)
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  97)   componentDidMount() {}
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  98)
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  99)   render() {
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 100)     const { classes } = this.props;      
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 101)     return (
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 102)       <React.Fragment>
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 103)         <CssBaseline />
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 104)         <Navbar />
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 105)         <div className={classes.root}>   
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 106)           <Grid container
+justify="center">
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 107)
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 108)             <SignupForm />
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 109)           </Grid>
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 110)         </div>
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 111)       </React.Fragment>
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 112)     );
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 113)   }
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 114) }
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 115)
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 116) export default
+withRouter(withStyles(styles)(Signup));
+
+ElactiQR/frontend/src/components/Signup/SignupForm.js
+
+0ddce3ea (jacobking61 2022-10-09 11:14:57 -0400  1) import React, {useState} from 'react';
+0ddce3ea (jacobking61 2022-10-09 11:14:57 -0400  2) import PasswordChecklist from
+'react-password-checklist'
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  3) import {
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  4)   Checkbox,
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  5)   Grid,
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  6)   TextField,
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  7)   FormControlLabel,
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  8)   Paper,
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  9)   Button
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 10) } from '@material-ui/core';
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 13) const SignupForm = () => {
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 16)   const [checked, setChecked] =
+React.useState(true);
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 17)
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 18)   const handleChange = (event) => {       
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 19)     setChecked(event.target.checked);     
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 20)   };
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 21)
+0ddce3ea (jacobking61 2022-10-09 11:14:57 -0400 25)   const [password, setPassword] = 
+useState("");
+0ddce3ea (jacobking61 2022-10-09 11:14:57 -0400 26)   const [confirmpassword,
+setconfirmPassword] = useState("");
+0ddce3ea (jacobking61 2022-10-09 11:14:57 -0400 27)
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 47)   return (
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 48)     <div style={{ padding: 30 }}>
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 49)       <Paper>
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 50)         <Grid
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 51)           container
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 52)           spacing={0}
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 53)           direction={'column'}
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 54)           justify={'center'}
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 55)           alignItems={'center'}
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 56)         >
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 57)           <Grid item xs={12}>
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 59)           </Grid>
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 60)           <Grid item xs={12}>
+0ddce3ea (jacobking61 2022-10-09 11:14:57 -0400 61)             <TextField label="Password"   
+type={'password'} onChange={e => setPassword(e.target.value)}> </TextField>
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 62)           </Grid>
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 63)           <Grid item xs={12}>
+0ddce3ea (jacobking61 2022-10-09 11:14:57 -0400 64)             <TextField label="Confirm 
+Password" type={'password'} onChange={e => setconfirmPassword(e.target.value)}></TextField>   
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 65)           </Grid>
+3733a6dc (jacobking61 2022-10-11 08:40:35 -0400 66)           <PasswordChecklist
+rules={["minLength", "specialChar", "number", "capital", "match"]} minLength={8}
+value={password} valueAgain={confirmpassword}
+0ddce3ea (jacobking61 2022-10-09 11:14:57 -0400 67)           />
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 68)           <Grid item xs={12}>
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 69)             <FormControlLabel
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 70)               control={
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 71)                 <Checkbox
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 72)                   checked={checked}       
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 73)                   onChange={handleChange} 
+f9da3ae8 (jacobking61 2022-10-09 11:34:04 -0400 74)                   label={'Receive
+Notifications'}
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 75)                   inputProps={{
+'aria-label': 'primary checkbox' }}
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 76)                 />
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 77)               }
+f9da3ae8 (jacobking61 2022-10-09 11:34:04 -0400 78)               label="Receive
+Notifications"
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 79)             />
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 80)           </Grid>
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 81)           <Grid item xs={12}>
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 83)           </Grid>
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 84)         </Grid>
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 85)       </Paper>
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 86)     </div>
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 87)   );
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 88) };
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 89)
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 90) export default SignupForm;
+
+ElactiQR/frontend/src/routes.js
+
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  3) import Login from './components/Login'
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400  5) import Signup from './components/Signup'  
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 15)           <Route exact path='/login'      
+component={ Login } />
+420bd9b8 (jacobking61 2022-10-04 12:38:19 -0400 16)           <Route exact path='/signup'     
+component={ Signup } />
+
+ElactiQR/frontend/src/components/Menu.js
+
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  2)   {
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  3)     label: "Home",
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  4)     pathname: "/"
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  5)   },
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  6)   {
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  7)     label: "My QRs",
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  8)     pathname: "/my-qrs"
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400  9)   },
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 10)   {
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 11)     label: "Create QR",
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 12)     pathname: "/create-qr"
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 13)   },
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 14)   {
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 15)     label: "Signup",
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 16)     pathname: "/signup"
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 17)   },
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 18)   {
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 19)     label: "Login",
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 20)     pathname: "/login"
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 21)   },
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 22)
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 23) ];
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 24)
+f9e200b2 (jacobking61 2022-09-27 09:14:12 -0400 25) export default Menu;
