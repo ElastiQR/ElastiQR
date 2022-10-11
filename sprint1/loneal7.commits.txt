@@ -1,0 +1,483 @@
+* backend/src/controllers/authController.js
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400  1) const jwt = require("jsonwebtoken")
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400  2) const bcrypt = require('bcryptjs')
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400  5)
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400  6) function generateAccessToken (user) {
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400  7)     return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "15m"})
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400  8) }
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400  9)
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 10) module.exports = {
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 11)     createUserController: async (req,res) => {
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 12)         const user = req.body.name;
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 13)         const passwordHash = await bcrypt.hash(req.body.password,10);
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 14)
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 15)         db.getConnection( async (err, connection) => {
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 16)             if (err) throw (err)
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 17)
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 19)             const search_query = mysql.format(sqlSearch,[user])
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 21)
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 22)             const insert_query = mysql.format(sqlInsert,[user, passwordHash])
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 23)
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 24)             await connection.query (search_query, async (err, result) => {
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 25)             if (err) throw (err)
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 26)
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 27)             console.log("------> Search Results")
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 28)             console.log(result.length)
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 29)
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 30)             if (result.length != 0) {
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 31)                 connection.release()
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 32)                 console.log("------> User already exists")
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 33)                 res.sendStatus(409)
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 34)             } else {
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 35)                 await connection.query (insert_query, (err, result)=> {
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 36)                 connection.release()
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 37)                 if (err) throw (err)
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 41)                 })
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 42)             }
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 43)             })
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 44)
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 45)         })
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 46)     },
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 47)
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 48)     loginUserController: (req, res)=> {
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 49)         const user = req.body.name
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 50)         const password = req.body.password
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 51)
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 52)         db.getConnection ( async (err, connection)=> {
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 53)             if (err) throw (err)
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 54)
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 56)             const search_query = mysql.format(sqlSearch,[user])
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 57)
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 58)             await connection.query (search_query, async (err, result) => {
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 59)                 connection.release()
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 60)
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 61)                 if (err) throw (err)
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 62)                 if (result.length == 0) {
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 63)                 console.log("--------> User does not exist")
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 64)                 res.sendStatus(404)
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 65)                 }
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 66)                 else {
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 67)                     const hashedPassword = result[0].password
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 68)
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 69)                     if (await bcrypt.compare(password, hashedPassword)) {
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 70)                         console.log("---------> Login Successful")
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 71)                         console.log("---------> Generating accessToken")
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 72)                         const token = generateAccessToken({user: user})
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 73)                         console.log(token)
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 74)                         res.json({accessToken: token})
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 75)                     } else {
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 76)                         res.send("Password incorrect!")
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 77)                     }
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 78)                 }
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 79)             })
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 80)         })
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 81)     }
+* backend/src/index.js
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400  1) require("dotenv").config()
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400  2) const express = require("express");
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400  7)
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400  8) /* Import Routes */
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 10)
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 11) /* Declare App */
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 12) const app = express();
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 14) app.use(bodyParser.json());
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 15)
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 22) /* Public Routes */
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 23) app.get("/", (req, res) => {
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 25) });
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 26)
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 27) app.use('/auth', authRouter)
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 28)
+d3730906 (loganoneal   2022-09-19 20:59:12 -0400 29) /* Start Application */
+
+* backend/src/routes/authRoute.js
+d3730906 (loganoneal 2022-09-19 20:59:12 -0400  1) const router = require('express').Router()
+d3730906 (loganoneal 2022-09-19 20:59:12 -0400  2) const { createUserController, loginUserController} = require('../controllers/authController')
+d3730906 (loganoneal 2022-09-19 20:59:12 -0400  8) router.post('/createUser', createUserController)
+d3730906 (loganoneal 2022-09-19 20:59:12 -0400  9) router.post('/login', loginUserController)
+d3730906 (loganoneal 2022-09-19 20:59:12 -0400 10)
+
+* frontend/src/App.js
+a3b82007 (loganoneal  2022-09-26 00:15:24 -0400  1) import React, { Component } from 'react';
+a3b82007 (loganoneal  2022-09-26 00:15:24 -0400  2) import { ThemeProvider } from '@material-ui/styles';
+a3b82007 (loganoneal  2022-09-26 00:15:24 -0400  4) import Routes from './routes'
+a3b82007 (loganoneal  2022-09-26 00:15:24 -0400  6)
+a3b82007 (loganoneal  2022-09-26 00:15:24 -0400  7) class App extends Component {
+a3b82007 (loganoneal  2022-09-26 00:15:24 -0400  8)   render() {
+a3b82007 (loganoneal  2022-09-26 00:15:24 -0400  9)     return (
+a3b82007 (loganoneal  2022-09-26 00:15:24 -0400 10)       <div>
+a3b82007 (loganoneal  2022-09-26 00:15:24 -0400 11)         <ThemeProvider theme={theme}>
+a3b82007 (loganoneal  2022-09-26 00:15:24 -0400 12)           <Routes />
+a3b82007 (loganoneal  2022-09-26 00:15:24 -0400 13)         </ThemeProvider>
+a3b82007 (loganoneal  2022-09-26 00:15:24 -0400 14)       </div>
+a3b82007 (loganoneal  2022-09-26 00:15:24 -0400 15)     );
+a3b82007 (loganoneal  2022-09-26 00:15:24 -0400 16)   }
+a3b82007 (loganoneal  2022-09-26 00:15:24 -0400 19) export default App;
+
+* frontend/src/components/Main.js
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400   1) import React, { Component } from "react";
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400   2) import withStyles from "@material-ui/styles/withStyles";
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400   3) import { withRouter } from "react-router-dom";
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400   4) import CssBaseline from "@material-ui/core/CssBaseline";
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400   5) import Paper from "@material-ui/core/Paper";
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400   6) import Typography from "@material-ui/core/Typography";
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400   7) import Grid from "@material-ui/core/Grid";
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400   8) import Button from "@material-ui/core/Button";
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400   9)
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  10) import Navbar from "./Navbar";
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  11)
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  12) const backgroundShape = require("../images/shape.svg");
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  13) 
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  14) const styles = theme => ({
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  15)   root: {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  16)     flexGrow: 1,
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  17)     backgroundColor: theme.palette.grey["100"],
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  18)     overflow: "hidden",
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  19)     background: `url(${backgroundShape}) no-repeat`,
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  20)     backgroundSize: "cover",
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  21)     backgroundPosition: "0 400px",
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  22)     paddingBottom: 200
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  23)   },
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  24)   grid: {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  25)     width: 1200,
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  26)     marginTop: 40,
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  27)     [theme.breakpoints.down("sm")]: {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  28)       width: "calc(100% - 20px)"
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  29)     }
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  30)   },
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  31)   paper: {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  32)     padding: theme.spacing(3),
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  33)     textAlign: "left",
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  34)     color: theme.palette.text.secondary
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  35)   },
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  36)   rangeLabel: {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  37)     display: "flex",
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  38)     justifyContent: "space-between",
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  39)     paddingTop: theme.spacing(2)
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  40)   },
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  41)   navBar: {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  42)     display: "flex",
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  43)     justifyContent: "space-between",
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  44)     alignItems: "center",
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  45)     marginTop: 32
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  46)   },
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  47)   outlinedButtom: {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  48)     textTransform: "uppercase",
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  49)     margin: theme.spacing(1)
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  50)   },
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  51)   actionButtom: {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  52)     textTransform: "uppercase",
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  53)     margin: theme.spacing(1),
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  54)     width: 152
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  55)   },
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  56)   blockCenter: {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  57)     padding: theme.spacing(2),
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  58)     textAlign: "center"
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  59)   },
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  60)   block: {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  61)     padding: theme.spacing(2)
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  62)   },
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  63)   box: {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  64)     marginBottom: 40,
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  65)     height: 65
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  66)   },
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  67)   inlining: {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  68)     display: "inline-block",
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  69)     marginRight: 10
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  70)   },
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  71)   buttonBar: {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  72)     display: "flex"
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  73)   },
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  74)   alignRight: {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  75)     display: "flex",
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  76)     justifyContent: "flex-end"
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  77)   },
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  78)   noBorder: {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  79)     borderBottomStyle: "hidden"
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  80)   },
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  81)   loadingState: {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  82)     opacity: 0.05
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  83)   },
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  84)   loadingMessage: {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  85)     position: "absolute",
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  86)     top: "40%",
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  87)     left: "40%"
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  88)   }
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  89) });
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  90) 
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  91) class Main extends Component {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  92)   state = {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  93)     learnMoredialog: false,
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  94)     getStartedDialog: false
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  95)   };
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  96)
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  97)   componentDidMount() {}
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  98)
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  99)   render() {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 100)     const { classes } = this.props;
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 101)     return (
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 102)       <React.Fragment>
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 103)         <CssBaseline />
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 104)         <Navbar />
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 105)         <div className={classes.root}>
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 106)           <Grid container justify="center">
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 107)
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 108)           </Grid>
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 109)         </div>
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 110)       </React.Fragment>
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 111)     );
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 112)   }
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 113) }
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 114)
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 115) export default withRouter(withStyles(styles)(Main));
+
+* frontend/src/components/Navbar.js
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400   1) import React, { Component } from "react";
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400   2) import withStyles from "@material-ui/styles/withStyles";
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400   3) import { Link, withRouter } from "react-router-dom";
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400   4) import Grid from "@material-ui/core/Grid";
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400   5) import Typography from "@material-ui/core/Typography";
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400   6) import Toolbar from "@material-ui/core/Toolbar";
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400   7) import AppBar from "@material-ui/core/AppBar";
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400   8) import Tabs from "@material-ui/core/Tabs";
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400   9) import Tab from "@material-ui/core/Tab";
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  10) import MenuIcon from "@material-ui/icons/Menu";
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  11) import IconButton from "@material-ui/core/IconButton";
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  12) import List from "@material-ui/core/List";
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  13) import ListItem from "@material-ui/core/ListItem";
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  14) import ListItemText from "@material-ui/core/ListItemText";
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  15) import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  16) import { Link as MaterialLink } from "@material-ui/core";
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  17) import Menu from "./Menu";
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  18)
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  19) const logo = require("../images/logo.svg");
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  20)
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  21) const styles = theme => ({
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  22)   appBar: {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  23)     position: "relative",
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  24)     boxShadow: "none",
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  25)     borderBottom: `1px solid ${theme.palette.grey["100"]}`,
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  26)     backgroundColor: "white"
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  27)   },
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  28)   inline: {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  29)     display: "inline"
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  30)   },
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  31)   flex: {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  32)     display: "flex",
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  33)     [theme.breakpoints.down("sm")]: {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  34)       display: "flex",
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  35)       justifyContent: "space-evenly",
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  36)       alignItems: "center"
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  37)     }
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  38)   },
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  39)   link: {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  40)     textDecoration: "none",
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  41)     color: "inherit"
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  42)   },
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  43)   productLogo: {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  44)     display: "inline-block",
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  45)     borderLeft: `1px solid ${theme.palette.grey["A100"]}`,
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  46)     marginLeft: 32,
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  47)     paddingLeft: 24,
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  48)     [theme.breakpoints.up("md")]: {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  49)       paddingTop: "1.5em"
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  50)     }
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  51)   },
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  52)   tagline: {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  53)     display: "inline-block",
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  54)     marginLeft: 10,
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  55)     [theme.breakpoints.up("md")]: {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  56)       paddingTop: "0.8em"
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  57)     }
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  58)   },
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  59)   iconContainer: {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  60)     display: "none",
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  61)     [theme.breakpoints.down("sm")]: {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  62)       display: "block"
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  63)     }
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  64)   },
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  65)   iconButton: {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  66)     float: "right"
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  67)   },
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  68)   tabContainer: {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  69)     marginLeft: 32,
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  70)     [theme.breakpoints.down("sm")]: {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  71)       display: "none"
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  72)     }
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  73)   },
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  74)   tabItem: {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  75)     paddingTop: 20,
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  76)     paddingBottom: 20,
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  77)     minWidth: "auto"
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  78)   }
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  79) });
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  80)
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  81) class Navbar extends Component {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  82)   state = {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  83)     value: 0,
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  84)     menuDrawer: false
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  85)   };
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  86)
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  87)   handleChange = (event, value) => {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  88)     this.setState({ value });
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  89)   };
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  90)
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  91)   mobileMenuOpen = event => {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  92)     this.setState({ menuDrawer: true });
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  93)   };
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  94) 
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  95)   mobileMenuClose = event => {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  96)     this.setState({ menuDrawer: false });
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  97)   };
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  98)
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  99)   componentDidMount() {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 100)     window.scrollTo(0, 0);
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 101)   }
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 102)
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 103)   current = () => {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 104)     if (this.props.currentPath === "/home") {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 105)       return 0;
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 106)     }
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 107)     if (this.props.currentPath === "/create-qr") {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 108)       return 1;
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 109)     }
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 110)     if (this.props.currentPath === "/my-qrs") {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 111)       return 2;
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 112)     }
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 113)   };
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 114)
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 115)   render() {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 116)     const { classes } = this.props;
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 117)
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 118)     return (
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 119)       <AppBar position="absolute" color="default" className={classes.appBar}>
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 120)         <Toolbar>
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 121)           <Grid container spacing={10} alignItems="baseline">
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 122)             <Grid item xs={12} className={classes.flex}>
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 123)               <div className={classes.inline}>
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 124)                 <Typography variant="h6" color="inherit" noWrap>
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 125)                   <Link to="/" className={classes.link}>
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 126)                     <img width={20} src={logo} alt="" />
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 127)                     <span className={classes.tagline}>ElasticQR</span>
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 128)                   </Link>
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 129)                 </Typography>
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 130)               </div>
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 131)               {!this.props.noTabs && (
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 132)                 <React.Fragment>
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 133)                   <div className={classes.productLogo}>
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 134)                   </div>
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 135)                   <div className={classes.iconContainer}>
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 136)                     <IconButton
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 137)                       onClick={this.mobileMenuOpen}
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 138)                       className={classes.iconButton}
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 139)                       color="inherit"
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 140)                       aria-label="Menu"
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 141)                     >
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 142)                       <MenuIcon />
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 143)                     </IconButton>
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 144)                   </div>
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 145)                   <div className={classes.tabContainer}>
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 146)                     <SwipeableDrawer
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 147)                       anchor="right"
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 148)                       open={this.state.menuDrawer}
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 149)                       onClose={this.mobileMenuClose}
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 150)                       onOpen={this.mobileMenuOpen}
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 151)                     >
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 152)                       <AppBar title="Menu" />
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 153)                       <List>
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 154)                         {Menu.map((item, index) => (
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 155)                           <ListItem
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 156)                             component={item.external ? MaterialLink : Link}
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 157)                             href={item.external ? item.pathname : null}
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 158)                             to={
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 159)                               item.external
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 160)                                 ? null
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 161)                                 : {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 162)                                     pathname: item.pathname,
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 163)                                     search: this.props.location.search
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 164)                                   }
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 165)                             }
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 166)                             button
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 167)                             key={item.label}
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 168)                           >
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 169)                             <ListItemText primary={item.label} />
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 170)                           </ListItem>
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 171)                         ))}
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 172)                       </List>
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 173)                     </SwipeableDrawer>
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 174)                     <Tabs
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 175)                       value={this.current() || this.state.value}
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 176)                       indicatorColor="primary"
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 177)                       textColor="primary"
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 178)                       onChange={this.handleChange}
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 179)                     >
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 180)                       {Menu.map((item, index) => (
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 181)                         <Tab
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 182)                           key={index}
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 183)                           component={item.external ? MaterialLink : Link}
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 184)                           href={item.external ? item.pathname : null}
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 185)                           to={
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 186)                             item.external
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 187)                               ? null
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 188)                               : {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 189)                                   pathname: item.pathname,
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 190)                                   search: this.props.location.search
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 191)                                 }
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 192)                           }
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 193)                           classes={{ root: classes.tabItem }}
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 194)                           label={item.label}
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 195)                         />
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 196)                       ))}
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 197)                     </Tabs>
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 198)                   </div>
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 199)                 </React.Fragment>
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 200)               )}
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 201)             </Grid>
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 202)           </Grid>
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 203)         </Toolbar>
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 204)       </AppBar>
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 205)     );
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 206)   }
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 207) }
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 208)
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 209) export default withRouter(withStyles(styles)(Navbar));
+
+* frontend/src/components/ScrollTop.js
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  1) import { Component } from 'react'
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  2) import { withRouter } from 'react-router-dom'
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  3)
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  4) class ScrollToTop extends Component {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  5)     componentDidUpdate(prevProps) {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  6)       if (this.props.location.pathname !== prevProps.location.pathname) {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  7)         window.scrollTo(0, 0);
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  8)       }
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400  9)     }
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 10)
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 11)     render() {
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 12)       return this.props.children;
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 13)     }
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 14)   }
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 15)
+a3b82007 (loganoneal 2022-09-26 00:15:24 -0400 16)   export default withRouter(ScrollToTop);
+
+* frontend/src/index.js
+a3b82007 (loganoneal  2022-09-26 00:15:24 -0400 2) import ReactDOM from 'react-dom';
+a3b82007 (loganoneal  2022-09-26 00:15:24 -0400 5) import * as serviceWorker from './serviceWorker';
+a3b82007 (loganoneal  2022-09-26 00:15:24 -0400 7) ReactDOM.render(<App />, document.getElementById('root'));
+a3b82007 (loganoneal  2022-09-26 00:15:24 -0400 9) serviceWorker.unregister();
+
+* frontend/src/routes.js
+a3b82007 (loganoneal  2022-09-26 00:15:24 -0400  1) import React from 'react'
+a3b82007 (loganoneal  2022-09-26 00:15:24 -0400  2) import { Route, HashRouter, Switch } from 'react-router-dom'
+a3b82007 (loganoneal  2022-09-26 00:15:24 -0400  4) import Main from './components/Main'
+a3b82007 (loganoneal  2022-09-26 00:15:24 -0400  8) import ScrollToTop from './components/ScrollTop'
+a3b82007 (loganoneal  2022-09-26 00:15:24 -0400  9)
+a3b82007 (loganoneal  2022-09-26 00:15:24 -0400 10) export default props => (
+a3b82007 (loganoneal  2022-09-26 00:15:24 -0400 11)     <HashRouter>
+a3b82007 (loganoneal  2022-09-26 00:15:24 -0400 12)       <ScrollToTop>
+a3b82007 (loganoneal  2022-09-26 00:15:24 -0400 13)         <Switch>
+a3b82007 (loganoneal  2022-09-26 00:15:24 -0400 14)           <Route exact path='/' component={ Main } />
+a3b82007 (loganoneal  2022-09-26 00:15:24 -0400 19)         </Switch>
+a3b82007 (loganoneal  2022-09-26 00:15:24 -0400 20)       </ScrollToTop>
+a3b82007 (loganoneal  2022-09-26 00:15:24 -0400 21)     </HashRouter>
+a3b82007 (loganoneal  2022-09-26 00:15:24 -0400 22)   )
