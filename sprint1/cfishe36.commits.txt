@@ -1,0 +1,94 @@
+* backend/src/controllers/qrController.js
+bd3e4ebb (Caleb Fisher 2022-10-10 16:43:46 -0400  1) const mysql = require("mysql")
+bd3e4ebb (Caleb Fisher 2022-10-10 16:43:46 -0400  2) const db = require("../helpers/database")
+bd3e4ebb (Caleb Fisher 2022-10-10 16:43:46 -0400  7)       const qrURL = req.body.url 
+bd3e4ebb (Caleb Fisher 2022-10-10 16:43:46 -0400  8)       const userID = req.body.userID
+bd3e4ebb (Caleb Fisher 2022-10-10 16:43:46 -0400 13)         const sqlSearch = `SELECT * FROM QRCodes 
+bd3e4ebb (Caleb Fisher 2022-10-10 16:43:46 -0400 14)                            where qrname = ? AND userID = ? LIMIT 1`
+bd3e4ebb (Caleb Fisher 2022-10-10 16:43:46 -0400 15)         const search_query = mysql.format(sqlSearch, [qrname, userID])
+bd3e4ebb (Caleb Fisher 2022-10-10 16:43:46 -0400 16)         const sqlInsert = `INSERT INTO QRCodes (qrID, qrname, qrURL, userID)
+bd3e4ebb (Caleb Fisher 2022-10-10 16:43:46 -0400 17)                            VALUES (NULL, ?, ?, ?)`
+bd3e4ebb (Caleb Fisher 2022-10-10 16:43:46 -0400 18)         const insert_query = mysql.format(sqlInsert, [qrname, qrURL, userID])
+a969cc4c (Caleb Fisher 2022-10-10 17:21:33 -0400 40)       const qrname = req.query.name
+a969cc4c (Caleb Fisher 2022-10-10 17:21:33 -0400 41) 
+a969cc4c (Caleb Fisher 2022-10-10 17:21:33 -0400 42)       db.getConnection(async (err, connection) => {
+a969cc4c (Caleb Fisher 2022-10-10 17:21:33 -0400 43)         if (err) throw (err)
+a969cc4c (Caleb Fisher 2022-10-10 17:21:33 -0400 44) 
+a969cc4c (Caleb Fisher 2022-10-10 17:21:33 -0400 45)         const sqlSearch = 'SELECT * FROM QRCodes WHERE qrname = ? LIMIT 1'
+a969cc4c (Caleb Fisher 2022-10-10 17:21:33 -0400 46)         const search_query = mysql.format(sqlSearch, [qrname])
+a969cc4c (Caleb Fisher 2022-10-10 17:21:33 -0400 47) 
+a969cc4c (Caleb Fisher 2022-10-10 17:21:33 -0400 48)         await connection.query(search_query, async (err, result)=> {
+a969cc4c (Caleb Fisher 2022-10-10 17:21:33 -0400 49)           if (err) throw (err)
+a969cc4c (Caleb Fisher 2022-10-10 17:21:33 -0400 50)           connection.release()
+a969cc4c (Caleb Fisher 2022-10-10 17:21:33 -0400 51) 
+a969cc4c (Caleb Fisher 2022-10-10 17:21:33 -0400 52)           if (result.length != 0) {
+a969cc4c (Caleb Fisher 2022-10-10 17:21:33 -0400 53)             const response = {
+a969cc4c (Caleb Fisher 2022-10-10 17:21:33 -0400 54)               id:result[0].qrID,
+a969cc4c (Caleb Fisher 2022-10-10 17:21:33 -0400 55)               name:result[0].qrname,
+a969cc4c (Caleb Fisher 2022-10-10 17:21:33 -0400 56)               url:result[0].qrURL,
+a969cc4c (Caleb Fisher 2022-10-10 17:21:33 -0400 57)               userID:result[0].userID
+a969cc4c (Caleb Fisher 2022-10-10 17:21:33 -0400 58)             }
+a969cc4c (Caleb Fisher 2022-10-10 17:21:33 -0400 60)             // Send HTTP status 200 and indicate success
+a969cc4c (Caleb Fisher 2022-10-10 17:21:33 -0400 62)           } else {
+a969cc4c (Caleb Fisher 2022-10-10 17:21:33 -0400 65)           }
+a969cc4c (Caleb Fisher 2022-10-10 17:21:33 -0400 66)         })
+a969cc4c (Caleb Fisher 2022-10-10 17:21:33 -0400 67)       })
+a969cc4c (Caleb Fisher 2022-10-10 17:21:33 -0400 69)   }
+
+* backend/src/controllers/authController.js
+6b5cc9bb (Caleb Fisher 2022-10-01 23:07:12 -0400  3) const mysql = require("mysql")
+6b5cc9bb (Caleb Fisher 2022-10-01 23:07:12 -0400  4) const db = require("../helpers/database")
+6b5cc9bb (Caleb Fisher 2022-10-01 23:07:12 -0400 18)             const sqlSearch = "SELECT * FROM users WHERE username = ? LIMIT 1"
+6b5cc9bb (Caleb Fisher 2022-10-01 23:07:12 -0400 20)             const sqlInsert = "INSERT INTO users (username, password) VALUES (?,?)"
+6b5cc9bb (Caleb Fisher 2022-10-01 23:07:12 -0400 55)             const sqlSearch = "SELECT * FROM users WHERE username = ? LIMIT 1"
+6b5cc9bb (Caleb Fisher 2022-10-01 23:07:12 -0400 82) }
+
+* backend/src/helpers/database.js
+859f636f (Caleb Fisher 2022-09-23 15:05:44 -0400  1) const mysql = require('mysql');
+859f636f (Caleb Fisher 2022-09-23 15:05:44 -0400  2) 
+859f636f (Caleb Fisher 2022-09-23 15:05:44 -0400  3) // Currently configured for a development environment.
+859f636f (Caleb Fisher 2022-09-23 15:05:44 -0400  4) 
+859f636f (Caleb Fisher 2022-09-23 15:05:44 -0400  5) const DB_HOST = process.env.DB_HOST;
+859f636f (Caleb Fisher 2022-09-23 15:05:44 -0400  6) const DB_USER = process.env.DB_USER;
+859f636f (Caleb Fisher 2022-09-23 15:05:44 -0400  7) const DB_PASSWORD = process.env.DB_PASSWORD;
+859f636f (Caleb Fisher 2022-09-23 15:05:44 -0400  8) const DB_DATABASE = process.env.DB_DATABASE;
+859f636f (Caleb Fisher 2022-09-23 15:05:44 -0400  9) 
+859f636f (Caleb Fisher 2022-09-23 15:05:44 -0400 11) // const INSTANCE_CONNECTION_NAME = process.env.INSTANCE_CONNECTION_NAME;
+859f636f (Caleb Fisher 2022-09-23 15:05:44 -0400 12) 
+859f636f (Caleb Fisher 2022-09-23 15:05:44 -0400 13) const db = mysql.createPool({
+859f636f (Caleb Fisher 2022-09-23 15:05:44 -0400 15)   host: DB_HOST,
+859f636f (Caleb Fisher 2022-09-23 15:05:44 -0400 16)   user: DB_USER,
+859f636f (Caleb Fisher 2022-09-23 15:05:44 -0400 17)   password: DB_PASSWORD,
+859f636f (Caleb Fisher 2022-09-23 15:05:44 -0400 18)   database: DB_DATABASE,
+859f636f (Caleb Fisher 2022-09-23 15:05:44 -0400 20)   // socketPath: `/cloudsql/${INSTANCE_CONNECTION_NAME}`,
+859f636f (Caleb Fisher 2022-09-23 15:05:44 -0400 21) });
+859f636f (Caleb Fisher 2022-09-23 15:05:44 -0400 22) 
+859f636f (Caleb Fisher 2022-09-23 15:05:44 -0400 23) module.exports = db;
+
+* backend/src/index.js
+e6b71a09 (Caleb Fisher 2022-09-23 15:14:26 -0400  3) var bodyParser = require('body-parser')
+e6b71a09 (Caleb Fisher 2022-09-23 15:14:26 -0400  9) const authRouter = require('./routes/authRoute')
+e6b71a09 (Caleb Fisher 2022-09-23 15:14:26 -0400 13) app.use(express.json())
+e6b71a09 (Caleb Fisher 2022-09-23 15:14:26 -0400 31) app.listen(port, ()=> console.log(`Server Started on port ${port}...`))
+
+* backend/src/deploy.sh
+707e6570 (Caleb Fisher 2022-09-26 15:02:54 -0400  1) GOOGLE_PROJECT_ID=
+707e6570 (Caleb Fisher 2022-09-26 15:02:54 -0400  2) CLOUD_RUN_SERVICE=
+707e6570 (Caleb Fisher 2022-09-26 15:02:54 -0400  3) INSTANCE_CONNECTION_NAME=
+707e6570 (Caleb Fisher 2022-09-26 15:02:54 -0400  4) DB_USER=
+707e6570 (Caleb Fisher 2022-09-26 15:02:54 -0400  5) DB_PASSWORD=
+707e6570 (Caleb Fisher 2022-09-26 15:02:54 -0400  6) DB_NAME=
+707e6570 (Caleb Fisher 2022-09-26 15:02:54 -0400  7) 
+707e6570 (Caleb Fisher 2022-09-26 15:02:54 -0400  8) gcloud builds submit --tag gcr.io/$GOOGLE_PROJECT_ID/$CLOUD_RUN_SERVICE \
+707e6570 (Caleb Fisher 2022-09-26 15:02:54 -0400  9)  --project=$GOOGLE_PROJECT_ID \
+707e6570 (Caleb Fisher 2022-09-26 15:02:54 -0400 10)  /
+707e6570 (Caleb Fisher 2022-09-26 15:02:54 -0400 11) 
+707e6570 (Caleb Fisher 2022-09-26 15:02:54 -0400 12) gcloud run deploy $CLOUD_RUN_SERVICE \
+707e6570 (Caleb Fisher 2022-09-26 15:02:54 -0400 13)  --image gcr.io/$GOOGLE_PROJECT_ID/$CLOUD_RUN_SERVICE \
+707e6570 (Caleb Fisher 2022-09-26 15:02:54 -0400 14)  --add-cloudsql-instances $INSTANCE_CONNECTION_NAME \
+707e6570 (Caleb Fisher 2022-09-26 15:02:54 -0400 15)  --update-env-vars INSTANCE_CONNECTION_NAME=$INSTANCE_CONNECTION_NAME,DB_PASSWORD=$DB_PASSWORD,DB_USER=$DB_USER,DB_NAME=$DB_NAME \
+707e6570 (Caleb Fisher 2022-09-26 15:02:54 -0400 16)  --platform managed \
+707e6570 (Caleb Fisher 2022-09-26 15:02:54 -0400 17)  --region us-central1 \
+707e6570 (Caleb Fisher 2022-09-26 15:02:54 -0400 18)  --allow-unauthenticated \
+707e6570 (Caleb Fisher 2022-09-26 15:02:54 -0400 19)  --project=$GOOGLE_PROJECT_ID \
+707e6570 (Caleb Fisher 2022-09-26 15:02:54 -0400 20)  /
