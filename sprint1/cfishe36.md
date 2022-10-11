@@ -1,8 +1,8 @@
 # Sprint 1
 
-Name: Caleb Fisher
-GitHub id: cfisher36
-Group Name: ElastiQR
+- Name: Caleb Fisher
+- GitHub ID: cfisher36
+- Group Name: ElastiQR
 
 ### What you planned to do
 * [Create Cloud SQL instance #9](https://github.com/ElastiQR/ElastiQR/issues/9)
@@ -36,4 +36,4 @@ I had a little trouble with establishing database connectivity since I haven't w
 - backend/README.md
 
 ### What you accomplished
-One of my primary objectives for this sprint was to introduce a basic database structure for testing our endpoints. We knew that we wanted to utilize GCP to store our database, so I first had to create the Cloud SQL instance and set up the database helper for all of the controllers to have access to the database. While I was working with our cloud configuration, I also created a shell script for deploying and building the API once we're ready. Once the basic structure of our endpoints was finished, I worked on developing queries with the temporary tables in Cloud SQL to make our endpoints functional. Additionally, I performed fianl testing on all of the endpoints and made small modifications to emulate the expected behavior.
+One of my primary objectives for this sprint was to introduce a basic database structure for testing our endpoints. We knew that we wanted to utilize GCP to store our database, so I first had to create the Cloud SQL instance and set up the database helper for all of the controllers to have access to the database. While I was working with our cloud configuration, I also created a shell script for deploying and building the API once we're ready. Once the basic structure of our endpoints was finished, I worked on developing queries with the temporary tables in Cloud SQL to make our endpoints functional. Additionally, I performed final testing on all of the endpoints and made small modifications to emulate the expected behavior.
