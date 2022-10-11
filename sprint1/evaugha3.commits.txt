@@ -1,0 +1,193 @@
+frontend/src/routes.js:
+0e8ed8c5 (VaughanEric 2022-10-05 14:25:57 -0400  6) import ExplorePage from './components/ExplorePage'
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400  7) import CreatePage from './components/CreatePage'
+88a6c640 (VaughanEric 2022-10-04 21:10:31 -0400 17)           <Route exact path='/my-qrs' component={ ExplorePage } />
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 18)           <Route exact path='/create-qr' component={ CreatePage } />
+
+frontend/src/index.css:
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400  3)   padding: 0;
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400  9)   overflow-x: hidden;
+
+frontend/src/components/CreatePage.js:
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400  1) import React, { Component } from "react";
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400  2) import withStyles from "@material-ui/styles/withStyles";
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400  3) import { withRouter } from "react-router-dom";
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400  4) 
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400  5) import NavBar from "./Navbar";
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400  6) 
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400  7) const styles = theme => ({
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400  8) });
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400  9) 
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 10) class CreatePage extends Component {
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 11)   render() {
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 12)     const { classes } = this.props;
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 13) 
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 14)     return (
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 15)       <React.Fragment >
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 16)         <NavBar />
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 17)         <h1> Create QR Code Page</h1>
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 18)       </React.Fragment>
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 19)     );
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 20)   }
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 21) }
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 22) 
+0e8ed8c5 (VaughanEric 2022-10-05 14:25:57 -0400 23) export default withRouter(withStyles(styles)(CreatePage));
+
+frontend/src/components/ExplorePage.js:
+728c054f (VaughanEric 2022-10-04 21:09:01 -0400  1) import React, { Component } from "react";
+728c054f (VaughanEric 2022-10-04 21:09:01 -0400  2) import withStyles from "@material-ui/styles/withStyles";
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400  3) import { Link, withRouter } from "react-router-dom";
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400  4) import Button from "@material-ui/core/Button";
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400  5) import Grid from "@material-ui/core/Grid";
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400  6) import Typography from "@material-ui/core/Typography";
+728c054f (VaughanEric 2022-10-04 21:09:01 -0400  7) 
+728c054f (VaughanEric 2022-10-04 21:09:01 -0400  8) import NavBar from "./Navbar";
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400  9) import QRList from "./QRList";
+728c054f (VaughanEric 2022-10-04 21:09:01 -0400 10) 
+728c054f (VaughanEric 2022-10-04 21:09:01 -0400 11) const styles = theme => ({
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 12)   page: {
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 13)     backgroundColor: "#F5F4F4",
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 14)     width: "100vw",
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 15)     minHeight: "100vh",
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 16)     overflow: "hidden"
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 17)   },
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 18)   container: {
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 19)     maxWidth: 500,
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 20)     width: "80vw",
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 21)     marginTop: "4vh"
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 22)   },
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 23)   flex: {
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 24)     display: "flex",
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 25)     justifyContent: "center"
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 26)   },
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 27)   link: {
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 28)     textDecoration: "none"
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 29)   },
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 30)   button: {
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 31)     backgroundColor: "#62D2A2",
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 32)     color: "#ffffff",
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 33)     textTransform: "none",
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 34)     width: "100%",
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 35)     height: "100%",
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 36)     "&:hover": {
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 37)       backgroundColor: "#888888"
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 38)     }
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 39)   },
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 40)   buttonContainer: {
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 41)     marginBottom: "3vh"
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 42)   },
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 43)   listTitle: {
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 44)     color: "#62D2A2",
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 45)     fontWeight: "bold"
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 46)   }
+728c054f (VaughanEric 2022-10-04 21:09:01 -0400 47) });
+728c054f (VaughanEric 2022-10-04 21:09:01 -0400 48) 
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 49) class ExplorePage extends Component {
+728c054f (VaughanEric 2022-10-04 21:09:01 -0400 50)   render() {
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 51)     const { classes } = this.props;
+728c054f (VaughanEric 2022-10-04 21:09:01 -0400 52) 
+728c054f (VaughanEric 2022-10-04 21:09:01 -0400 53)     return (
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 54)       <div className={classes.page}>
+728c054f (VaughanEric 2022-10-04 21:09:01 -0400 55)         <NavBar/>
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 56)         <div className={classes.flex}>
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 57)           <Grid container spacing={3} className={classes.container}>
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 58)             <Grid item xs={12} className={classes.flex, classes.buttonContainer}>
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 59)               <Link to="/create-qr" className={classes.link}>
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 60)                 <Button variant="contained" className={classes.button}>
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 61)                   <Typography variant="h6">
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 62)                     Create New QR Code
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 63)                   </Typography>
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 64)                 </Button>
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 65)               </Link>
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 66)             </Grid>
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 67)             <Grid item xs={12} className={classes.flex}>
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 68)               <Typography variant="h5" className={classes.listTitle}>
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 69)                 Your QR Codes
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 70)               </Typography>
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 71)             </Grid>
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 72)             <Grid item xs={12} className={classes.flex}>
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 73)               <QRList />
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 74)             </Grid>
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 75)           </Grid>
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 76)         </div>
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 77)       </div>
+728c054f (VaughanEric 2022-10-04 21:09:01 -0400 78)     )
+728c054f (VaughanEric 2022-10-04 21:09:01 -0400 79)   }
+728c054f (VaughanEric 2022-10-04 21:09:01 -0400 80) }
+728c054f (VaughanEric 2022-10-04 21:09:01 -0400 81) 
+64eeceda (VaughanEric 2022-10-05 12:27:28 -0400 82) export default withRouter(withStyles(styles)(ExplorePage));
+
+frontend/src/components/QRList.js:
+efeac123 (VaughanEric 2022-10-05 12:11:32 -0400  1) import React, { Component } from "react";
+efeac123 (VaughanEric 2022-10-05 12:11:32 -0400  2) import withStyles from "@material-ui/styles/withStyles";
+efeac123 (VaughanEric 2022-10-05 12:11:32 -0400  3) import { withRouter } from "react-router-dom";
+efeac123 (VaughanEric 2022-10-05 12:11:32 -0400  4) import List from "@material-ui/core/List";
+efeac123 (VaughanEric 2022-10-05 12:11:32 -0400  5) 
+efeac123 (VaughanEric 2022-10-05 12:11:32 -0400  6) import QRListItem from "./QRListItem";
+efeac123 (VaughanEric 2022-10-05 12:11:32 -0400  7) import MOCK_DATA from "../MOCK_DATA.json";
+efeac123 (VaughanEric 2022-10-05 12:11:32 -0400  8) 
+efeac123 (VaughanEric 2022-10-05 12:11:32 -0400  9) class QRList extends Component {
+efeac123 (VaughanEric 2022-10-05 12:11:32 -0400 10)   render() {
+efeac123 (VaughanEric 2022-10-05 12:11:32 -0400 11)     return (
+efeac123 (VaughanEric 2022-10-05 12:11:32 -0400 12)       <List>
+efeac123 (VaughanEric 2022-10-05 12:11:32 -0400 13)         {MOCK_DATA.map((item, index) => (
+efeac123 (VaughanEric 2022-10-05 12:11:32 -0400 14)           <QRListItem name={item.name} description={item.description} />
+efeac123 (VaughanEric 2022-10-05 12:11:32 -0400 15)         ))}
+efeac123 (VaughanEric 2022-10-05 12:11:32 -0400 16)       </List>
+efeac123 (VaughanEric 2022-10-05 12:11:32 -0400 17)     );
+efeac123 (VaughanEric 2022-10-05 12:11:32 -0400 18)   }
+efeac123 (VaughanEric 2022-10-05 12:11:32 -0400 19) }
+efeac123 (VaughanEric 2022-10-05 12:11:32 -0400 20) 
+0e8ed8c5 (VaughanEric 2022-10-05 14:25:57 -0400 21) export default withRouter(QRList);
+
+frontend/src/components/QRListItem.js:
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400  1) import React, { Component } from 'react';
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400  2) import withStyles from '@material-ui/styles/withStyles';
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400  3) import { Link, withRouter } from 'react-router-dom';
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400  4) import Card from '@material-ui/core/Card';
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400  5) import CardContent from '@material-ui/core/CardContent';
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400  6) import Typography from '@material-ui/core/Typography';
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400  7) 
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400  8) const styles = theme => ({
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400  9)   link: {
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 10)     textDecoration: "none",
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 11)   },
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 12)   card: {
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 13)     width: "100%",
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 14)     marginBottom: "1rem",
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 15)     "&:hover": {
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 16)       boxShadow: "4px 4px 4px #888888",
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 17)       backgroundColor: "#f9f9f9"
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 18)     }
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 19)   },
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 20)   cardTitle: {
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 21)     color: "#000000",
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 22)     marginBottom: 5
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 23)   },
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 24)   cardDescription: {
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 25)     color: "#888888"
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 26)   }
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 27) });
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 28) 
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 29) class QRListItem extends Component {
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 30)   render() {
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 31)     const { classes } = this.props;
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 32) 
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 33)     return (
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 34)       <Link className={classes.link}>
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 35)         <Card className={classes.card}>
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 36)           <CardContent>
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 37)             <Typography variant="h6" className={classes.cardTitle}>
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 38)               {this.props.name}
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 39)             </Typography>
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 40)             <Typography variant="body2" className={classes.cardDescription}>
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 41)               {this.props.description}
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 42)             </Typography>
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 43)           </CardContent>
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 44)         </Card>
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 45)       </Link>
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 46)     );
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 47)   }
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 48) }
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 49) 
+5a572797 (VaughanEric 2022-10-05 12:08:54 -0400 50) export default withRouter(withStyles(styles)(QRListItem));
