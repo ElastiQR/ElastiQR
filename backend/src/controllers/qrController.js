@@ -5,6 +5,7 @@ module.exports = {
     createQRController: (req, res)=> {
       const qrname = req.body.name
       const qrURL = req.body.url 
+      const description = req.body.description
       const userID = req.body.userID
   
       db.getConnection ( async (err, connection)=> {
@@ -13,9 +14,9 @@ module.exports = {
         const sqlSearch = `SELECT * FROM QRCodes 
                            where qrname = ? AND userID = ? LIMIT 1`
         const search_query = mysql.format(sqlSearch, [qrname, userID])
-        const sqlInsert = `INSERT INTO QRCodes (qrID, qrname, qrURL, userID)
-                           VALUES (NULL, ?, ?, ?)`
-        const insert_query = mysql.format(sqlInsert, [qrname, qrURL, userID])
+        const sqlInsert = `INSERT INTO QRCodes (qrID, qrname, qrURL, description, userID, created)
+                           VALUES (NULL, ?, ?, ?, ?, ?)`
+        const insert_query = mysql.format(sqlInsert, [qrname, qrURL, description, userID, Date.now()])
   
         await connection.query (search_query, async (err, result)=> {
           if (err) throw (err)
@@ -37,27 +38,22 @@ module.exports = {
       })
     },
     retrieveQRController: (req,res)=> {
-      const qrname = req.query.name
+      const userID = req.query.userID
 
       db.getConnection(async (err, connection) => {
         if (err) throw (err)
 
-        const sqlSearch = 'SELECT * FROM QRCodes WHERE qrname = ? LIMIT 1'
-        const search_query = mysql.format(sqlSearch, [qrname])
+        const sqlSearch = 'SELECT * FROM QRCodes WHERE userID = ?'
+        const search_query = mysql.format(sqlSearch, [userID])
 
         await connection.query(search_query, async (err, result)=> {
           if (err) throw (err)
           connection.release()
 
           if (result.length != 0) {
-            const response = {
-              id:result[0].qrID,
-              name:result[0].qrname,
-              url:result[0].qrURL,
-              userID:result[0].userID
-            }
+            const response = { result }
             res.send(response)
-            // Send HTTP status 200 and indicate success
+
             console.log("--------> Requested QR Code has been found successfully")
           } else {
             console.log("--------> Error, could not find the requested QR Code")
