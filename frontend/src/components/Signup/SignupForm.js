@@ -81,7 +81,7 @@ const SignupForm = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <Button disabled={Valid} onClick={createUser} fullWidth > Sign Up </Button>
+            <Button disabled={Valid || username == "" } onClick={createUser} fullWidth > Sign Up </Button>
           </Grid>
         </Grid>
       </Paper>
