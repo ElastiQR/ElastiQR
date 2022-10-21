@@ -4,6 +4,9 @@ import { Link, withRouter } from 'react-router-dom';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import { ThemeProvider } from '@material-ui/styles';
+
+import theme from '../theme';
 
 const styles = theme => ({
   link: {
@@ -13,16 +16,16 @@ const styles = theme => ({
     width: "100%",
     marginBottom: "1rem",
     "&:hover": {
-      boxShadow: "4px 4px 4px #888888",
-      backgroundColor: "#f9f9f9"
+      boxShadow: `4px 4px 4px ${theme.palette.button.mediumGray}`,
+      backgroundColor: theme.palette.button.lightGray
     }
   },
   cardTitle: {
-    color: "#000000",
+    color: theme.palette.text.black,
     marginBottom: 5
   },
   cardDescription: {
-    color: "#888888"
+    color: theme.palette.text.gray
   }
 });
 
@@ -31,18 +34,20 @@ class QRListItem extends Component {
     const { classes } = this.props;
 
     return (
-      <Link className={classes.link}>
-        <Card className={classes.card}>
-          <CardContent>
-            <Typography variant="h6" className={classes.cardTitle}>
-              {this.props.name}
-            </Typography>
-            <Typography variant="body2" className={classes.cardDescription}>
-              {this.props.description}
-            </Typography>
-          </CardContent>
-        </Card>
-      </Link>
+      <ThemeProvider theme={theme}>
+        <Link className={classes.link}>
+          <Card className={classes.card}>
+            <CardContent>
+              <Typography variant="h6" className={classes.cardTitle}>
+                {this.props.name}
+              </Typography>
+              <Typography variant="body2" className={classes.cardDescription}>
+                {this.props.description}
+              </Typography>
+            </CardContent>
+          </Card>
+        </Link>
+      </ThemeProvider>
     );
   }
 }

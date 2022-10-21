@@ -4,13 +4,15 @@ import { Link, withRouter } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import { ThemeProvider } from '@material-ui/styles';
 
+import theme from "../theme";
 import NavBar from "./Navbar";
 import QRList from "./QRList";
 
 const styles = theme => ({
   page: {
-    backgroundColor: "#F5F4F4",
+    backgroundColor: theme.palette.background.lightGray,
     width: "100vw",
     minHeight: "100vh",
     overflow: "hidden"
@@ -28,20 +30,20 @@ const styles = theme => ({
     textDecoration: "none"
   },
   button: {
-    backgroundColor: "#62D2A2",
-    color: "#ffffff",
+    backgroundColor: theme.palette.button.green,
+    color: theme.palette.text.white,
     textTransform: "none",
     width: "100%",
     height: "100%",
     "&:hover": {
-      backgroundColor: "#888888"
+      backgroundColor: theme.palette.button.mediumGrey
     }
   },
   buttonContainer: {
     marginBottom: "3vh"
   },
   listTitle: {
-    color: "#62D2A2",
+    color: theme.palette.text.green,
     fontWeight: "bold"
   }
 });
@@ -53,27 +55,29 @@ class ExplorePage extends Component {
     return (
       <div className={classes.page}>
         <NavBar/>
-        <div className={classes.flex}>
-          <Grid container spacing={3} className={classes.container}>
-            <Grid item xs={12} className={classes.flex, classes.buttonContainer}>
-              <Link to="/create-qr" className={classes.link}>
-                <Button variant="contained" className={classes.button}>
-                  <Typography variant="h6">
-                    Create New QR Code
-                  </Typography>
-                </Button>
-              </Link>
+        <ThemeProvider theme={theme}>
+          <div className={classes.flex}>
+            <Grid container spacing={3} className={classes.container}>
+              <Grid item xs={12} className={classes.flex, classes.buttonContainer}>
+                <Link to="/create-qr" className={classes.link}>
+                  <Button variant="contained" className={classes.button}>
+                    <Typography variant="h6">
+                      Create New QR Code
+                    </Typography>
+                  </Button>
+                </Link>
+              </Grid>
+              <Grid item xs={12} className={classes.flex}>
+                <Typography variant="h5" className={classes.listTitle}>
+                  Your QR Codes
+                </Typography>
+              </Grid>
+              <Grid item xs={12} className={classes.flex}>
+                <QRList />
+              </Grid>
             </Grid>
-            <Grid item xs={12} className={classes.flex}>
-              <Typography variant="h5" className={classes.listTitle}>
-                Your QR Codes
-              </Typography>
-            </Grid>
-            <Grid item xs={12} className={classes.flex}>
-              <QRList />
-            </Grid>
-          </Grid>
-        </div>
+          </div>
+        </ThemeProvider>
       </div>
     )
   }
