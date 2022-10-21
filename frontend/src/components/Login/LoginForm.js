@@ -70,7 +70,7 @@ const LoginForm = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <Button onClick={loginUser} fullWidth>Login</Button>
+            <Button disabled={username == "" || password == ""} onClick={loginUser} fullWidth>Login</Button>
           </Grid>
         </Grid>
       </Paper>
