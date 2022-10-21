@@ -9,6 +9,7 @@ import {
   Button
 } from '@material-ui/core';
 import { useHistory } from "react-router-dom";
+import AuthService from "../../services/auth.service";
 
 const SignupForm = () => {
   let history = useHistory();
@@ -19,32 +20,62 @@ const SignupForm = () => {
     setChecked(event.target.checked);
   };
 
-  const [Valid, setValid] = useState(false)
-
+  const [formValid, setFormValid] = useState(false)
   
   const [username, setUsername] = useState("");
-
   const [password, setPassword] = useState("");
   const [confirmpassword, setconfirmPassword] = useState("");
 
-  function createUser() {
+  const [successful, setSuccessful] = useState(false);
+  const [message, setMessage] = useState("");
+
+  function oldHandleRegister() {
     let credentials = {
       "name" : username, 
       "password": password
     };
 
-    fetch('http://localhost:3000/auth/createUser', {
+    fetch('http://localhost:3000/auth/signUp', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(credentials)
-    })
-      .then(data => data.json())
+    }).then(data => data.json());
 
-    history.push('/login')
-
+    history.push('/login');
   }
+
+  function handleRegister() {
+    setMessage("");
+    setSuccessful(false);
+
+    if (true) {
+      AuthService.register(
+        username,
+        password
+      ).then(
+        response => {
+          setMessage(response.data.message)
+          setSuccessful(true);
+        },
+        error => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+          setMessage(resMessage)
+          setSuccessful(false);
+        }
+      );
+    } else {
+      console.log("FORM NOT VALID");
+    }
+  }
+
 
   return (
     <div style={{ padding: 30 }}>
@@ -65,7 +96,7 @@ const SignupForm = () => {
           <Grid item xs={12}>
             <TextField label="Confirm Password" type={'password'} onChange={e => setconfirmPassword(e.target.value)}></TextField>
           </Grid>
-          <PasswordChecklist rules={["minLength", "specialChar", "number", "capital", "match"]} minLength={8} value={password} valueAgain={confirmpassword} onChange={(isValid)=>{setValid(Valid => !Valid)}}
+          <PasswordChecklist rules={["minLength", "specialChar", "number", "capital", "match"]} minLength={8} value={password} valueAgain={confirmpassword} onChange={(isValid)=>{setFormValid(Valid => !Valid)}}
           />
           <Grid item xs={12}>
             <FormControlLabel
@@ -81,7 +112,7 @@ const SignupForm = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <Button disabled={Valid} onClick={createUser} fullWidth > Sign Up </Button>
+            <Button disabled={formValid} onClick={handleRegister} fullWidth > Sign Up </Button>
           </Grid>
         </Grid>
       </Paper>
