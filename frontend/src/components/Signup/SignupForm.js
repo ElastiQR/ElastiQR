@@ -26,30 +26,22 @@ const SignupForm = () => {
   const [password, setPassword] = useState("");
   const [confirmpassword, setconfirmPassword] = useState("");
 
-  const [successful, setSuccessful] = useState(false);
-  const [message, setMessage] = useState("");
+  function createUser() {
+    let credentials = {
+      "name" : username, 
+      "password": password
+    };
 
-  function handleRegister() {
-    setMessage("");
-    setSuccessful(false);
+    fetch('http://localhost:3000/auth/createUser', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(credentials)
+    })
+      .then(data => data.json())
 
-    if (true) {
-      AuthService.register(
-        username,
-        password
-      ).then(
-        response => {
-          setMessage(response.data.message)
-          setSuccessful(true);
-          history.push('/login');
-        },
-        error => {
-          const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
+    history.push('/login')
 
           setMessage(resMessage)
           setSuccessful(false);
