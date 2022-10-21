@@ -19,6 +19,8 @@ const SignupForm = () => {
     setChecked(event.target.checked);
   };
 
+  const [Valid, setValid] = useState(false)
+
   
   const [username, setUsername] = useState("");
 
@@ -63,7 +65,7 @@ const SignupForm = () => {
           <Grid item xs={12}>
             <TextField label="Confirm Password" type={'password'} onChange={e => setconfirmPassword(e.target.value)}></TextField>
           </Grid>
-          <PasswordChecklist rules={["minLength", "specialChar", "number", "capital", "match"]} minLength={8} value={password} valueAgain={confirmpassword}
+          <PasswordChecklist rules={["minLength", "specialChar", "number", "capital", "match"]} minLength={8} value={password} valueAgain={confirmpassword} onChange={(isValid)=>{setValid(Valid => !Valid)}}
           />
           <Grid item xs={12}>
             <FormControlLabel
@@ -79,7 +81,7 @@ const SignupForm = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <Button onClick={createUser} fullWidth > Sign Up </Button>
+            <Button disabled={Valid || username == "" } onClick={createUser} fullWidth > Sign Up </Button>
           </Grid>
         </Grid>
       </Paper>
