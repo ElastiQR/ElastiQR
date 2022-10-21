@@ -8,7 +8,7 @@ function generateAccessToken (user) {
 }
 
 module.exports = {
-    createUserController: async (req,res) => {
+    signUpController: async (req,res) => {
         const user = req.body.name;
         const passwordHash = await bcrypt.hash(req.body.password,10);
         
