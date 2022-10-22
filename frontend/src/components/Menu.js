@@ -19,7 +19,10 @@ const Menu = [
     label: "Login",
     pathname: "/login"
   },
-
+  {
+    label: "Profile",
+    pathname: "/profile"
+  },
 ];
 
 export default Menu;
