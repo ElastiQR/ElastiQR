@@ -46,7 +46,7 @@ module.exports = {
       db.getConnection(async (err, connection) => {
         if (err) throw (err)
 //lines 48 - 62 are for issue 70
-        if (resultslimit == NULL ) {
+        if (resultslimit = null ) {
           const sqlSearch = 'SELECT * FROM QRCodes WHERE userID = ?'
           islimit = 0
         }
