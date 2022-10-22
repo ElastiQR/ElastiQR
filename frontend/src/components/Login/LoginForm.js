@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { green } from '@material-ui/core/colors'
 import {
   Checkbox,
   Grid,
@@ -52,7 +53,7 @@ const LoginForm = () => {
   }
 
   return (
-    <div style={{ padding: 30 }}>
+    <div style={{ width: '21%', padding: 30 }}>
       <Paper>
         <Grid
           container
@@ -61,6 +62,7 @@ const LoginForm = () => {
           justify={'center'}
           alignItems={'center'}
         >
+          <h2 style={{color: green[500]}}>ElastiQR</h2>
           <Grid item xs={12}>
             <TextField label="Username" onChange={e => setUsername(e.target.value)}></TextField>
           </Grid>
