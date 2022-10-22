@@ -6,6 +6,7 @@ import Signup from './components/Signup'
 import ExplorePage from './components/ExplorePage'
 import CreatePage from './components/CreatePage'
 import ScrollToTop from './components/ScrollTop'
+import Profile from './components/Profile'
 
 export default props => (
     <HashRouter>
@@ -16,6 +17,7 @@ export default props => (
           <Route exact path='/signup' component={ Signup } />
           <Route exact path='/my-qrs' component={ ExplorePage } />
           <Route exact path='/create-qr' component={ CreatePage } />
+          <Route exact path='/profile' component={ Profile } />
         </Switch>
       </ScrollToTop>
     </HashRouter>
