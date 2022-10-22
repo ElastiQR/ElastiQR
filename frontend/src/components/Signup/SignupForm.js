@@ -26,22 +26,30 @@ const SignupForm = () => {
   const [password, setPassword] = useState("");
   const [confirmpassword, setconfirmPassword] = useState("");
 
-  function createUser() {
-    let credentials = {
-      "name" : username, 
-      "password": password
-    };
+  const [successful, setSuccessful] = useState(false);
+  const [message, setMessage] = useState("");
 
-    fetch('http://localhost:3000/auth/createUser', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(credentials)
-    })
-      .then(data => data.json())
+  function handleRegister() {
+    setMessage("");
+    setSuccessful(false);
 
-    history.push('/login')
+    if (true) {
+      AuthService.register(
+        username,
+        password
+      ).then(
+        response => {
+          setMessage(response.data.message)
+          setSuccessful(true);
+          history.push('/login');
+        },
+        error => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
 
           setMessage(resMessage)
           setSuccessful(false);
@@ -88,7 +96,7 @@ const SignupForm = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <Button disabled={Valid || username == "" } onClick={handleRegister} fullWidth > Sign Up </Button>
+            <Button disabled={formValid} onClick={handleRegister} fullWidth > Sign Up </Button>
           </Grid>
         </Grid>
       </Paper>
