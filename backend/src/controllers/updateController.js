@@ -46,13 +46,13 @@ module.exports = {
       const newqrurl = req.body.newqrurl
       const newqrdes = req.body.newqrdes
 
-      if (newqrname == NULL) {
+      if (newqrname == null) {
         newqrname = qrname
       }
-      if (newqrurl == NULL) {
+      if (newqrurl == null) {
         newqrurl = qrURL
       }
-      if (newqrdes == NULL) {
+      if (newqrdes == null) {
         newqrdes = description
       }
 
