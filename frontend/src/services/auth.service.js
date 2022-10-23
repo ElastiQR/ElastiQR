@@ -19,6 +19,19 @@ class AuthService {
       });
   }
 
+  async googleLogin(googleData) {
+    return await axios
+      .post(API_URL + "googleLogin", {
+        "token": googleData.tokenId
+      })
+      .then(response => {
+        console.log("RESPONSE: " + response);
+        if (response.data.accessToken) {
+          localStorage.setItem("user", JSON.stringify(response.data));
+        }
+      })
+  }
+
   logout() {
     localStorage.removeItem("user");
   }
