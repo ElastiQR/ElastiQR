@@ -9,6 +9,7 @@ import Button from "@material-ui/core/Button";
 import LoginForm from "./LoginForm";
 import Navbar from "../Navbar";
 import LoginPage from "./LoginForm";
+import GoogleLoginButton from "./GoogleLoginButton";
 
 const backgroundShape = require("../../images/shape.svg");
 
@@ -104,9 +105,13 @@ class Login extends Component {
         <CssBaseline />
         <Navbar />
         <div className={classes.root}>
-          <Grid container justify="center">
-
+          <Grid container 
+            justify="center" 
+            direction="column" 
+            alignItems="center">
+              
             <LoginForm />
+            <GoogleLoginButton />
           </Grid>
         </div>
       </React.Fragment>
