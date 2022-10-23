@@ -92,13 +92,8 @@ module.exports = {
             idToken: token,
             audience: process.env.GOOGLE_CLIENT_ID
         });
-        const { name, email, picture } = ticket.getPayload();    
-        //const user = await db.user.upsert({ 
-        //    where: { email: email },
-        //    update: { name, picture },
-        //    create: { name, email, picture }
-        //})
-        
+
+        const { name, email, picture } = ticket.getPayload();       
         var user = {
             email,
             first: name.split(" ")[0],
@@ -117,14 +112,12 @@ module.exports = {
             const insert_query = mysql.format(sqlInsert,[user.email, user.first, user.last])
 
             await connection.query (search_query, async (err, result) => {
-                //connection.release()
                 
                 if (err) throw (err)
                 if (result.length == 0) {
                     await connection.query(insert_query, async (err, results) => {
-                        //connection.release()
-
                         if (err) throw(err)
+
                         console.log("---------> Creating Google User")
                         console.log(results.insertId)
                     })
@@ -155,9 +148,6 @@ module.exports = {
                 }
             }) 
         })
-
-        console.log(name + " " + email)
-        //res.status(201)
-        //res.json(user)
+        console.log("Processing" + " " + name + ": " + email)
     }
 }
