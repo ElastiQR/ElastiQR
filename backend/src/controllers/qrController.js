@@ -42,23 +42,25 @@ module.exports = {
       const userID = req.query.userID
       const resultslimit = req.query.resultslimit
       var islimit
+      var sqlSearch
+      var search_query
 
       db.getConnection(async (err, connection) => {
         if (err) throw (err)
 //lines 48 - 62 are for issue 70
-        if (resultslimit = null ) {
-          const sqlSearch = 'SELECT * FROM QRCodes WHERE userID = ?'
+        if (resultslimit == null ) {
+          sqlSearch = 'SELECT * FROM QRCodes WHERE userID = ?'
           islimit = 0
         }
         else {
-          const sqlSearch = 'SELECT * FROM QRCodes WHERE userID = ? LIMIT ?'
+          sqlSearch = 'SELECT * FROM QRCodes WHERE userID = ? LIMIT ?'
           islimit = 1
         }
         if (islimit == 0) {
-          const search_query = mysql.format(sqlSearch, [userID])
+          search_query = mysql.format(sqlSearch, [userID])
         }
         if (islimit == 1) {
-          const search_query = mysql.format(sqlSearch, [userID, resultslimit])
+          search_query = mysql.format(sqlSearch, [userID, resultslimit])
         }
 
         await connection.query(search_query, async (err, result)=> {
