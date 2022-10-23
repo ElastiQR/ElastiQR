@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, HashRouter, Switch } from 'react-router-dom'
 import Login from './components/Login'
-import Main from './components/Main'
+import Main from './components/Main/Main'
 import Signup from './components/Signup'
 import ExplorePage from './components/ExplorePage'
 import CreatePage from './components/CreatePage'
