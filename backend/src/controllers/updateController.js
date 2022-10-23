@@ -42,9 +42,9 @@ module.exports = {
       const description = req.body.description
       const userID = req.body.userID
 
-      const newqrname = req.body.newqrname
-      const newqrurl = req.body.newqrurl
-      const newqrdes = req.body.newqrdes
+      var newqrname = req.body.newqrname
+      var newqrurl = req.body.newqrurl
+      var newqrdes = req.body.newqrdes
 
       if (newqrname == null) {
         newqrname = qrname
@@ -62,30 +62,30 @@ module.exports = {
         const sqlSearch = `SELECT * FROM QRCodes 
                            where qrname = ? AND userID = ? LIMIT 1`
         const search_query = mysql.format(sqlSearch, [qrname, userID])
-        const sqlUpdate = `UPDATE QRCodes SET qrname = newqrname 
+        const sqlUpdate = `UPDATE QRCodes SET qrname = ? 
                            WHERE qrname = ? AND userID = ?`
-        const update_query = mysql.format(sqlUpdate, [qrname, userID, newqrname])
+        const update_query = mysql.format(sqlUpdate, [newqrname, qrname, userID])
   
-        const sqlUpdateUrl = `UPDATE QRCodes SET qrURL = newqrurl 
+        const sqlUpdateUrl = `UPDATE QRCodes SET qrURL = ? 
         WHERE qrname = ? AND userID = ?`
-        const update_queryurl = mysql.format(sqlUpdateUrl, [qrname, userID, newqrurl])
+        const update_queryurl = mysql.format(sqlUpdateUrl, [newqrurl, qrname, userID])
 
-        const sqlUpdateDes = `UPDATE QRCodes SET description = newqrdes 
+        const sqlUpdateDes = `UPDATE QRCodes SET description = ? 
         WHERE qrname = ? AND userID = ?`
-        const update_querydes = mysql.format(sqlUpdateDes, [qrname, userID, newqrdes])
+        const update_querydes = mysql.format(sqlUpdateDes, [newqrdes, qrname, userID])
 
         await connection.query (update_query, async (err, result)=> {
           if (err) throw (err)
           console.log("--------> Updated QR Code Name")
           //console.log(result.insertId)
-           res.sendStatus(201) 
+           //res.sendStatus(201) 
         }) 
 
         await connection.query (update_queryurl, async (err, result)=> {
           if (err) throw (err)
             console.log("--------> Updated QR Code URL")
             //console.log(result.insertId)
-            res.sendStatus(201) 
+            //res.sendStatus(201) 
         }) 
 
         await connection.query (update_querydes, async (err, result)=> {
@@ -94,9 +94,8 @@ module.exports = {
           if (err) throw (err)
           console.log("--------> Updated QR Code Description")
           //console.log(result.insertId)
-          res.sendStatus(201) 
-        }) 
-
+        })
+        res.sendStatus(201) 
       })
     }
   }
