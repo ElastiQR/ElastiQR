@@ -71,7 +71,10 @@ module.exports = {
                         console.log("---------> Generating accessToken")
                         const token = generateAccessToken({user: user})   
                         console.log(token)
-                        res.json({accessToken: token})
+                        res.json({
+                            userID: result[0].userID,
+                            accessToken: token
+                        })
                     } else {
                         res.send("Password incorrect!")
                     } 
