@@ -7,7 +7,7 @@ export const theme = createTheme({
         main: green[50]
       },
       primary: {
-        main: green[400]
+        main: '#62D2A2'
       }
     },
     typography: {
