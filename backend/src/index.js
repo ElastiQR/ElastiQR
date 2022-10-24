@@ -8,6 +8,7 @@ require('dotenv').config({ path: require('find-config')('.env') })
 
 /* Import Routes */
 const authRouter = require('./routes/authRoute')
+const updateRouter = require('./routes/updateRoute')
 
 /* Declare App */
 const app = express();
@@ -27,6 +28,7 @@ app.get("/", (req, res) => {
 });
 
 app.use('/auth', authRouter)
+app.use('/update', updateRouter)
 
 /* Start Application */
 const port = 3000;
