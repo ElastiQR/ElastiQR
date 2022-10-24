@@ -129,10 +129,17 @@ class QRDetailsPage extends Component {
 
               <Grid container item spacing={1}>
                 <Grid item xs={12} className={classes.linkText}>
-                  <TextInput label="Link" value={this.state.link} onChangeValue={this.handleLinkChange} />
+                  <TextInput 
+                    label="Link"
+                    value={this.state.link}
+                    onChangeValue={this.handleLinkChange} 
+                  />
                 </Grid>
                 <Grid item xs={12} className={classes.descriptionText}>
-                  <TextInput label="Description" value={this.state.description} onChangeValue={this.handleDescriptionChange} />
+                  <TextInput
+                    label="Description"
+                    value={this.state.description}
+                    onChangeValue={this.handleDescriptionChange} />
                 </Grid>             
               </Grid>
 
