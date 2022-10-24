@@ -40,12 +40,28 @@ module.exports = {
     },
     retrieveQRController: (req,res)=> {
       const userID = req.query.userID
+      const resultslimit = req.query.resultslimit
+      var islimit
+      var sqlSearch
+      var search_query
 
       db.getConnection(async (err, connection) => {
         if (err) throw (err)
-
-        const sqlSearch = 'SELECT * FROM QRCodes WHERE userID = ?'
-        const search_query = mysql.format(sqlSearch, [userID])
+//lines 48 - 62 are for issue 70
+        if (resultslimit == null ) {
+          sqlSearch = 'SELECT * FROM QRCodes WHERE userID = ?'
+          islimit = 0
+        }
+        else {
+          sqlSearch = 'SELECT * FROM QRCodes WHERE userID = ? LIMIT ?'
+          islimit = 1
+        }
+        if (islimit == 0) {
+          search_query = mysql.format(sqlSearch, [userID])
+        }
+        if (islimit == 1) {
+          search_query = mysql.format(sqlSearch, [userID, resultslimit])
+        }
 
         await connection.query(search_query, async (err, result)=> {
           if (err) throw (err)
@@ -55,9 +71,9 @@ module.exports = {
             const response = { "codes": result }
             res.send(JSON.stringify(response))
 
-            console.log("--------> Requested QR Code has been found successfully")
+            console.log("--------> Requested QR Codes have been found successfully")
           } else {
-            console.log("--------> Error, could not find the requested QR Code")
+            console.log("--------> Error, could not find the requested QR Codes")
             res.sendStatus(400)
           }
         })

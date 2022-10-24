@@ -6,10 +6,10 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
+import Navbar from "../Navbar";
+import CreateQRForm from "./CreateQRForm"
 
-import Navbar from "./Navbar";
-
-const backgroundShape = require("../images/shape.svg");
+const backgroundShape = require("../../images/shape.svg");
 
 const styles = theme => ({
   root: {
@@ -88,7 +88,7 @@ const styles = theme => ({
   }
 });
 
-class Main extends Component {
+class Signup extends Component {
   state = {
     learnMoredialog: false,
     getStartedDialog: false
@@ -104,7 +104,7 @@ class Main extends Component {
         <Navbar />
         <div className={classes.root}>
           <Grid container justify="center">
-
+            <CreateQRForm></CreateQRForm>
           </Grid>
         </div>
       </React.Fragment>
@@ -112,4 +112,4 @@ class Main extends Component {
   }
 }
 
-export default withRouter(withStyles(styles)(Main));
+export default withRouter(withStyles(styles)(Signup));

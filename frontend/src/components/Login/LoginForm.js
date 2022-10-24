@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { green } from '@material-ui/core/colors'
 import {
   Checkbox,
   Grid,
@@ -8,6 +9,7 @@ import {
   Button
 } from '@material-ui/core';
 import { useHistory } from "react-router-dom";
+import AuthService from "../../services/auth.service";
 
 const LoginForm = () => {
   let history = useHistory();
@@ -17,31 +19,41 @@ const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
 
-  function loginUser() {
-    let credentials = {
-      "name" : username, 
-      "password": password
-    };
+  function handleLogin() {
+    setMessage("");
+    setLoading(true);
 
-    fetch('http://localhost:3000/auth/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
+    AuthService.login(username, password).then(
+      () => {
+        history.push('/');
+        window.location.reload();
       },
-      body: JSON.stringify(credentials)
-    })
-      .then(data => data.json())
+      error => {
+        console.log("USERNAME: " + username, "PASSWORD" + password);
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+          console.log(resMessage);
+          console.log(error);
 
-    history.push('/')
-
+        setLoading(false);
+        setMessage(resMessage);
+      }
+    );
   }
 
   return (
-    <div style={{ padding: 30 }}>
+    <div style={{ width: '21%', padding: 30 }}>
       <Paper>
         <Grid
           container
@@ -50,6 +62,7 @@ const LoginForm = () => {
           justify={'center'}
           alignItems={'center'}
         >
+          <h2 style={{color: green[500]}}>ElastiQR</h2>
           <Grid item xs={12}>
             <TextField label="Username" onChange={e => setUsername(e.target.value)}></TextField>
           </Grid>
@@ -70,7 +83,10 @@ const LoginForm = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <Button disabled={username == "" || password == ""} onClick={loginUser} fullWidth>Login</Button>
+            <Button onClick={handleLogin} fullWidth>Login</Button>
+            {loading && (
+                  <span className="spinner-border spinner-border-sm"></span>
+            )}
           </Grid>
         </Grid>
       </Paper>

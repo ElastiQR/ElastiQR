@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import withStyles from "@material-ui/styles/withStyles";
 import { withRouter } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import { green } from '@material-ui/core/colors'
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import LoginForm from "./LoginForm";
+
 import Navbar from "../Navbar";
-import LoginPage from "./LoginForm";
-import GoogleLoginButton from "./GoogleLoginButton";
+import MainPage from "./Mainpage";
 
 const backgroundShape = require("../../images/shape.svg");
 
@@ -90,7 +90,7 @@ const styles = theme => ({
   }
 });
 
-class Login extends Component {
+class Main extends Component {
   state = {
     learnMoredialog: false,
     getStartedDialog: false
@@ -105,13 +105,8 @@ class Login extends Component {
         <CssBaseline />
         <Navbar />
         <div className={classes.root}>
-          <Grid container 
-            justify="center" 
-            direction="column" 
-            alignItems="center">
-              
-            <LoginForm />
-            <GoogleLoginButton />
+          <Grid container justify='center'>
+            <MainPage></MainPage>
           </Grid>
         </div>
       </React.Fragment>
@@ -119,4 +114,4 @@ class Login extends Component {
   }
 }
 
-export default withRouter(withStyles(styles)(Login));
+export default withRouter(withStyles(styles)(Main));

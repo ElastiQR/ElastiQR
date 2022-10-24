@@ -2,11 +2,13 @@ import React, { Component } from 'react'
 import withStyles from '@material-ui/styles/withStyles'
 import { withRouter } from 'react-router-dom'
 import List from '@material-ui/core/List'
-
-import QRListItem from './QRListItem'
 import MOCK_DATA from '../../MOCK_DATA.json'
 
+import QRListItem from "./QRListItem"
+import AuthService from "../../services/auth.service"
+
 class QRList extends Component {
+/*
   constructor(props) {
     super(props);
     this.state = {
@@ -17,10 +19,10 @@ class QRList extends Component {
   }
 
   componentDidMount() {
-      fetch('http://localhost:3000/auth/getQRCodes?' + new URLSearchParams({
-          // Currently using a test user id
-          // Needs user context from login to access current user id
-          userID: 5
+    const user = AuthService.getCurrentUser()  
+    
+    fetch('http://localhost:3000/auth/getQRCodes?' + new URLSearchParams({
+          userID: user.userID
       }), {
         method: 'GET',
         headers: {
@@ -43,10 +45,13 @@ class QRList extends Component {
         }
       )
   }
-/*
+
   render() {
     const { error, isLoaded, QRCodes } = this.state;
-    if (error) {
+    if (QRCodes.length == 0) {
+      return <div> You don't have any QR codes.
+        Try creating your first one with the button above! </div>
+    } else if (error) {
       return <div> Error: {error.message}</div>;
     } else if (!isLoaded) {
       return <div>Loading...</div>

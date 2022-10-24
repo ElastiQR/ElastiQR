@@ -16,6 +16,7 @@ const styles = theme => ({
   buttonBase: {
     width: "100%",
     marginBottom: "1rem",
+    color: theme.palette.background.white
   },
   card: {
     width: "100%",
