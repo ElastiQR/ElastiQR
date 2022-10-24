@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 import withStyles from '@material-ui/styles/withStyles'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
@@ -18,13 +18,15 @@ const styles = theme => ({
   },
   textField: {
     width: "100%",
-    paddingTop: 0
+    paddingTop: 0,
+    backgroundColor: theme.palette.background.white,
+    borderRadius: "4px"
   }
 });
 
 class TextInput extends Component {
   render() {
-    const { classes } = this.props;
+    const { classes, value, onChangeValue } = this.props;
 
     return (
       <ThemeProvider theme={theme}>
@@ -35,7 +37,9 @@ class TextInput extends Component {
             </Typography>
           </Grid>
           <Grid item xs={12} className={classes.flex}>
-            <TextField 
+            <TextField
+              value={this.props.value}
+              onChange={this.props.onChangeValue}
               variant="outlined"
               color={`${theme.palette.text.green}`}
               className={classes.textField}
