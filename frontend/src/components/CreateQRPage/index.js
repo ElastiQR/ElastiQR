@@ -88,7 +88,7 @@ const styles = theme => ({
   }
 });
 
-class Signup extends Component {
+class CreateQRPage extends Component {
   state = {
     learnMoredialog: false,
     getStartedDialog: false
@@ -112,4 +112,4 @@ class Signup extends Component {
   }
 }
 
-export default withRouter(withStyles(styles)(Signup));
+export default withRouter(withStyles(styles)(CreateQRPage));

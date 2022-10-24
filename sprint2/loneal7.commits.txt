@@ -1,0 +1,291 @@
+#### Issue: Create User Login React Context #6 
+* frontend\src\services\auth-header.js
+43036628 (loganofneal 2022-10-21 12:12:17 -0400  1) export default function authHeader() {
+43036628 (loganofneal 2022-10-21 12:12:17 -0400  2)     const user = JSON.parse(localStorage.getItem('user'));
+43036628 (loganofneal 2022-10-21 12:12:17 -0400  3)
+43036628 (loganofneal 2022-10-21 12:12:17 -0400  4)     if (user && user.accessToken) {
+43036628 (loganofneal 2022-10-21 12:12:17 -0400  5)       // for Node.js Express back-end
+43036628 (loganofneal 2022-10-21 12:12:17 -0400  6)       return { 'x-access-token': user.accessToken };
+43036628 (loganofneal 2022-10-21 12:12:17 -0400  7)     } else {
+43036628 (loganofneal 2022-10-21 12:12:17 -0400  8)       return {};
+43036628 (loganofneal 2022-10-21 12:12:17 -0400  9)     }
+43036628 (loganofneal 2022-10-21 12:12:17 -0400 10)   }
+
+* frontend\src\services\auth.service.js
+43036628 (loganofneal  2022-10-21 12:12:17 -0400  1) import axios from "axios";
+43036628 (loganofneal  2022-10-21 12:12:17 -0400  2)
+43036628 (loganofneal  2022-10-21 12:12:17 -0400  3) const API_URL = "http://localhost:3000/auth/";
+43036628 (loganofneal  2022-10-21 12:12:17 -0400  4)
+43036628 (loganofneal  2022-10-21 12:12:17 -0400  5) class AuthService {
+43036628 (loganofneal  2022-10-21 12:12:17 -0400  6)   login(username, password) {
+43036628 (loganofneal  2022-10-21 12:12:17 -0400  7)     return axios
+43036628 (loganofneal  2022-10-21 12:12:17 -0400  8)       .post(API_URL + "login", {
+43036628 (loganofneal  2022-10-21 12:12:17 -0400  9)         "name": username,
+43036628 (loganofneal  2022-10-21 12:12:17 -0400 10)         "password": password
+43036628 (loganofneal  2022-10-21 12:12:17 -0400 11)       })
+43036628 (loganofneal  2022-10-21 12:12:17 -0400 12)       .then(response => {
+43036628 (loganofneal  2022-10-21 12:12:17 -0400 13)         console.log("RESPONSE: " + response);
+43036628 (loganofneal  2022-10-21 12:12:17 -0400 14)         if (response.data.accessToken) {
+43036628 (loganofneal  2022-10-21 12:12:17 -0400 15)           localStorage.setItem("user", JSON.stringify(response.data));
+43036628 (loganofneal  2022-10-21 12:12:17 -0400 16)         }
+43036628 (loganofneal  2022-10-21 12:12:17 -0400 17)
+43036628 (loganofneal  2022-10-21 12:12:17 -0400 18)         return response.data;
+43036628 (loganofneal  2022-10-21 12:12:17 -0400 19)       });
+43036628 (loganofneal  2022-10-21 12:12:17 -0400 20)   }
+43036628 (loganofneal  2022-10-21 12:12:17 -0400 21)
+43036628 (loganofneal  2022-10-21 12:12:17 -0400 35)   logout() {
+43036628 (loganofneal  2022-10-21 12:12:17 -0400 36)     localStorage.removeItem("user");
+43036628 (loganofneal  2022-10-21 12:12:17 -0400 37)   }
+43036628 (loganofneal  2022-10-21 12:12:17 -0400 38)
+43036628 (loganofneal  2022-10-21 12:12:17 -0400 39)   register(username, password) {
+43036628 (loganofneal  2022-10-21 12:12:17 -0400 40)     return axios.post(API_URL + "signUp", {
+43036628 (loganofneal  2022-10-21 12:12:17 -0400 41)       "name": username,
+43036628 (loganofneal  2022-10-21 12:12:17 -0400 42)       "password": password
+43036628 (loganofneal  2022-10-21 12:12:17 -0400 43)     });
+43036628 (loganofneal  2022-10-21 12:12:17 -0400 44)   }
+43036628 (loganofneal  2022-10-21 12:12:17 -0400 45)
+43036628 (loganofneal  2022-10-21 12:12:17 -0400 46)   getCurrentUser() {
+43036628 (loganofneal  2022-10-21 12:12:17 -0400 47)     return JSON.parse(localStorage.getItem('user'));;
+43036628 (loganofneal  2022-10-21 12:12:17 -0400 48)   }
+43036628 (loganofneal  2022-10-21 12:12:17 -0400 49) }
+43036628 (loganofneal  2022-10-21 12:12:17 -0400 50)
+43036628 (loganofneal  2022-10-21 12:12:17 -0400 51) export default new AuthService();
+
+* frontend\src\services\user.service.js
+43036628 (loganofneal 2022-10-21 12:12:17 -0400  1) import axios from 'axios';
+43036628 (loganofneal 2022-10-21 12:12:17 -0400  2) import authHeader from './auth-header';
+43036628 (loganofneal 2022-10-21 12:12:17 -0400  3)
+43036628 (loganofneal 2022-10-21 12:12:17 -0400  4) const API_URL = 'http://localhost:3000/api/test/';
+43036628 (loganofneal 2022-10-21 12:12:17 -0400  5)
+43036628 (loganofneal 2022-10-21 12:12:17 -0400  6) class UserService {
+43036628 (loganofneal 2022-10-21 12:12:17 -0400  7)   getUserQRs() {
+43036628 (loganofneal 2022-10-21 12:12:17 -0400  8)     return axios.get(API_URL + 'user', { headers: authHeader() });
+43036628 (loganofneal 2022-10-21 12:12:17 -0400  9)   }
+43036628 (loganofneal 2022-10-21 12:12:17 -0400 10) }
+43036628 (loganofneal 2022-10-21 12:12:17 -0400 11)
+43036628 (loganofneal 2022-10-21 12:12:17 -0400 12) export default new UserService();
+
+#### Issue: Make Cards Shared Wrapper Component #80
+* frontend/src/components/shared/CardContainer.js
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400  1) import React, {useState} from 'react';
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400  2) import { useHistory } from "react-router-dom";
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400  3) import "./shared.css";
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400  4)
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400  5) const CardContainer = (props) => {
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400  6)   let history = useHistory();
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400  7)
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400  8)   return (
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400  9)     <div className="card-container">
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400 10)       {props.children}
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400 11)     </div>
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400 12)   );
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400 13) };
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400 14)
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400 15) export default CardContainer;
+
+* frontend/src/components/shared/shared.css
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400  1) .card-container {
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400  2)     margin-top: 5%;
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400  3)      background-color: white;
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400  4)      min-width: 350px;
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400  5)      max-width: 600px;
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400  6)      height: auto;
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400  7)      border-radius: 14px;
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400  8)      box-shadow: 4px 4px 4px #888888;
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400  9) }
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400 10)
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400 11) header {
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400 12)      background-color: #62D2A2;
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400 13)      background-position: 0px 0px;
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400 14)      background-repeat: no-repeat;
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400 15)      background-size: contain;
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400 16)      text-align: center;
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400 17)      border-top-left-radius: 14px;
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400 18)      border-top-right-radius: 14px;
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400 19) }
+  
+#### Issue: Frontend User Profile Page #64
+* frontend/src/components/Profile/ProfileCard.css
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400  1) header {
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400  2)      background-color: #62D2A2;
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400  3)      background-position: 0px 0px;
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400  4)      background-repeat: no-repeat;
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400  5)      background-size: contain;
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400  6)      text-align: center;
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400  7)      border-top-left-radius: 14px;
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400  8)      border-top-right-radius: 14px;
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400  9) }
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 10)
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 11) .avatar-img {
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 12)      margin: auto;
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 13)      width: 100px;
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 14)      border: solid white 4px;
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 15)      border-radius: 50%;
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 16)      margin-top: 15%;
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 17)     margin-bottom: 15%;
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 18) }
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 19)
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 20) .bold-text {
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 21)      font-weight: bold;
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 22)      font-size: 1.1rem;
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 23)      text-align: center;
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 24)      padding: 10px 20px 0px 20px;
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 25) }
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 26)
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 27) .normal-text {
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 28)      font-weight: normal;
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 29)      font-size: 0.95rem;
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 30)      color: hsl(0, 0%, 50%);
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 31)      text-align: center;
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 32)      padding-bottom: 10px;
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 33) }
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 34)
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 36) .smaller-text {
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 37)      font-weight: normal;
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 38)      font-size: 0.7rem;
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 39)      color: hsl(0, 0%, 50%);
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 40)      text-align: center;
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 41)      letter-spacing: 1px;
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 42)      padding-bottom: 20px;
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 43)      line-height: 5px;
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 44) }
+
+* frontend/src/components/Profile/ProfileCard.js
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400  1) import React, {useState} from 'react';
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400  2) import {
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400  3)   Checkbox,
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400  4)   Grid,
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400  5)   TextField,
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400  6)   FormControlLabel,
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400  7)   Paper,
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400  8)   Button
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400  9) } from '@material-ui/core';
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 10) import { useHistory } from "react-router-dom";
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 11) import AuthService from "../../services/auth.service";
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 12) import "./ProfileCard.css";
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 13) import avatar from "../../images/avatar.png";
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400 14) import CardContainer from '../shared/CardContainer';
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 15)
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 16) const ProfileCard = () => {
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 17)   let history = useHistory();
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 57)   return (
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400 58)     <CardContainer>
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 59)         <header>
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 60)             <img class="avatar-img" src={avatar}/>
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 61)         </header>
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 62)         <h1 className="bold-text">
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 63)             Test User
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 64)         </h1>
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 65)         <div className="social-container">
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 66)             <div className="followers">
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 67)                 <h1 className="bold-text">23</h1>
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 68)                 <h2 className="smaller-text">QR Codes</h2>
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 69)             </div>
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 70)             <div className="likes">
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 71)                 <h1 className="bold-text">0</h1>
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 72)                 <h2 className="smaller-text">Broken Links</h2>
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 73)             </div>
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 74)         </div>
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400 75)     </CardContainer>
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 76)   );
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 77) };
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 78)
+cc6fc50f (loganoneal 2022-10-22 18:11:42 -0400 79) export default ProfileCard;
+
+#### Issue: Create QR Code Component #78
+* frontend/src/components/CreateQRPage/CreateQRForm.js
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400  1) import React, {useState} from 'react';
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400  2) import { useHistory } from "react-router-dom";
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400  3) import "./CreateQRForm.css";
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400  4) import avatar from "../../images/avatar.png";
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400  5) import {
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400  6)   Button,
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400  7)   TextField,
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400  8) } from '@material-ui/core';
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400  9) import { QRCode } from 'react-qrcode-logo';
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400 10) import CardContainer from '../shared/CardContainer';
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 11)
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 12) const CreateQRForm = () => {
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 13)   let history = useHistory();
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 14)
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 15)   const [link, setLink] = useState("elasticqr.com");
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 16)
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 17)   return (
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400 18)     <CardContainer>
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 19)         <header>
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 20)             <QRCode value={link} />
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 21)         </header>
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 22)         <h1 className="bold-text">
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 23)               <TextField
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 24)                 margin="normal"
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 25)                 required
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 26)                 fullWidth
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 27)                 id="email"
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 28)                 label="QR Code Name"
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 29)                 name="email"
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 30)                 autoComplete="email"
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 31)                 autoFocus
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 32)               />
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 33)               <TextField
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 34)                 margin="normal"
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 35)                 required
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 36)                 fullWidth
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 37)                 name="link"
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 38)                 label="Link"
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 39)                 type="link"
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 40)                 id="link"
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 41)                 onChange={e => setLink(e.target.value)}
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 42)               />
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 43)         </h1>
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 44)         <div className="footer-container">
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 45)               <Button
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 46)                 type="submit"
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 47)                 fullWidth
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 48)                 variant="contained"
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 49)                 sx={{ mt: 3, mb: 2 }}
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 50)                 color="primary"
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 51)               >
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 52)                 Create QR
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 53)               </Button>
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 54)         </div>
+eca1f5ef (loganoneal 2022-10-24 10:26:57 -0400 55)     </CardContainer>
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 56)   );
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 57) };
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 58)
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 59) export default CreateQRForm;
+
+* frontend/src/components/CreateQRPage/index.js
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400  12) const backgroundShape = require("../../images/shape.svg");
+4cd81ed6 (loganoneal 2022-10-24 11:05:38 -0400  91) class CreateQRPage extends Component {
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400  92)   state = {
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400  93)     learnMoredialog: false,
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400  94)     getStartedDialog: false
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400  95)   };
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400  96)
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400  97)   componentDidMount() {}
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400  98)
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400  99)   render() {
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 100)     const { classes } = this.props;
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 101)     return (
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 102)       <React.Fragment>
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 103)         <CssBaseline />
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 104)         <Navbar />
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 105)         <div className={classes.root}>
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 106)           <Grid container justify="center">
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 107)             <CreateQRForm></CreateQRForm>
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 108)           </Grid>
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 109)         </div>
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 110)       </React.Fragment>
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 111)     );
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 112)   }
+2fc6ff04 (loganoneal 2022-10-23 19:48:41 -0400 113) }
+4cd81ed6 (loganoneal 2022-10-24 11:05:38 -0400 115) export default withRouter(withStyles(styles)(CreateQRPage));
+
+* frontend/src/routes.js
+cc6fc50f (loganoneal  2022-10-22 18:11:42 -0400  8) import Profile from './components/Profile'
+2fc6ff04 (loganoneal  2022-10-23 19:48:41 -0400  9) import CreateQRPage from './components/CreateQRPage'
+2fc6ff04 (loganoneal  2022-10-23 19:48:41 -0400 19)           <Route exact path='/create-qr' component={ CreateQRPage } />
+cc6fc50f (loganoneal  2022-10-22 18:11:42 -0400 20)           <Route exact path='/profile' component={ Profile } />
+
+* frontend/src/theme.js
+2fc6ff04 (loganoneal  2022-10-23 19:48:41 -0400 10)         main: '#62D2A2'
