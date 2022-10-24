@@ -1,0 +1,19 @@
+.card-container {
+    margin-top: 5%;
+	background-color: white;
+	min-width: 350px;
+	max-width: 600px;
+	height: auto;
+	border-radius: 14px;
+	box-shadow: 4px 4px 4px #888888;
+}
+
+header {
+	background-color: #62D2A2;
+	background-position: 0px 0px;
+	background-repeat: no-repeat;
+	background-size: contain;
+	text-align: center;
+	border-top-left-radius: 14px;
+	border-top-right-radius: 14px;
+}

@@ -11,6 +11,7 @@ import { useHistory } from "react-router-dom";
 import AuthService from "../../services/auth.service";
 import "./ProfileCard.css";
 import avatar from "../../images/avatar.png";
+import CardContainer from '../shared/CardContainer';
 
 const ProfileCard = () => {
   let history = useHistory();
@@ -54,7 +55,7 @@ const ProfileCard = () => {
   }
 
   return (
-    <div className="card-container">
+    <CardContainer>
         <header>
             <img class="avatar-img" src={avatar}/>
         </header>
@@ -71,7 +72,7 @@ const ProfileCard = () => {
                 <h2 className="smaller-text">Broken Links</h2>
             </div>
         </div>
-    </div>
+    </CardContainer>
   );
 };
 

@@ -7,6 +7,7 @@ import {
   TextField,
 } from '@material-ui/core';
 import { QRCode } from 'react-qrcode-logo';
+import CardContainer from '../shared/CardContainer';
 
 const CreateQRForm = () => {
   let history = useHistory();
@@ -14,7 +15,7 @@ const CreateQRForm = () => {
   const [link, setLink] = useState("elasticqr.com");
   
   return (
-    <div className="card-container">
+    <CardContainer>
         <header>
             <QRCode value={link} />
         </header>
@@ -51,7 +52,7 @@ const CreateQRForm = () => {
                 Create QR
               </Button>
         </div>
-    </div>
+    </CardContainer>
   );
 };
 
