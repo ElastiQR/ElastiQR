@@ -9,12 +9,13 @@ export const theme = createTheme({
         main: "#62D2A2"
       },
       background: {
-        lightGray: "#F5F4F4"
+        lightGray: "#F5F4F4",
+        white: "#FFFFFF"
       },
       button: {
         green: "#62D2A2",
         darkGray: "#696969",
-        mediumGray: "#888888",
+        mediumGray: "#AAAAAA",
         lightGray: "#F9F9F9",
         white: "#FFFFFF"
       },
