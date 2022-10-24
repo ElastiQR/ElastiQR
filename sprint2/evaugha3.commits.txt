@@ -2,8 +2,6 @@ frontend/src/routes.js:
 91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  6) import ExplorePage from './components/ExplorePage/ExplorePage'
 91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 11) /* For testing purposes */
 91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 12) import QRDetailsPage from './components/QRDetailsPage'
-91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 13) 
-88a6c640 (VaughanEric 2022-10-04 21:10:31 -0400 21)           <Route exact path='/my-qrs' component={ ExplorePage } />
 91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 22)           <Route exact path='/qr-details-testing' component={ QRDetailsPage } />
 
 frontend/src/theme.js:
