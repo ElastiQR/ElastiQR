@@ -1,0 +1,298 @@
+frontend/src/routes.js:
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  6) import ExplorePage from './components/ExplorePage/ExplorePage'
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 11) /* For testing purposes */
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 12) import QRDetailsPage from './components/QRDetailsPage'
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 13) 
+88a6c640 (VaughanEric 2022-10-04 21:10:31 -0400 21)           <Route exact path='/my-qrs' component={ ExplorePage } />
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 22)           <Route exact path='/qr-details-testing' component={ QRDetailsPage } />
+
+frontend/src/theme.js:
+826a96e1 (VaughanEric 2022-10-21 16:03:07 -0400  6)         main: "#62D2A2"
+826a96e1 (VaughanEric 2022-10-21 16:03:07 -0400  9)         main: "#62D2A2"
+826a96e1 (VaughanEric 2022-10-21 16:03:07 -0400 10)       },
+826a96e1 (VaughanEric 2022-10-21 16:03:07 -0400 11)       background: {
+92fefe6a (VaughanEric 2022-10-24 09:30:58 -0400 12)         lightGray: "#F5F4F4",
+92fefe6a (VaughanEric 2022-10-24 09:30:58 -0400 13)         white: "#FFFFFF"
+826a96e1 (VaughanEric 2022-10-21 16:03:07 -0400 14)       },
+826a96e1 (VaughanEric 2022-10-21 16:03:07 -0400 15)       button: {
+826a96e1 (VaughanEric 2022-10-21 16:03:07 -0400 16)         green: "#62D2A2",
+826a96e1 (VaughanEric 2022-10-21 16:03:07 -0400 17)         darkGray: "#696969",
+92fefe6a (VaughanEric 2022-10-24 09:30:58 -0400 18)         mediumGray: "#AAAAAA",
+826a96e1 (VaughanEric 2022-10-21 16:03:07 -0400 19)         lightGray: "#F9F9F9",
+826a96e1 (VaughanEric 2022-10-21 16:03:07 -0400 20)         white: "#FFFFFF"
+826a96e1 (VaughanEric 2022-10-21 16:03:07 -0400 21)       },
+826a96e1 (VaughanEric 2022-10-21 16:03:07 -0400 22)       text: {
+826a96e1 (VaughanEric 2022-10-21 16:03:07 -0400 23)         white: "#FFFFFF",
+826a96e1 (VaughanEric 2022-10-21 16:03:07 -0400 24)         black: "#000000",
+826a96e1 (VaughanEric 2022-10-21 16:03:07 -0400 25)         gray: "#888888",
+826a96e1 (VaughanEric 2022-10-21 16:03:07 -0400 26)         green: "#62D2A2"
+826a96e1 (VaughanEric 2022-10-21 16:03:07 -0400 35) });
+826a96e1 (VaughanEric 2022-10-21 16:03:07 -0400 36) 
+826a96e1 (VaughanEric 2022-10-21 16:03:07 -0400 37) export default theme;
+
+frontend/src/components/ExplorePage/ExplorePage.js:
+92fefe6a (VaughanEric 2022-10-24 09:30:58 -0400  7) import { ThemeProvider } from '@material-ui/styles'
+92fefe6a (VaughanEric 2022-10-24 09:30:58 -0400  9) import theme from '../../theme'
+92fefe6a (VaughanEric 2022-10-24 09:30:58 -0400 15)     backgroundColor: theme.palette.background.lightGray,
+92fefe6a (VaughanEric 2022-10-24 09:30:58 -0400 33)     backgroundColor: theme.palette.button.green,
+92fefe6a (VaughanEric 2022-10-24 09:30:58 -0400 34)     color: theme.palette.text.white,
+92fefe6a (VaughanEric 2022-10-24 09:30:58 -0400 39)       backgroundColor: theme.palette.button.mediumGray
+92fefe6a (VaughanEric 2022-10-24 09:30:58 -0400 46)     color: theme.palette.text.green,
+92fefe6a (VaughanEric 2022-10-24 09:30:58 -0400 56)       <ThemeProvider theme={theme}>
+92fefe6a (VaughanEric 2022-10-24 09:30:58 -0400 81)       </ThemeProvider>
+
+frontend/src/components/ExplorePage/QRListItem.js:
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  7) import { ThemeProvider } from '@material-ui/styles'
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  8) import ButtonBase from '@material-ui/core/ButtonBase'
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 10) import theme from '../../theme'
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 16)   buttonBase: {
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 17)     width: "100%",
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 18)     marginBottom: "1rem",
+84e511de (VaughanEric 2022-10-24 11:37:43 -0400 19)     color: theme.palette.background.white
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 20)   },
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 23)     textAlign: "left",
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 25)       boxShadow: `4px 4px 4px ${theme.palette.button.mediumGray}`,
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 26)       backgroundColor: theme.palette.button.lightGray
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 30)     color: theme.palette.text.black,
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 34)     color: theme.palette.text.gray
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 43)       <ThemeProvider theme={theme}>
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 44)         <Link className={classes.link}
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 45)           to={{
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 46)             pathname: "/qr-details-testing",
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 47)             state: {
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 48)               name: this.props.name,
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 49)               description: this.props.description
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 50)             }
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 51)           }}
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 52)         >
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 53)           <ButtonBase className={classes.buttonBase}>
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 66)       </ThemeProvider>
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 71) export default withStyles(styles)(QRListItem);
+
+frontend/src/components/QRDetailsPage.js:
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400   1) import React, { Component, useState } from 'react'
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400   2) import withStyles from '@material-ui/styles/withStyles'
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400   3) import { Link, withRouter } from 'react-router-dom'
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400   4) import Button from '@material-ui/core/Button'
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400   5) import Grid from '@material-ui/core/Grid'
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400   6) import Typography from '@material-ui/core/Typography'
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400   7) import { ThemeProvider } from '@material-ui/styles'
+4d970e23 (VaughanEric 2022-10-24 10:44:24 -0400   8) import QRCode from 'react-qr-code'
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400   9) 
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  10) import theme from '../theme'
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  11) import NavBar from './Navbar'
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  12) import TextInput from './TextInput'
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  13) 
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  14) const styles = theme => ({
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  15)   page: {
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  16)     backgroundColor: theme.palette.background.lightGray,
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  17)     width: "100vw",
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  18)     minHeight: "100vh",
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  19)     overflow: "hidden"
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  20)   },
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  21)   flex: {
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  22)     display: "flex",
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  23)     justifyContent: "center"
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  24)   },
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  25)   container: {
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  26)     maxWidth: 500,
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  27)     width: "80vw",
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  28)     marginTop: "4vh"
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  29)   },
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  30)   qrName: {
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  31)     color: theme.palette.text.green,
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  32)     fontWeight: "bold"
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  33)   },
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  34)   button: {
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  35)     color: theme.palette.text.white,
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  36)     textTransform: "none",
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  37)     width: "100%",
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  38)     height: "100%",
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  39)     "&:hover": {
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  40)       backgroundColor: theme.palette.button.mediumGray
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  41)     }
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  42)   },
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  43)   link: {
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  44)     textDecoration: "none"
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  45)   },
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  46)   greenButton: {
+4d970e23 (VaughanEric 2022-10-24 10:44:24 -0400  47)     backgroundColor: theme.palette.button.green
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  48)   },
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  49)   grayButton: {
+4d970e23 (VaughanEric 2022-10-24 10:44:24 -0400  50)     backgroundColor: theme.palette.button.darkGray
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  51)   },
+4d970e23 (VaughanEric 2022-10-24 10:44:24 -0400  52)   backButton: {
+4d970e23 (VaughanEric 2022-10-24 10:44:24 -0400  53)     marginBottom: "4vh"
+4d970e23 (VaughanEric 2022-10-24 10:44:24 -0400  54)   },
+4d970e23 (VaughanEric 2022-10-24 10:44:24 -0400  55)   linkText: {
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  56)     marginTop: "2vh",
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  57)   },
+4d970e23 (VaughanEric 2022-10-24 10:44:24 -0400  58)   descriptionText: {
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  59)     marginBottom: "5vh",
+4d970e23 (VaughanEric 2022-10-24 10:44:24 -0400  60)   },
+4d970e23 (VaughanEric 2022-10-24 10:44:24 -0400  61)   qrCode: {
+4d970e23 (VaughanEric 2022-10-24 10:44:24 -0400  62)     marginBottom: "2vh"
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  63)   }
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  64) })
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  65) 
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  66) 
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  67) class QRDetailsPage extends Component {
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  68)   constructor(props) {
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  69)     super(props);
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  70)     console.log(props);
+4d970e23 (VaughanEric 2022-10-24 10:44:24 -0400  71)     
+4d970e23 (VaughanEric 2022-10-24 10:44:24 -0400  72)     /* The link is just a placeholder for now to make sure that the qr code works.
+4d970e23 (VaughanEric 2022-10-24 10:44:24 -0400  73)        Also, right now I am reading in the qr code name and description from the
+4d970e23 (VaughanEric 2022-10-24 10:44:24 -0400  74)        QRListItem component. I just needed something to test with until we can
+4d970e23 (VaughanEric 2022-10-24 10:44:24 -0400  75)        connect with the backend. */
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  76)     this.state = {
+4d970e23 (VaughanEric 2022-10-24 10:44:24 -0400  77)       link: "https://github.com/ElastiQR/ElastiQR",
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  78)       description: this.props.location.state.description
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  79)     }
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  80)   }
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  81) 
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  82)   handleLinkChange = event => {
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  83)     this.setState({link: event.target.value})
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  84)   }
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  85) 
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  86)   handleDescriptionChange = event => {
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  87)     this.setState({description: event.target.value})
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  88)   }
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  89) 
+4d970e23 (VaughanEric 2022-10-24 10:44:24 -0400  90)   /* Currently, I am using the update function just to make sure that the link
+4d970e23 (VaughanEric 2022-10-24 10:44:24 -0400  91)      and description have the correct value after being changed */
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  92)   update = () => {
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  93)     console.log("Link: " + this.state.link);
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  94)     console.log("Descriptoin: " + this.state.description);
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  95)   }
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  96) 
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  97)   render() {
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  98)     const { classes } = this.props;
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400  99) 
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 100)     return (
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 101)       <ThemeProvider theme={theme}>
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 102)         <div className={classes.page}>
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 103)         <NavBar />
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 104)           <div className={classes.flex}>
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 105)             <Grid container spacing={3} className={classes.container}>
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 106)               <Grid item xs={12} className={classes.flex}>
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 107)                 <Typography variant="h5" className={classes.qrName}>
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 108)                   {this.props.location.state.name}
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 109)                 </Typography>
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 110)               </Grid>
+4d970e23 (VaughanEric 2022-10-24 10:44:24 -0400 111) 
+4d970e23 (VaughanEric 2022-10-24 10:44:24 -0400 112)               <Grid item xs={12} className={classes.flex}>
+4d970e23 (VaughanEric 2022-10-24 10:44:24 -0400 113)                 <QRCode
+4d970e23 (VaughanEric 2022-10-24 10:44:24 -0400 114)                   size={144}
+4d970e23 (VaughanEric 2022-10-24 10:44:24 -0400 115)                   value="https://github.com/ElastiQR/ElastiQR"
+4d970e23 (VaughanEric 2022-10-24 10:44:24 -0400 116)                   viewBox={`0 0 144 144`}
+4d970e23 (VaughanEric 2022-10-24 10:44:24 -0400 117)                   bgColor={theme.palette.background.lightGray}
+4d970e23 (VaughanEric 2022-10-24 10:44:24 -0400 118)                   className={classes.qrCode}
+4d970e23 (VaughanEric 2022-10-24 10:44:24 -0400 119)                 />
+4d970e23 (VaughanEric 2022-10-24 10:44:24 -0400 120)               </Grid>
+4d970e23 (VaughanEric 2022-10-24 10:44:24 -0400 121) 
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 122)               <Grid item xs={12}>
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 123)                 <Button variant="contained" className={`${classes.button} ${classes.greenButton}`}>
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 124)                   <Typography variant="h6">
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 125)                     Download
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 126)                   </Typography>
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 127)                 </Button>
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 128)               </Grid>
+4d970e23 (VaughanEric 2022-10-24 10:44:24 -0400 129) 
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 130)               <Grid container item spacing={1}>
+4d970e23 (VaughanEric 2022-10-24 10:44:24 -0400 131)                 <Grid item xs={12} className={classes.linkText}>
+db7bc736 (VaughanEric 2022-10-24 13:12:50 -0400 132)                   <TextInput 
+db7bc736 (VaughanEric 2022-10-24 13:12:50 -0400 133)                     label="Link"
+db7bc736 (VaughanEric 2022-10-24 13:12:50 -0400 134)                     value={this.state.link}
+db7bc736 (VaughanEric 2022-10-24 13:12:50 -0400 135)                     onChangeValue={this.handleLinkChange} 
+db7bc736 (VaughanEric 2022-10-24 13:12:50 -0400 136)                   />
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 137)                 </Grid>
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 138)                 <Grid item xs={12} className={classes.descriptionText}>
+db7bc736 (VaughanEric 2022-10-24 13:12:50 -0400 139)                   <TextInput
+db7bc736 (VaughanEric 2022-10-24 13:12:50 -0400 140)                     label="Description"
+db7bc736 (VaughanEric 2022-10-24 13:12:50 -0400 141)                     value={this.state.description}
+db7bc736 (VaughanEric 2022-10-24 13:12:50 -0400 142)                     onChangeValue={this.handleDescriptionChange} />
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 143)                 </Grid>             
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 144)               </Grid>
+4d970e23 (VaughanEric 2022-10-24 10:44:24 -0400 145) 
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 146)               <Grid item xs={12}>
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 147)                 <Button variant="contained" onClick={this.update} className={`${classes.button} ${classes.greenButton}`}>
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 148)                   <Typography variant="h6">
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 149)                     Update
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 150)                   </Typography>
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 151)                 </Button>
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 152)               </Grid>
+4d970e23 (VaughanEric 2022-10-24 10:44:24 -0400 153) 
+4d970e23 (VaughanEric 2022-10-24 10:44:24 -0400 154)               <Grid item xs={12} className={classes.backButton}>
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 155)                 <Link to="/my-qrs" className={classes.link}>
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 156)                   <Button variant="contained" className={`${classes.button} ${classes.grayButton}`}>
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 157)                     <Typography variant="h6">
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 158)                       Back
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 159)                     </Typography>
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 160)                   </Button>
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 161)                 </Link>
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 162)               </Grid>
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 163)             </Grid>
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 164)           </div>
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 165)         </div>
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 166)       </ThemeProvider>
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 167)     )
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 168)   }
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 169) }
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 170) 
+91a9a2d9 (VaughanEric 2022-10-24 09:38:36 -0400 171) export default withRouter(withStyles(styles)(QRDetailsPage));
+
+frontend/src/components/TextInput.js:
+2e7c1b45 (VaughanEric 2022-10-24 09:35:23 -0400  1) import React, { Component, useState } from 'react'
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400  2) import withStyles from '@material-ui/styles/withStyles'
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400  3) import Grid from '@material-ui/core/Grid'
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400  4) import Typography from '@material-ui/core/Typography'
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400  5) import TextField from '@material-ui/core/TextField'
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400  6) import { ThemeProvider } from '@material-ui/styles'
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400  7) 
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400  8) import theme from '../theme'
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400  9) 
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400 10) const styles = theme => ({
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400 11)   flex: {
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400 12)     display: "flex",
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400 13)     justifyContent: "center"
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400 14)   },
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400 15)   textFieldLabel: {
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400 16)     color: theme.palette.text.green,
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400 17)     paddingBottom: 0
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400 18)   },
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400 19)   textField: {
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400 20)     width: "100%",
+2e7c1b45 (VaughanEric 2022-10-24 09:35:23 -0400 21)     paddingTop: 0,
+2e7c1b45 (VaughanEric 2022-10-24 09:35:23 -0400 22)     backgroundColor: theme.palette.background.white,
+2e7c1b45 (VaughanEric 2022-10-24 09:35:23 -0400 23)     borderRadius: "4px"
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400 24)   }
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400 25) });
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400 26) 
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400 27) class TextInput extends Component {
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400 28)   render() {
+2e7c1b45 (VaughanEric 2022-10-24 09:35:23 -0400 29)     const { classes, value, onChangeValue } = this.props;
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400 30) 
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400 31)     return (
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400 32)       <ThemeProvider theme={theme}>
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400 33)         <Grid container spacing={0}>
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400 34)           <Grid item xs={12}>
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400 35)             <Typography variant="subtitle1" className={classes.textFieldLabel}>
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400 36)               {this.props.label}
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400 37)             </Typography>
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400 38)           </Grid>
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400 39)           <Grid item xs={12} className={classes.flex}>
+2e7c1b45 (VaughanEric 2022-10-24 09:35:23 -0400 40)             <TextField
+2e7c1b45 (VaughanEric 2022-10-24 09:35:23 -0400 41)               value={this.props.value}
+2e7c1b45 (VaughanEric 2022-10-24 09:35:23 -0400 42)               onChange={this.props.onChangeValue}
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400 43)               variant="outlined"
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400 44)               color={`${theme.palette.text.green}`}
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400 45)               className={classes.textField}
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400 46)             />
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400 47)           </Grid>
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400 48)         </Grid>
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400 49)       </ThemeProvider>
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400 50)     )
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400 51)   }
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400 52) }
+8d1977cc (VaughanEric 2022-10-23 20:17:01 -0400 53) export default withStyles(styles)(TextInput);
