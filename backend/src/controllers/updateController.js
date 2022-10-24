@@ -30,7 +30,7 @@ module.exports = {
                 if (err) throw (err)
                 console.log("--------> Deleted QR Code")
                 //console.log(result.insertId)
-                res.sendStatus(201) 
+                res.sendStatus(200) 
               })
           }
         })
@@ -95,7 +95,7 @@ module.exports = {
           console.log("--------> Updated QR Code Description")
           //console.log(result.insertId)
         })
-        res.sendStatus(201) 
+        res.sendStatus(200) 
       })
     }
   }

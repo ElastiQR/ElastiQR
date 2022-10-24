@@ -24,7 +24,7 @@ const GoogleLoginButton = () => {
   }
 
   return (
-    <div style={{ width: '21%', padding: 30 }}>
+    <div>
       <GoogleLogin
         style={{ marginTop: '100px' }}
         clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
