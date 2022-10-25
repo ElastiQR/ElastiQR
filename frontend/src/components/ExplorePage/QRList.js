@@ -17,7 +17,13 @@ class QRList extends Component {
   }
 
   componentDidMount() {
-    const user = AuthService.getCurrentUser()  
+    const user = AuthService.getCurrentUser()
+    if (!user) {
+      this.setState({ error: 
+        {message: "User needs to login. In the future, we'll want to hide this page until logged in"} 
+      });
+      return;
+    }
 
     fetch('http://localhost:3000/auth/getQRCodes?' + new URLSearchParams({
       userID: user.userID
@@ -49,11 +55,11 @@ class QRList extends Component {
     if (error) {
       console.log(error.message)
       return <div> Error: {error.message}</div>;
+    } else if (!isLoaded) {
+      return <div>Loading...</div>
     } else if (QRCodes.length == 0) {
       return <div> You don't have any QR codes.
       Try creating your first one with the button above! </div>
-    } else if (!isLoaded) {
-      return <div>Loading...</div>
     } else {
       return (
         <List>
