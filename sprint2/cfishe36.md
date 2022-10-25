@@ -17,7 +17,7 @@
 * [Process QR Characteristics in QR Endpoints](https://github.com/ElastiQR/ElastiQR/issues/55)
 
 ### What problems you encountered
-With the respect to the secret manager, it ultimately was going to be a much more involved transition than I was expecting. It required that the whole team get the Google CLI and have set permissions, which I didn't want to burden the team with since it wasn't stricly necessary. Other than that, there weren't many problems.
+With the respect to the secret manager, it ultimately was going to be a much more involved transition than I was expecting. It required that the whole team get the Google CLI and have set permissions, which I didn't want to burden the team with since it wasn't strictly necessary. Other than that, there weren't many problems.
 
 ### Issues you worked on
 - [#54](https://github.com/ElastiQR/ElastiQR/issues/54) Link Users with QR Codes in Database
