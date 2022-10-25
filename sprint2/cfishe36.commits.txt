@@ -1,0 +1,303 @@
+* backend/src/controllers/qrController.js
+e1904b12 (Caleb Fisher 2022-10-17 15:52:59 -0400  8)       const description = req.body.description
+e1904b12 (Caleb Fisher 2022-10-17 15:52:59 -0400 17)         const sqlInsert = `INSERT INTO QRCodes (qrID, qrname, qrURL, description, userID, created)
+d0ebdb4a (Caleb Fisher 2022-10-17 17:49:39 -0400 18)                            VALUES (NULL, ?, ?, ?, ?, CURRENT_TIMESTAMP())`
+d0ebdb4a (Caleb Fisher 2022-10-17 17:49:39 -0400 19)         const insert_query = mysql.format(sqlInsert, 
+d0ebdb4a (Caleb Fisher 2022-10-17 17:49:39 -0400 20)           [qrname, qrURL, description, userID])
+e1904b12 (Caleb Fisher 2022-10-17 15:52:59 -0400 42)       const userID = req.query.userID
+4113e9a5 (Caleb Fisher 2022-10-22 20:36:23 -0400 45)       var sqlSearch
+4113e9a5 (Caleb Fisher 2022-10-22 20:36:23 -0400 46)       var search_query
+4113e9a5 (Caleb Fisher 2022-10-22 20:36:23 -0400 51)         if (resultslimit == null ) {
+4113e9a5 (Caleb Fisher 2022-10-22 20:36:23 -0400 52)           sqlSearch = 'SELECT * FROM QRCodes WHERE userID = ?'
+4113e9a5 (Caleb Fisher 2022-10-22 20:36:23 -0400 56)           sqlSearch = 'SELECT * FROM QRCodes WHERE userID = ? LIMIT ?'
+4113e9a5 (Caleb Fisher 2022-10-22 20:36:23 -0400 60)           search_query = mysql.format(sqlSearch, [userID])
+4113e9a5 (Caleb Fisher 2022-10-22 20:36:23 -0400 63)           search_query = mysql.format(sqlSearch, [userID, resultslimit])
+d0ebdb4a (Caleb Fisher 2022-10-17 17:49:39 -0400 71)             const response = { "codes": result }
+d0ebdb4a (Caleb Fisher 2022-10-17 17:49:39 -0400 72)             res.send(JSON.stringify(response))
+e1904b12 (Caleb Fisher 2022-10-17 15:52:59 -0400 73) 
+
+* frontend/src/components/ExplorePage/QRList.js
+e98eab94 (Caleb Fisher 2022-10-24 21:16:49 -0400 20)     const user = AuthService.getCurrentUser()
+e98eab94 (Caleb Fisher 2022-10-24 21:16:49 -0400 21)     if (!user) {
+e98eab94 (Caleb Fisher 2022-10-24 21:16:49 -0400 22)       this.setState({ error: 
+e98eab94 (Caleb Fisher 2022-10-24 21:16:49 -0400 23)         {message: "User needs to login. In the future, we'll want to hide this page until logged in"} 
+e98eab94 (Caleb Fisher 2022-10-24 21:16:49 -0400 24)       });
+e98eab94 (Caleb Fisher 2022-10-24 21:16:49 -0400 25)       return;
+e98eab94 (Caleb Fisher 2022-10-24 21:16:49 -0400 26)     }
+a97b2009 (Caleb Fisher 2022-10-24 14:17:20 -0400 27) 
+4113e9a5 (Caleb Fisher 2022-10-22 20:36:23 -0400 28)     fetch('http://localhost:3000/auth/getQRCodes?' + new URLSearchParams({
+a97b2009 (Caleb Fisher 2022-10-24 14:17:20 -0400 29)       userID: user.userID
+a97b2009 (Caleb Fisher 2022-10-24 14:17:20 -0400 30)     }), {
+a97b2009 (Caleb Fisher 2022-10-24 14:17:20 -0400 31)       method: 'GET',
+a97b2009 (Caleb Fisher 2022-10-24 14:17:20 -0400 32)       headers: {
+a97b2009 (Caleb Fisher 2022-10-24 14:17:20 -0400 33)         'Content-Type': 'application/json'
+a97b2009 (Caleb Fisher 2022-10-24 14:17:20 -0400 34)       },
+a97b2009 (Caleb Fisher 2022-10-24 14:17:20 -0400 35)     })
+a97b2009 (Caleb Fisher 2022-10-24 14:17:20 -0400 36)     .then(res => res.json())
+a97b2009 (Caleb Fisher 2022-10-24 14:17:20 -0400 37)     .then(
+a97b2009 (Caleb Fisher 2022-10-24 14:17:20 -0400 38)       (result) => {
+a97b2009 (Caleb Fisher 2022-10-24 14:17:20 -0400 39)         this.setState({
+a97b2009 (Caleb Fisher 2022-10-24 14:17:20 -0400 40)           isLoaded: true,
+a97b2009 (Caleb Fisher 2022-10-24 14:17:20 -0400 41)           QRCodes: result.codes
+a97b2009 (Caleb Fisher 2022-10-24 14:17:20 -0400 42)         });
+a97b2009 (Caleb Fisher 2022-10-24 14:17:20 -0400 43)       },
+a97b2009 (Caleb Fisher 2022-10-24 14:17:20 -0400 44)       (error) => {
+a97b2009 (Caleb Fisher 2022-10-24 14:17:20 -0400 45)         this.setState({
+a97b2009 (Caleb Fisher 2022-10-24 14:17:20 -0400 46)           isLoaded: true,
+a97b2009 (Caleb Fisher 2022-10-24 14:17:20 -0400 47)           error
+a97b2009 (Caleb Fisher 2022-10-24 14:17:20 -0400 48)         });
+a97b2009 (Caleb Fisher 2022-10-24 14:17:20 -0400 49)       }
+a97b2009 (Caleb Fisher 2022-10-24 14:17:20 -0400 50)     )
+d0ebdb4a (Caleb Fisher 2022-10-17 17:49:39 -0400 52) 
+a97b2009 (Caleb Fisher 2022-10-24 14:17:20 -0400 55)     if (error) {
+a97b2009 (Caleb Fisher 2022-10-24 14:17:20 -0400 56)       console.log(error.message)
+e98eab94 (Caleb Fisher 2022-10-24 21:16:49 -0400 58)     } else if (!isLoaded) {
+e98eab94 (Caleb Fisher 2022-10-24 21:16:49 -0400 59)       return <div>Loading...</div>
+a97b2009 (Caleb Fisher 2022-10-24 14:17:20 -0400 60)     } else if (QRCodes.length == 0) {
+a97b2009 (Caleb Fisher 2022-10-24 14:17:20 -0400 61)       return <div> You don't have any QR codes.
+a97b2009 (Caleb Fisher 2022-10-24 14:17:20 -0400 62)       Try creating your first one with the button above! </div>
+
+* backend/src/controllers/authController.js
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400   5) const { OAuth2Client } = require('google-auth-library')
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400   6) 
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400   7) const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
+4113e9a5 (Caleb Fisher 2022-10-22 20:36:23 -0400  77)                         res.json({
+4113e9a5 (Caleb Fisher 2022-10-22 20:36:23 -0400  78)                             userID: result[0].userID,
+4113e9a5 (Caleb Fisher 2022-10-22 20:36:23 -0400  79)                             accessToken: token
+4113e9a5 (Caleb Fisher 2022-10-22 20:36:23 -0400  80)                         })
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400  87)     },
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400  88)     googleLoginController: async (req, res) => {
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400  89)         const token = req.body.token
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400  90) 
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400  91)         const ticket = await client.verifyIdToken({
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400  92)             idToken: token,
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400  93)             audience: process.env.GOOGLE_CLIENT_ID
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400  94)         });
+ac4f22ef (Caleb Fisher 2022-10-23 00:45:13 -0400  95) 
+ac4f22ef (Caleb Fisher 2022-10-23 00:45:13 -0400  96)         const { name, email, picture } = ticket.getPayload();       
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400  97)         var user = {
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400  98)             email,
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400  99)             first: name.split(" ")[0],
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 100)             last: name.split(" ")[1],
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 101)             picture
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 102)         }
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 103) 
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 104)         db.getConnection ( async (err, connection)=> {
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 105)             if (err) throw (err)
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 106) 
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 107)             const sqlSearch = "SELECT * FROM users WHERE username = ? LIMIT 1"
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 108)             const search_query = mysql.format(sqlSearch,[user.email])
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 109) 
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 110)             const sqlInsert = `INSERT INTO users (username, firstname, lastname, isGoogle)
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 111)                                VALUES (?,?,?,1)`
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 112)             const insert_query = mysql.format(sqlInsert,[user.email, user.first, user.last])
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 113) 
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 114)             await connection.query (search_query, async (err, result) => {
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 115)                 
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 116)                 if (err) throw (err)
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 117)                 if (result.length == 0) {
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 118)                     await connection.query(insert_query, async (err, results) => {
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 119)                         if (err) throw(err)
+ac4f22ef (Caleb Fisher 2022-10-23 00:45:13 -0400 120) 
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 121)                         console.log("---------> Creating Google User")
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 122)                         console.log(results.insertId)
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 123)                     })
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 124)                     await connection.query(search_query, async (err, results)=> {
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 125)                         connection.release()
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 126) 
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 127)                         if (err) throw(err)
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 128)                         console.log("Confirming and Retrieving Google User Info...")
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 129)                         const accessToken = generateAccessToken({user: user.email})
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 130)                         user = {
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 131)                             ...user,
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 132)                             userID: results[0].userID,
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 133)                             accessToken
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 134)                         }
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 135)                         res.status(201)
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 136)                         res.json(user)
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 137)                     })
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 138)                 } else {
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 139)                     connection.release()
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 140)                     console.log("---------> Login Successful")
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 141)                     console.log("---------> Generating accessToken")
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 142)                     const accessToken = generateAccessToken({user: user.email})   
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 143)                     console.log(accessToken)
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 144)                     res.json({
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 145)                         userID: result[0].userID,
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 146)                         accessToken
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 147)                     })
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 148)                 }
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 149)             }) 
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 150)         })
+ac4f22ef (Caleb Fisher 2022-10-23 00:45:13 -0400 151)         console.log("Processing" + " " + name + ": " + email)
+
+* backend/src/routes/authRoute.js
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400  2) const { signUpController, 
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400  3)         loginUserController,
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400  4)         googleLoginController
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400  5)       } = require('../controllers/authController')
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 13) router.post('/googleLogin', googleLoginController)
+
+* frontend/src/services/auth.service.js
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 22)   async googleLogin(googleData) {
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 23)     return await axios
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 24)       .post(API_URL + "googleLogin", {
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 25)         "token": googleData.tokenId
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 26)       })
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 27)       .then(response => {
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 28)         console.log("RESPONSE: " + response);
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 29)         if (response.data.accessToken) {
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 30)           localStorage.setItem("user", JSON.stringify(response.data));
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 31)         }
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 32)       })
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 33)   }
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 34) 
+
+* backend/src/index.js
+a836e28a (Caleb Fisher 2022-10-24 14:21:44 -0400 11) const updateRouter = require('./routes/updateRoute')
+a836e28a (Caleb Fisher 2022-10-24 14:21:44 -0400 31) app.use('/update', updateRouter)
+
+* frontend/src/components/CreateQRPage/CreateQRForm.js
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400  5) import { TextField } from '@material-ui/core';
+1424ea71 (Caleb Fisher 2022-10-24 20:20:32 -0400  6) import LoadingButton from '../shared/LoadingButton';
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400  9) import AuthService from '../../services/auth.service';
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 10) import UserService from '../../services/user.service';
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 16)   const [qrname, setName] = useState();
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 17)   const [error, setError] = useState(false);
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 18)   const [help, setHelp] = useState();
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 19)   const [loading, setLoading] = useState(false);
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 20) 
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 21)   const handleClick = () => {
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 22)     const user = AuthService.getCurrentUser();
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 23)     if (!user.accessToken) {
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 24)       console.log("User is not logged in");
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 25)       return;
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 26)     }
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 27) 
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 28)     const regex = new RegExp(
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 29)       /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/);
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 30)     if (!regex.test(link)) {
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 31)       setError(true);
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 32)       setHelp('Invalid URL');
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 33)       return;
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 34)     }
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 35) 
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 36)     UserService.createQR(user.userID, qrname, link);
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 37)     setLoading(true)
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 38)     setTimeout(() => { history.push('/my-qrs'); }, 1500);
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 39)   }
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 56)                 onChange={e => setName(e.target.value)}
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 66)                 error={error}
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 67)                 helperText={help}
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 72)               <LoadingButton
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 73)                 loading={loading}
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 74)                 onClick={handleClick}
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 81)               </LoadingButton>
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 87) export default CreateQRForm;
+
+* frontend/src/components/Login/GoogleLoginButton.js
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400  1) import React, {useEffect} from 'react';
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400  2) import { useHistory } from "react-router-dom";
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400  3) import AuthService from "../../services/auth.service";
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400  4) import { GoogleLogin } from "react-google-login";
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400  5) import { gapi } from "gapi-script";
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400  6) 
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400  7) const GoogleLoginButton = () => {
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400  8) 
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400  9)   let history = useHistory()
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 10) 
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 11)   useEffect(() => {
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 12)     const initClient = () => {
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 13)       gapi.client.init({
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 14)         clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 15)         scope: ''
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 16)       });
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 17)     };
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 18)     gapi.load('client:auth2', initClient);
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 19)   });
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 20) 
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 21)   const handleGoogleLogin = async googleData => {
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 22)       AuthService.googleLogin(googleData)
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 23)       history.push('/')
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 24)   }
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 25) 
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 26)   return (
+001a6784 (Caleb Fisher 2022-10-24 14:22:45 -0400 27)     <div>
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 28)       <GoogleLogin
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 29)         style={{ marginTop: '100px' }}
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 30)         clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 31)         buttonText="Log in with Google"
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 32)         onSuccess={handleGoogleLogin}
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 33)         onFailure={() => { console.log("failed")}}
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 34)         cookiePolicy={'single_host_origin'}
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 35)       />
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 36)     </div>
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 37)   );
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 38) };
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 39) 
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 40) export default GoogleLoginButton;
+
+* frontend/src/components/shared/LoadingButton.js
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400  1) import React from 'react';
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400  2) import PropTypes from 'prop-types';
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400  3) import withStyles from "@material-ui/styles/withStyles";
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400  4) import {Button , CircularProgress} from '@material-ui/core';
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400  5) 
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400  6) const styles = theme => ({
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400  7)   button: {
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400  8)     margin: theme.spacing.unit,
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400  9)   },
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 10) });
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 11) 
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 12) const LoadingButton = (props) => {
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 13)   const { classes, loading, ...other } = props;
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 14) 
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 15)   if (loading) {
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 16)     return (
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 17)       <Button className={classes.button} {...other}>
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 18)         <CircularProgress color="black"/>
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 19)       </Button>
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 20)     );
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 21)   } else {
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 22)     return (
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 23)       <Button className={classes.button} {...other}> 
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 24)         Create QR
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 25)       </Button>
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 26)     );
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 27)   }
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 28) }
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 29) 
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 30) LoadingButton.defaultProps = {
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 31)   loading: false,
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 32) };
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 33) 
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 34) LoadingButton.propTypes = {
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 35)   classes: PropTypes.object.isRequired,
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 36)   loading: PropTypes.bool,
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 37) };
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 38) 
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 39) export default withStyles(styles)(LoadingButton);
+
+* frontend/src/components/Login/index.js
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400  12) import GoogleLoginButton from "./GoogleLoginButton";
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 108)           <Grid container 
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 109)             justify="center" 
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 110)             direction="column" 
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 111)             alignItems="center">
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 112)               
+628181b3 (Caleb Fisher 2022-10-23 00:40:55 -0400 114)             <GoogleLoginButton />
+
+* frontend/src/services/user.service.js
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400  5) const QR_API_URL = 'http://localhost:3000/';
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 11) 
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 12)   createQR(id, name, url) {
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 13)     return axios.post(QR_API_URL + 'auth/createQR', {
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 14)       userID: id,
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 15)       name,
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 16)       url
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 17)     })
+df0c30e2 (Caleb Fisher 2022-10-24 16:43:09 -0400 18)   }
+
+* backend/src/controllers/updateController.js
+a836e28a (Caleb Fisher 2022-10-24 14:21:44 -0400  33)                 res.sendStatus(200) 
+a836e28a (Caleb Fisher 2022-10-24 14:21:44 -0400  98)         res.sendStatus(200) 
