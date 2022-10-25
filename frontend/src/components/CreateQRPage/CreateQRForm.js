@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import "./CreateQRForm.css";
 import avatar from "../../images/avatar.png";
 import { TextField } from '@material-ui/core';
-import LoadingButton from './LoadingButton';
+import LoadingButton from '../shared/LoadingButton';
 import { QRCode } from 'react-qrcode-logo';
 import CardContainer from '../shared/CardContainer';
 import AuthService from '../../services/auth.service';
