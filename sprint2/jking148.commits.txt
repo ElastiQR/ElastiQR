@@ -1,0 +1,138 @@
+src/components/Login/LoginForm.js
+
+03ce7be6 (jacobking61 2022-10-22 18:02:47 -0400  2) import { green } from 
+'@material-ui/core/colors'
+03ce7be6 (jacobking61 2022-10-22 18:02:47 -0400 56)     <div style={{ width: '21%',     
+padding: 30 }}>
+03ce7be6 (jacobking61 2022-10-22 18:02:47 -0400 65)           <h2 style={{color:        
+green[500]}}>ElastiQR</h2>
+
+src/components/Main/LineChart.js
+
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400  1) import React from "react";
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400  2) import { green } from
+'@material-ui/core/colors'
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400  3) import { ResponsiveContainer,       
+LineChart, Line, XAxis, YAxis} from "recharts";
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400  4)
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400  5) const simpleData = [
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400  6)   {
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400  7)     subject: "October 21",
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400  8)     fees: 125
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400  9)   },
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 10)   {
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 11)     subject: "October 22",
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 12)     fees: 100
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 13)   },
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 14)   {
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 15)     subject: "October 23",
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 16)     fees: 110
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 17)   },
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 18)   {
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 19)     subject: "October 24",
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 20)     fees: 95
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 21)
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 22)   },
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 23)   {
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 24)     subject: "October 25",
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 25)     fees : 100
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 26)   },
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 27)
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 28) ];
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 29) function SimpleChart(){
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 30)     return (
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 31)     <React.Fragment>
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 32)       <h2 style={{color:
+green[500]}}>Users in the last 5 days</h2>
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 33)       <ResponsiveContainer
+width="100%" aspect={3} >
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 34)        <LineChart data=
+{simpleData}>
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 35)          <XAxis dataKey ="subject"  
+/>
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 36)          <Line dataKey="fees" />    
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 37)          <YAxis />
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 38)        </LineChart>
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 39)       </ResponsiveContainer>        
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 40)     </React.Fragment>
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 41)
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 42)     );
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 43) };
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 44)
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 45) export default SimpleChart
+
+src/components/Main/Main.js
+
+febcd409 frontend/src/components/Main/Main.js (jacobking61 2022-10-23 13:01:59 -0400   
+5) import { green } from '@material-ui/core/colors'
+febcd409 frontend/src/components/Main/Main.js (jacobking61 2022-10-23 13:01:59 -0400    
+11) import Navbar from "../Navbar";
+febcd409 frontend/src/components/Main/Main.js (jacobking61 2022-10-23 13:01:59 -0400    
+12) import MainPage from "./Mainpage";
+febcd409 frontend/src/components/Main/Main.js (jacobking61 2022-10-23 13:01:59 -0400    
+14) const backgroundShape = require("../../images/shape.svg");
+febcd409 frontend/src/components/Main/Main.js (jacobking61 2022-10-23 13:01:59 -0400    
+108)           <Grid container justify='center'>
+febcd409 frontend/src/components/Main/Main.js (jacobking61 2022-10-23 13:01:59 -0400    
+109)             <MainPage></MainPage>
+
+src/components/Main/Mainpage.js
+
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400  1) import React, {useState} from 
+'react';
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400  2) import { green } from
+'@material-ui/core/colors'
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400  3) import {
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400  4)   Checkbox,
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400  5)   Grid,
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400  6)   TextField,
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400  7)   FormControlLabel,
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400  8)   Paper,
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400  9)   Button
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 10) } from '@material-ui/core';
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 11) import
+"../Profile/ProfileCard.css";
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 12) import ProfileCard from
+'../Profile/ProfileCard';
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 13) import SimpleChart from
+'./LineChart';
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 14) import { useHistory } from
+"react-router-dom";
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 15) import AuthService from 
+"../../services/auth.service";
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 16)
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 17) const MainPage = () => {
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 18)
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 19)   return (
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 20)     <div style={{width: '60%',      
+padding: 30}}>
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 21)         <h1 style={{color:
+green[500]}}>Welcome to ElastiQR</h1>
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 22)         <div
+className="social-container">
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 23)             <div
+className="followers">
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 24)                 <h1
+className="bold-text">23</h1>
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 25)                 <h2
+className="smaller-text">QR Codes</h2>
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 26)             </div>
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 27)             <div className="likes"> 
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 28)                 <h1 
+className="bold-text">0</h1>
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 29)                 <h2
+className="smaller-text">Broken Links</h2>
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 30)             </div>
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 31)         </div>
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 32)         <SimpleChart></SimpleChart> 
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 33)     </div>
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 34)   );
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 35) };
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 36)
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400 37) export default MainPage;
+
+src/routes.js
+
+febcd409 (jacobking61 2022-10-23 13:01:59 -0400  4) import Main from 
+'./components/Main/Main'
+
