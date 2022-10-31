@@ -78,5 +78,29 @@ module.exports = {
           }
         })
       })
+    },
+    redirectQRController: (req,res)=> {
+      const qrID = req.query.qrID;
+      console.log("QR ID: " + qrID);
+
+      db.getConnection(async (err, connection) => {
+        if (err) throw (err)
+        sqlSearch = 'SELECT * FROM QRCodes WHERE qrID = ? LIMIT 1'
+        search_query = mysql.format(sqlSearch, [qrID])
+
+        await connection.query(search_query, async (err, result)=> {
+          if (err) throw (err)
+          connection.release()
+
+          if (result.length != 0) {
+            console.log("--------> Requested QR Code has been found successfully")
+
+            res.redirect(result[0].qrURL);
+          } else {
+            console.log("--------> Error, could not find the requested QR Code")
+            res.sendStatus(400)
+          }
+        });
+      });
     }
   }

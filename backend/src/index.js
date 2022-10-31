@@ -9,6 +9,7 @@ require('dotenv').config({ path: require('find-config')('.env') })
 /* Import Routes */
 const authRouter = require('./routes/authRoute')
 const updateRouter = require('./routes/updateRoute')
+const qrRouter = require('./routes/qrRoute')
 
 /* Declare App */
 const app = express();
@@ -27,6 +28,7 @@ app.get("/", (req, res) => {
   res.send("Backend Running!");
 });
 
+app.use('/qr', qrRouter)
 app.use('/auth', authRouter)
 app.use('/update', updateRouter)
 
