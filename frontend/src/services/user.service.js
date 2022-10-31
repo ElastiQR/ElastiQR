@@ -10,7 +10,7 @@ class UserService {
   }
 
   createQR(id, name, url) {
-    return axios.post(QR_API_URL + 'auth/createQR', {
+    return axios.post(QR_API_URL + 'qr/createQR', {
       userID: id,
       name,
       url

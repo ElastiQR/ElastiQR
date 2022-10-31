@@ -25,7 +25,7 @@ class QRList extends Component {
       return;
     }
 
-    fetch('http://localhost:3000/auth/getQRCodes?' + new URLSearchParams({
+    fetch('http://localhost:3000/qr/getQRCodes?' + new URLSearchParams({
       userID: user.userID
     }), {
       method: 'GET',
