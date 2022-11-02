@@ -16,6 +16,15 @@ class UserService {
       url
     })
   }
+
+  updateQR(id, name, url, description) {
+    return axios.patch(QR_API_URL + 'update/updateQRCodes', {
+      qrID: id,
+      name,
+      url,
+      description
+    })
+  }
 }
 
 export default new UserService();

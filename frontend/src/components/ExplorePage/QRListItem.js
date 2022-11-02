@@ -45,8 +45,10 @@ class QRListItem extends Component {
           to={{
             pathname: "/qr-details-testing",
             state: {
+              id: this.props.id,
               name: this.props.name,
-              description: this.props.description
+              description: this.props.description,
+              url: this.props.url
             }
           }}
         >

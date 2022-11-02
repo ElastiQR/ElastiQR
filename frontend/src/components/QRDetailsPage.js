@@ -10,6 +10,7 @@ import QRCode from 'react-qr-code'
 import theme from '../theme'
 import NavBar from './Navbar'
 import TextInput from './TextInput'
+import UserService from '../services/user.service'
 
 const styles = theme => ({
   page: {
@@ -74,8 +75,10 @@ class QRDetailsPage extends Component {
        QRListItem component. I just needed something to test with until we can
        connect with the backend. */
     this.state = {
-      link: "https://github.com/ElastiQR/ElastiQR",
-      description: this.props.location.state.description
+      link: this.props.location.state.url,
+      description: this.props.location.state.description,
+      error: false,
+      help: ""
     }
   }
 
@@ -90,8 +93,32 @@ class QRDetailsPage extends Component {
   /* Currently, I am using the update function just to make sure that the link
      and description have the correct value after being changed */
   update = () => {
-    console.log("Link: " + this.state.link);
-    console.log("Descriptoin: " + this.state.description);
+    const regex = new RegExp(
+      /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/);
+    if (!regex.test(this.state.link)) {
+      this.setState({error: true, help: "Invalid URL"});
+      return;
+    }
+
+    UserService.updateQR(this.props.location.state.id, 
+      this.props.location.state.name, 
+      this.state.link, 
+      this.state.description)
+    .then(
+      () => {
+        // might want to add some logic here in the future to indicate success
+      },
+      (error) => {
+        const resMessage =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+        console.log(resMessage);
+        console.log(error);
+      }
+    )
   }
 
   render() {
@@ -112,7 +139,7 @@ class QRDetailsPage extends Component {
               <Grid item xs={12} className={classes.flex}>
                 <QRCode
                   size={144}
-                  value="https://github.com/ElastiQR/ElastiQR"
+                  value={this.state.link}
                   viewBox={`0 0 144 144`}
                   bgColor={theme.palette.background.lightGray}
                   className={classes.qrCode}
@@ -133,6 +160,8 @@ class QRDetailsPage extends Component {
                     label="Link"
                     value={this.state.link}
                     onChangeValue={this.handleLinkChange} 
+                    error={this.state.error}
+                    helperText={this.state.help}
                   />
                 </Grid>
                 <Grid item xs={12} className={classes.descriptionText}>
