@@ -64,7 +64,10 @@ class QRList extends Component {
       return (
         <List>
           {QRCodes.map((item, index) => (
-            <QRListItem name={item.qrname} description={item.description} />
+            <QRListItem id={item.qrID} 
+              name={item.qrname} 
+              description={item.description} 
+              url={item.qrURL} />
           ))}
         </List>
       );
