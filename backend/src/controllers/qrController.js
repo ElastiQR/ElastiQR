@@ -40,15 +40,15 @@ module.exports = {
     },
     retrieveQRController: (req,res)=> {
       const userID = req.query.userID
-      const resultslimit = req.query.resultslimit
+      const resultslimit = parseInt(req.query.resultslimit)
       var islimit
       var sqlSearch
       var search_query
 
       db.getConnection(async (err, connection) => {
         if (err) throw (err)
-//lines 48 - 62 are for issue 70
-        if (resultslimit == null ) {
+
+        if (!resultslimit) {
           sqlSearch = 'SELECT * FROM QRCodes WHERE userID = ?'
           islimit = 0
         }
