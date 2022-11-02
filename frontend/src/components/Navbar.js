@@ -13,6 +13,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
+import AuthService from "../services/auth.service";
 import { Link as MaterialLink } from "@material-ui/core";
 import Menu from "./Menu";
 
@@ -151,7 +152,10 @@ class Navbar extends Component {
                     >
                       <AppBar title="Menu" />
                       <List>
-                        {Menu.map((item, index) => (
+                        {Menu.filter((item) => {
+                          const user = AuthService.getCurrentUser();
+                          return (user) ? item.requireSignedIn : !item.requireSignedIn;
+                        }).map((item, index) => (
                           <ListItem
                             component={item.external ? MaterialLink : Link}
                             href={item.external ? item.pathname : null}
@@ -177,7 +181,10 @@ class Navbar extends Component {
                       textColor="primary"
                       onChange={this.handleChange}
                     >
-                      {Menu.map((item, index) => (
+                      {Menu.filter((item) => {
+                          const user = AuthService.getCurrentUser();
+                          return (user) ? item.requireSignedIn : !item.requireSignedIn;
+                        }).map((item, index) => (
                         <Tab
                           key={index}
                           component={item.external ? MaterialLink : Link}

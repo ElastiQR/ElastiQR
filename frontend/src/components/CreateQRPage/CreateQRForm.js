@@ -78,6 +78,7 @@ const CreateQRForm = () => {
                 sx={{ mt: 3, mb: 2 }}
                 color="primary"
               >
+                Create QR
               </LoadingButton>
         </div>
     </CardContainer>

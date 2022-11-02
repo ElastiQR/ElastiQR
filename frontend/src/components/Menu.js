@@ -1,27 +1,33 @@
 const Menu = [
   {
     label: "Home",
-    pathname: "/"
+    pathname: "/",
+    requireSignedIn: true
   },
   {
     label: "My QRs",
-    pathname: "/my-qrs"
+    pathname: "/my-qrs",
+    requireSignedIn: true
   },
   {
     label: "Create QR",
-    pathname: "/create-qr"
+    pathname: "/create-qr",
+    requireSignedIn: true
   },
   {
     label: "Signup",
-    pathname: "/signup"
+    pathname: "/signup",
+    requireSignedIn: false
   },
   {
     label: "Login",
-    pathname: "/login"
+    pathname: "/login",
+    requireSignedIn: false
   },
   {
     label: "Profile",
-    pathname: "/profile"
+    pathname: "/profile",
+    requireSignedIn: true
   },
 ];
 
