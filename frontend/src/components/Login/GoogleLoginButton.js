@@ -22,8 +22,7 @@ const GoogleLoginButton = () => {
       AuthService.googleLogin(googleData)
       .then(
         () => {
-          history.push('/');
-          window.location.reload();
+          setTimeout(() => { history.push('/'); }, 500);
         },
         (error) => {
           const resMessage =

@@ -16,9 +16,9 @@ export default props => (
     <HashRouter>
       <ScrollToTop>
         <Switch>
-          <Route exact path='/'> 
-            {(AuthService.getCurrentUser()) ? <Main /> : <Redirect to="/login" />}
-          </Route>
+          <Route exact path='/' render={
+              () => (AuthService.getCurrentUser()) ? <Main /> : <Redirect to="/login" />
+            } />
           <Route exact path='/login' component={ Login } />
           <Route exact path='/signup' component={ Signup } />
           <Route exact path='/my-qrs' component={ ExplorePage } />
