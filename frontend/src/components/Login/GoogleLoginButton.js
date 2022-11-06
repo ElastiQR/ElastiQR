@@ -20,7 +20,21 @@ const GoogleLoginButton = () => {
 
   const handleGoogleLogin = async googleData => {
       AuthService.googleLogin(googleData)
-      history.push('/')
+      .then(
+        () => {
+          setTimeout(() => { history.push('/'); }, 500);
+        },
+        (error) => {
+          const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+          console.log(resMessage);
+          console.log(error);
+        }
+      )
   }
 
   return (

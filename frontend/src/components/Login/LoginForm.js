@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core';
 import { useHistory } from "react-router-dom";
 import AuthService from "../../services/auth.service";
+import LoadingButton from '../shared/LoadingButton';
 
 const LoginForm = () => {
   let history = useHistory();
@@ -32,8 +33,7 @@ const LoginForm = () => {
 
     AuthService.login(username, password).then(
       () => {
-        history.push('/');
-        window.location.reload();
+        setTimeout(() => { history.push('/'); }, 500);
       },
       error => {
         console.log("USERNAME: " + username, "PASSWORD" + password);
@@ -62,7 +62,7 @@ const LoginForm = () => {
           justify={'center'}
           alignItems={'center'}
         >
-          <h2 style={{color: green[500]}}>ElastiQR</h2>
+          <h2 style={{color: '#62D2A2'}}>ElastiQR</h2>
           <Grid item xs={12}>
             <TextField label="Username" onChange={e => setUsername(e.target.value)}></TextField>
           </Grid>
@@ -83,10 +83,14 @@ const LoginForm = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <Button onClick={handleLogin} fullWidth>Login</Button>
-            {loading && (
-                  <span className="spinner-border spinner-border-sm"></span>
-            )}
+            <LoadingButton 
+              onClick={handleLogin} 
+              loading={loading}
+              variant="contained"
+              color="primary"
+              fullWidth>
+              Login
+            </LoadingButton>
           </Grid>
         </Grid>
       </Paper>

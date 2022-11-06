@@ -15,14 +15,12 @@ const LoadingButton = (props) => {
   if (loading) {
     return (
       <Button className={classes.button} {...other}>
-        <CircularProgress color="black"/>
+        <CircularProgress size="1.5rem" color="black"/>
       </Button>
     );
   } else {
     return (
-      <Button className={classes.button} {...other}> 
-        Create QR
-      </Button>
+      <Button className={classes.button} {...other} />
     );
   }
 }

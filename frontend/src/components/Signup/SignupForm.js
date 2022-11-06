@@ -15,6 +15,8 @@ const SignupForm = () => {
   let history = useHistory();
 
   const [checked, setChecked] = React.useState(true);
+  const [help, setHelp] = useState("");
+  const [fieldError, setError] = useState(false);
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
@@ -44,6 +46,10 @@ const SignupForm = () => {
           history.push('/login');
         },
         error => {
+          if (error.response.status == 409) {
+            setError(true);
+            setHelp("Already taken. Please try a different name.");
+          }
           const resMessage =
             (error.response &&
               error.response.data &&
@@ -72,7 +78,11 @@ const SignupForm = () => {
           alignItems={'center'}
         >
           <Grid item xs={12}>
-            <TextField label="Username" onChange={e => setUsername(e.target.value)}></TextField>
+            <TextField 
+              label="Username" 
+              onChange={e => setUsername(e.target.value)}
+              error={fieldError}
+              helperText={help}/>
           </Grid>
           <Grid item xs={12}>
             <TextField label="Password" type={'password'} onChange={e => setPassword(e.target.value)}> </TextField>
