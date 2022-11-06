@@ -50,6 +50,7 @@ class QRListItem extends Component {
             }
           }}
         >
+
           <ButtonBase className={classes.buttonBase}>
           <Card className={classes.card}>
             <CardContent>
