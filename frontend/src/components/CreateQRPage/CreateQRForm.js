@@ -9,11 +9,14 @@ import CardContainer from '../shared/CardContainer';
 import AuthService from '../../services/auth.service';
 import UserService from '../../services/user.service';
 
+import TextInput from '../TextInput';
+
 const CreateQRForm = () => {
   let history = useHistory();
 
   const [link, setLink] = useState("elasticqr.com");
   const [qrname, setName] = useState();
+  const [description, setDescription] = useState();  /* Add this field to the QR code creation process */
   const [error, setError] = useState(false);
   const [help, setHelp] = useState();
   const [loading, setLoading] = useState(false);
@@ -60,35 +63,36 @@ const CreateQRForm = () => {
   }
   
   return (
-    <CardContainer>
+    <CardContainer className="card">
         <header>
+          <div className="qr-container">
             <QRCode value={link} />
+          </div>
         </header>
-        <h1 className="bold-text">
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="QR Code Name"
-                name="email"
-                autoComplete="email"
-                autoFocus
-                onChange={e => setName(e.target.value)}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="link"
-                label="Link"
-                type="link"
-                id="link"
-                error={error}
-                helperText={help}
-                onChange={e => setLink(e.target.value)}
-              />
-        </h1>
+        <div className="body">
+          <TextInput
+            label="QR Code Name"
+            value={qrname}
+            onChangeValue={e => setName(e.target.value)}
+            required={true}
+          />
+          <div className="spacer" />
+          <TextInput
+            label="Link"
+            value={link}
+            onChangeValue={e => setLink(e.target.value)}
+            required={true}
+            error={error}
+            helperText={help}
+          />
+          <div className="spacer" />
+          <TextInput
+            label="Description"
+            value={description}
+            onChangeValue={e => setDescription(e.target.value)}
+            required={false}
+          />
+        </div>
         <div className="footer-container">
               <LoadingButton
                 loading={loading}
@@ -98,6 +102,7 @@ const CreateQRForm = () => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
                 color="primary"
+                id="loading-button"
               >
                 Create QR
               </LoadingButton>

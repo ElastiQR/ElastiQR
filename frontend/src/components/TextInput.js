@@ -26,7 +26,7 @@ const styles = theme => ({
 
 class TextInput extends Component {
   render() {
-    const { classes, value, onChangeValue, error, helperText } = this.props;
+    const { classes, label, value, onChangeValue, error, helperText, required } = this.props;
 
     return (
       <ThemeProvider theme={theme}>
@@ -45,6 +45,7 @@ class TextInput extends Component {
               className={classes.textField}
               error={this.props.error}
               helperText={this.props.helperText}
+              required={this.required}
             />
           </Grid>
         </Grid>
