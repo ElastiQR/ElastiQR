@@ -5,6 +5,7 @@ import List from '@material-ui/core/List'
 
 import QRListItem from "./QRListItem"
 import AuthService from "../../services/auth.service"
+import UserService from '../../services/user.service'
 
 class QRList extends Component {
   constructor(props) {
@@ -25,27 +26,23 @@ class QRList extends Component {
       return;
     }
 
-    fetch('http://localhost:3000/qr/getQRCodes?' + new URLSearchParams({
-      userID: user.userID
-    }), {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    })
-    .then(res => res.json())
+    UserService.getUserQRs(user.userID)
     .then(
-      (result) => {
+      (response) => {
         this.setState({
           isLoaded: true,
-          QRCodes: result.codes
+          QRCodes: response.data.codes
         });
       },
       (error) => {
         this.setState({
-          isLoaded: true,
-          error
+          isLoaded: true
         });
+        if (error.response?.status != 400) {
+          this.setState({
+            error
+          });
+        }
       }
     )
   }
