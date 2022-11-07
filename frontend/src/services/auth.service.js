@@ -3,11 +3,12 @@ import axios from "axios";
 const API_URL = "http://localhost:3000/auth/";
 
 class AuthService {
-  login(username, password) {
+  login(username, password, staySignedIn) {
     return axios
       .post(API_URL + "login", {
         "name": username,
-        "password": password
+        "password": password,
+        "staySignedIn": staySignedIn
       })
       .then(response => {
         console.log("RESPONSE: " + response);

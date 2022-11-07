@@ -49,7 +49,7 @@ const SignupForm = () => {
         error => {
           if (error.response.status == 409) {
             setError(true);
-            setHelp("Already taken. Please try a different name.");
+            setHelp("Username taken.");
           }
           const resMessage =
             (error.response &&
