@@ -8,13 +8,9 @@ import { ThemeProvider } from '@material-ui/styles'
 import QRCode from 'react-qr-code'
 
 import theme from '../theme'
-import NavBar from './Navbar'
 import TextInput from './TextInput'
-<<<<<<< HEAD
-import StatPage from './QRStatPage/StatPage'
-=======
 import UserService from '../services/user.service'
->>>>>>> 1ad3f0da0e4ec74fcceb62ac7bc119b02bc2461e
+import StatPage from './QRStatPage/StatPage'
 
 const styles = theme => ({
   page: {
@@ -131,7 +127,6 @@ class QRDetailsPage extends Component {
     return (
       <ThemeProvider theme={theme}>
         <div className={classes.page}>
-        <NavBar />
           <div className={classes.flex}>
             <Grid container spacing={3} className={classes.container}>
               <Grid item xs={12} className={classes.flex}>

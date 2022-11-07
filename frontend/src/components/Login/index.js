@@ -7,9 +7,9 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import LoginForm from "./LoginForm";
-import Navbar from "../Navbar";
 import LoginPage from "./LoginForm";
 import GoogleLoginButton from "./GoogleLoginButton";
+import CardContainer from "../shared/CardContainer";
 
 const backgroundShape = require("../../images/shape.svg");
 
@@ -101,20 +101,10 @@ class Login extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <React.Fragment>
-        <CssBaseline />
-        <Navbar />
-        <div className={classes.root}>
-          <Grid container 
-            justify="center" 
-            direction="column" 
-            alignItems="center">
-              
+          <CardContainer>           
             <LoginForm />
             <GoogleLoginButton />
-          </Grid>
-        </div>
-      </React.Fragment>
+          </CardContainer>
     );
   }
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import { green } from '@material-ui/core/colors'
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis} from "recharts";
+import theme from '../../theme'
 
 const simpleData = [
   {
@@ -29,7 +30,7 @@ const simpleData = [
 function SimpleChart(){
     return (
     <React.Fragment>
-      <h2 style={{color: green[500]}}>Users in the last 5 days</h2>
+      <h2 style={{color: theme.palette.button.green}}>Users in the last 5 days</h2>
       <ResponsiveContainer width="100%" aspect={3} >
        <LineChart data= {simpleData}>
          <XAxis dataKey ="subject" />
@@ -38,7 +39,6 @@ function SimpleChart(){
        </LineChart>
       </ResponsiveContainer>
     </React.Fragment>
-   
     );
 };
 

@@ -8,7 +8,6 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 
-import Navbar from "../Navbar";
 import MainPage from "./Mainpage";
 import StatPage from "./StatPage";
 
@@ -104,7 +103,6 @@ class QRStatPage extends Component {
     return (
       <React.Fragment>
         <CssBaseline />
-        <Navbar />
         <div className={classes.root}>
           <Grid container justify='center'>
             <StatPage></StatPage>

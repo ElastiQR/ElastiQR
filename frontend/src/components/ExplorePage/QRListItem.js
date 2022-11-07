@@ -6,42 +6,12 @@ import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import { ThemeProvider } from '@material-ui/styles'
 import ButtonBase from '@material-ui/core/ButtonBase'
-
 import theme from '../../theme'
-
-const styles = theme => ({
-  link: {
-    textDecoration: "none",
-  },
-  buttonBase: {
-    width: "100%",
-    marginBottom: "1rem",
-    color: theme.palette.background.white
-  },
-  card: {
-    width: "100%",
-    textAlign: "left",
-    "&:hover": {
-      boxShadow: `4px 4px 4px ${theme.palette.button.mediumGray}`,
-      backgroundColor: theme.palette.button.lightGray
-    }
-  },
-  cardTitle: {
-    color: theme.palette.text.black,
-    marginBottom: 5
-  },
-  cardDescription: {
-    color: theme.palette.text.gray
-  }
-});
 
 class QRListItem extends Component {
   render() {
-    const { classes } = this.props;
-
     return (
-      <ThemeProvider theme={theme}>
-        <Link className={classes.link}
+        <Link style={theme.link}
           to={{
             pathname: "/qr-details-testing",
             state: {
@@ -52,23 +22,21 @@ class QRListItem extends Component {
             }
           }}
         >
-
-          <ButtonBase className={classes.buttonBase}>
-          <Card className={classes.card}>
+          <ButtonBase style={theme.buttonBase}>
+          <Card style={theme.card}>
             <CardContent>
-              <Typography variant="h6" className={classes.cardTitle}>
+              <Typography variant="h6" style={theme.cardTitle}>
                 {this.props.name}
               </Typography>
-              <Typography variant="body2" className={classes.cardDescription}>
+              <Typography variant="body2" style={theme.cardDescription}>
                 {this.props.description}
               </Typography>
             </CardContent>
           </Card>
           </ButtonBase>
         </Link>
-      </ThemeProvider>
     );
   }
 }
 
-export default withStyles(styles)(QRListItem);
+export default withStyles(QRListItem);
