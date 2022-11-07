@@ -34,7 +34,6 @@ export const theme = createTheme({
       ].join(',')
     },
     page: {
-      backgroundColor: "#F5F4F4",
       width: "100vw",
       minHeight: "100vh",
       overflow: "hidden"

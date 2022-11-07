@@ -17,14 +17,15 @@ import AuthService from "../services/auth.service";
 import { Link as MaterialLink } from "@material-ui/core";
 import Menu from "./Menu";
 
-const logo = require("../images/logo.svg");
+const logo = require("../images/qr_logo.png");
 
 const styles = theme => ({
   appBar: {
     position: "relative",
     boxShadow: "none",
     borderBottom: `1px solid ${theme.palette.grey["100"]}`,
-    backgroundColor: "white"
+    backgroundColor: "white",
+    borderRadius: "0px",
   },
   inline: {
     display: "inline"
@@ -124,7 +125,7 @@ class Navbar extends Component {
               <div className={classes.inline}>
                 <Typography variant="h6" color="inherit" noWrap>
                   <Link to="/" className={classes.link}>
-                    <img width={20} src={logo} alt="" />
+                    <img width={25} src={logo} alt="" />
                     <span className={classes.tagline}>ElastiQR</span>
                   </Link>
                 </Typography>
