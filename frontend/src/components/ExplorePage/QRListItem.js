@@ -39,4 +39,4 @@ class QRListItem extends Component {
   }
 }
 
-export default withStyles(QRListItem);
+export default QRListItem;
