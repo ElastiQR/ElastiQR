@@ -15,12 +15,14 @@ import theme from './theme'
 
 /* For testing purposes */
 import QRDetailsPage from './components/QRDetailsPage'
+import AnimatedBackground from './components/shared/AnimatedBackground/AnimatedBackground'
 
 export default props => (
     <HashRouter>
       <ScrollToTop>
       <ThemeProvider theme={theme}>
         <Navbar/>
+        <AnimatedBackground></AnimatedBackground>
         <div style={theme.page}>
           <div style={theme.flex}>
             <Switch>
