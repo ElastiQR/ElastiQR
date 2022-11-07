@@ -33,9 +33,30 @@ const CreateQRForm = () => {
       return;
     }
 
-    UserService.createQR(user.userID, qrname, link);
-    setLoading(true)
-    setTimeout(() => { history.push('/my-qrs'); }, 1500);
+    UserService.createQR(user.userID, qrname, link)
+    .then(
+      (response) => {
+        console.log(response);
+        setLoading(true);
+        setTimeout(() => { history.push('/my-qrs'); }, 1500);
+      },
+      (error) => {
+        if (error.response?.data?.message === 'Token error') {
+          setLoading(true);
+          AuthService.logout();
+          setTimeout(() => { history.push('/login') }, 500);
+        } else {
+          const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+          console.log(resMessage);
+          console.log(error);
+        }
+      }
+    );
   }
   
   return (

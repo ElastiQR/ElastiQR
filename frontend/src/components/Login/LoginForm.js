@@ -30,12 +30,11 @@ const LoginForm = () => {
     setMessage("");
     setLoading(true);
 
-    AuthService.login(username, password).then(
+    AuthService.login(username, password, checked).then(
       () => {
         setTimeout(() => { history.push('/'); }, 500);
       },
       error => {
-        console.log("USERNAME: " + username, "PASSWORD" + password);
         const resMessage =
           (error.response &&
             error.response.data &&

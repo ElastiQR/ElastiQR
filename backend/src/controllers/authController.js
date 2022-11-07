@@ -6,8 +6,11 @@ const { OAuth2Client } = require('google-auth-library')
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
 
-function generateAccessToken (user) {
-    return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "15m"})
+function generateAccessToken (user, staySignedIn) {
+    if (staySignedIn) 
+        return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+    else 
+        return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "30m"});
 }
 
 module.exports = {
@@ -51,6 +54,7 @@ module.exports = {
     loginUserController: (req, res)=> {
         const user = req.body.name
         const password = req.body.password
+        const staySignedIn = req.body.staySignedIn
 
         db.getConnection ( async (err, connection)=> {
             if (err) throw (err)
@@ -72,7 +76,7 @@ module.exports = {
                     if (await bcrypt.compare(password, hashedPassword)) {
                         console.log("---------> Login Successful")
                         console.log("---------> Generating accessToken")
-                        const token = generateAccessToken({user: user})   
+                        const token = generateAccessToken({user: user}, staySignedIn)   
                         console.log(token)
                         res.json({
                             userID: result[0].userID,

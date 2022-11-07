@@ -8,7 +8,7 @@ class UserService {
   getUserQRs(userID) {
     return axios.get(QR_API_URL + 'qr/getQRCodes?' + new URLSearchParams({
       userID
-    }));
+    }), { headers: authHeader() })
   }
 
   createQR(id, name, url) {
@@ -16,7 +16,7 @@ class UserService {
       userID: id,
       name,
       url
-    })
+    }, { headers: authHeader() })
   }
 
   updateQR(id, name, url, description) {
@@ -25,7 +25,7 @@ class UserService {
       name,
       url,
       description
-    })
+    }, { headers: authHeader() })
   }
 }
 

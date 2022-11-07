@@ -11,6 +11,7 @@ import theme from '../theme'
 import TextInput from './TextInput'
 import UserService from '../services/user.service'
 import StatPage from './QRStatPage/StatPage'
+import AuthService from '../services/auth.service'
 
 const styles = theme => ({
   page: {
@@ -109,14 +110,19 @@ class QRDetailsPage extends Component {
         // might want to add some logic here in the future to indicate success
       },
       (error) => {
-        const resMessage =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-        console.log(resMessage);
-        console.log(error);
+        if (error.response?.data?.message === 'Token error') {
+          AuthService.logout();
+          setTimeout(() => { this.props.history.push('/login') }, 500);
+        } else {
+          const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+          console.log(resMessage);
+          console.log(error);
+        }
       }
     )
   }

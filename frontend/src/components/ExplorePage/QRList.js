@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import withStyles from '@material-ui/styles/withStyles'
 import { withRouter } from 'react-router-dom'
 import List from '@material-ui/core/List'
+import { LinearProgress } from '@material-ui/core'
 
 import QRListItem from "./QRListItem"
 import AuthService from "../../services/auth.service"
@@ -35,13 +36,18 @@ class QRList extends Component {
         });
       },
       (error) => {
-        this.setState({
-          isLoaded: true
-        });
-        if (error.response?.status != 400) {
+        if (error.response?.data?.message === 'Token error') {
+          AuthService.logout();
+          setTimeout(() => { this.props.history.push('/login') }, 500)
+        } else {
           this.setState({
-            error
+            isLoaded: true
           });
+          if (error.response?.status != 400) {
+            this.setState({
+              error
+            });
+          }
         }
       }
     )
@@ -53,7 +59,7 @@ class QRList extends Component {
       console.log(error.message)
       return <div> Error: {error.message}</div>;
     } else if (!isLoaded) {
-      return <div>Loading...</div>
+      return <LinearProgress/>
     } else if (QRCodes.length == 0) {
       return <div> You don't have any QR codes.
       Try creating your first one with the button above! </div>
@@ -61,7 +67,8 @@ class QRList extends Component {
       return (
         <List>
           {QRCodes.map((item, index) => (
-            <QRListItem id={item.qrID} 
+            <QRListItem key={item.qrID} 
+              id={item.qrID} 
               name={item.qrname} 
               description={item.description} 
               url={item.qrURL} />
