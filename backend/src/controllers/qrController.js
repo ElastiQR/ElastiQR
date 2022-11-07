@@ -102,5 +102,26 @@ module.exports = {
           }
         });
       });
+    },
+    countQRScansController: (req, res) => {
+      const qrID = parseInt(req.query.qrID);
+      const daySpan = parseInt(req.query.span);
+
+      db.getConnection(async (err, connection) => {
+        if (err) throw (err)
+        sqlSearch = `SELECT COUNT(*) AS quantity FROM QRScans WHERE qrID = ? AND 
+                     accessTime >= DATE_SUB(CURDATE(), INTERVAL ? day)`
+        search_query = mysql.format(sqlSearch, [qrID, daySpan])
+
+        await connection.query(search_query, async (err, result) => {
+          if (err) throw (err)
+          connection.release()
+          
+          const response = {
+            quantity: result[0].quantity
+          }
+          res.send(JSON.stringify(response))
+        })
+      })
     }
   }
