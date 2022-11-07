@@ -38,7 +38,8 @@ const SignupForm = () => {
     if (true) {
       AuthService.register(
         username,
-        password
+        password,
+        checked
       ).then(
         response => {
           setMessage(response.data.message)

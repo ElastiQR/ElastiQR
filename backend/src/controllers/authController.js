@@ -14,13 +14,13 @@ module.exports = {
     signUpController: async (req,res) => {
         const user = req.body.name;
         const passwordHash = await bcrypt.hash(req.body.password,10);
-        
+        const wantsnotifications = req.body.wantsnotifications;
         db.getConnection( async (err, connection) => {
             if (err) throw (err)
         
             const sqlSearch = "SELECT * FROM users WHERE username = ? LIMIT 1"
             const search_query = mysql.format(sqlSearch,[user])
-            const sqlInsert = "INSERT INTO users (username, password) VALUES (?,?)"
+            const sqlInsert = "INSERT INTO users (username, password, wantsnotifications) VALUES (?,?,?)"
         
             const insert_query = mysql.format(sqlInsert,[user, passwordHash])
         
