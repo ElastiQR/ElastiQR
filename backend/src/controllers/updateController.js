@@ -10,7 +10,7 @@ module.exports = {
         if (err) throw (err)
   
         const sqlSearch = `SELECT * FROM QRCodes 
-                           where qrname = ? AND userID = ? LIMIT 1`
+                           WHERE qrname = ? AND userID = ? LIMIT 1`
         const search_query = mysql.format(sqlSearch, [qrname, userID])
         const sqlDelete = `DELETE FROM QRCodes WHERE qrname = ? AND userID = ?`
         const delete_query = mysql.format(sqlDelete, [qrname, userID])
