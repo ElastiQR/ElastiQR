@@ -12,9 +12,9 @@ module.exports = {
   
         const sqlSearch = `SELECT * FROM users 
                            WHERE userID = ?`
-        const search_query = mysql.format(sqlSearch, [username])
-        const sqlDelete = `DELETE FROM users WHERE username = ?`
-        const delete_query = mysql.format(sqlDelete, [username])
+        const search_query = mysql.format(sqlSearch, [userID])
+        const sqlDelete = `DELETE FROM users WHERE userID = ?`
+        const delete_query = mysql.format(sqlDelete, [userID])
   
         await connection.query (search_query, async (err, result)=> {
           if (err) throw (err)
@@ -38,58 +38,49 @@ module.exports = {
 
       const userID = req.body.userID
       const username = req.body.username
-
+      const password = req.body.password
+      const wantsnotifications = req.body.wantsnotifications
     //var newuserID = req.body.newuserID // take out user id, can update wantsnotifications/prefs/
       var newusername = req.body.newusername //change password, encrypt new password, replace in table
       var newpassword = req.body.newpassword
-      var isnewpassword = 1
-      var passwordHash = ""
-    
+      var newnotificationschoice = req.body.newnotificationschoice
       if (newusername == null) {
         newusername = username
       }
       if (newpassword == null) {
-        isnewpassword = 0
+        passwordHash = await bcrypt.hash(password,10);
+      } 
+      else {
+        passwordHash = await bcrypt.hash(newpassword,10);
       }
-      if (isnewpassword == 1) {
-        passwordHash = await bcrypt.hash(req.body.password,10);
+      if (newnotificationschoice == null) {
+        newnotificationschoice = wantsnotifications
       }
-
       db.getConnection ( async (err, connection)=> {
         if (err) throw (err)
   
-       // const sqlSearch = `SELECT * FROM users 
-       //                  WHERE userID = ? LIMIT 1` //when changing username search by userID
-       // const search_query = mysql.format(sqlSearch, [userID])
-        const sqlUpdate = `UPDATE users SET username = ? 
+        const sqlSearch = `SELECT * FROM users 
+                          WHERE userID = ? LIMIT 1` //when changing username search by userID
+        const search_query = mysql.format(sqlSearch, [userID])
+        const sqlUpdate = `UPDATE users SET username = ?, password = ?, wantsnotifications = ? 
                            WHERE userID = ?`
-        const update_query = mysql.format(sqlUpdate, [newusername, userID])
-
-        //const pwSearch = "SELECT * FROM users WHERE userID = ? LIMIT 1"
-        //const pwsearch_query = mysql.format(sqlSearch,[userID])
-        const pwUpdate = 'UPDATE users SET password = ? WHERE userID = ?'
-        const pwupdate_query = mysql.format(pwUpdate, [passwordHash, userID])
-  
-        /*const qrsqlSearch = 'SELECT * FROM QRCodes WHERE userID = ?'
-        const sqlUpdateuserID = `UPDATE QRCodes SET userID = ? 
-        WHERE userID = ?`
-        const update_queryuserID = mysql.format(sqlUpdateuserID, [newuserID, userID])
-        */
-        await connection.query (update_query, async (err, result)=> {
+        const update_query = mysql.format(sqlUpdate, [newusername, passwordHash, newnotificationschoice, userID])
+        
+        await connection.query (search_query, async (err, result)=> {
           if (err) throw (err)
-          console.log("--------> Updated Username")
-          console.log(result.insertId)
-          //res.sendStatus(201) 
+          if (result.length() == 0) {
+            console.log("--------> Could not find user")
+            res.sendStatus(400)
+          }
+          else {
+            await connection.query (update_query, async (err, result)=> {
+              if (err) throw (err)
+              console.log("--------> Updated User")
+              console.log(result.insertId)
+              res.sendStatus(200) 
+            })
+          }
         })
-        if (isnewpassword == 1) {
-          await connection.query (pwupdate_query, async (err, result)=> {
-            if (err) throw (err)
-            console.log("--------> Updated Username")
-            console.log(result.insertId)
-            //res.sendStatus(201) 
-          })
-        }
-        res.sendStatus(200) 
       })
     }
   }

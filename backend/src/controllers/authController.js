@@ -22,7 +22,7 @@ module.exports = {
             const search_query = mysql.format(sqlSearch,[user])
             const sqlInsert = "INSERT INTO users (username, password, wantsnotifications) VALUES (?,?,?)"
         
-            const insert_query = mysql.format(sqlInsert,[user, passwordHash])
+            const insert_query = mysql.format(sqlInsert,[user, passwordHash, wantsnotifications])
         
             await connection.query (search_query, async (err, result) => {
             if (err) throw (err)
