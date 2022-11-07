@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { ThemeProvider } from '@material-ui/styles'
-import QRCode from 'react-qr-code'
+import { QRCode } from 'react-qrcode-logo'
 
 import theme from '../theme'
 import TextInput from './TextInput'
@@ -65,7 +65,6 @@ const styles = theme => ({
   }
 })
 
-
 class QRDetailsPage extends Component {
   constructor(props) {
     super(props);
@@ -76,6 +75,7 @@ class QRDetailsPage extends Component {
        QRListItem component. I just needed something to test with until we can
        connect with the backend. */
     this.state = {
+      name: this.props.location.state.name,
       link: this.props.location.state.url,
       description: this.props.location.state.description,
       error: false,
@@ -127,6 +127,20 @@ class QRDetailsPage extends Component {
     )
   }
 
+  downloadQRCode = () => {
+    var qrCodeURL = document.getElementById('qrcode')
+      .toDataURL("image/png")
+      .replace("image/png", "image/octet-stream");
+    console.log(qrCodeURL)
+    let aEl = document.createElement("a");
+    aEl.href = qrCodeURL;
+    aEl.download = this.state.name + ".png";
+    document.body.appendChild(aEl);
+    aEl.click();
+    document.body.removeChild(aEl);
+  }
+
+
   render() {
     const { classes } = this.props;
 
@@ -137,7 +151,7 @@ class QRDetailsPage extends Component {
             <Grid container spacing={3} className={classes.container}>
               <Grid item xs={12} className={classes.flex}>
                 <Typography variant="h5" className={classes.qrName}>
-                  {this.props.location.state.name}
+                  {this.state.name}
                 </Typography>
               </Grid>
 
@@ -148,11 +162,12 @@ class QRDetailsPage extends Component {
                   viewBox={`0 0 144 144`}
                   bgColor={theme.palette.background.lightGray}
                   className={classes.qrCode}
+                  id="qrcode"
                 />
               </Grid>
 
               <Grid item xs={12}>
-                <Button variant="contained" className={`${classes.button} ${classes.greenButton}`}>
+                <Button variant="contained" onClick={this.downloadQRCode} className={`${classes.button} ${classes.greenButton}`}>
                   <Typography variant="h6">
                     Download
                   </Typography>
@@ -171,13 +186,16 @@ class QRDetailsPage extends Component {
                     onChangeValue={this.handleLinkChange} 
                     error={this.state.error}
                     helperText={this.state.help}
+                    required={false}
                   />
                 </Grid>
                 <Grid item xs={12} className={classes.descriptionText}>
                   <TextInput
                     label="Description"
                     value={this.state.description}
-                    onChangeValue={this.handleDescriptionChange} />
+                    onChangeValue={this.handleDescriptionChange} 
+                    required={false}
+                  />  
                 </Grid>             
               </Grid>
 
