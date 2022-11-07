@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core';
 import { useHistory } from "react-router-dom";
 import AuthService from "../../services/auth.service";
+import theme from '../../theme';
 
 const SignupForm = () => {
   let history = useHistory();
@@ -68,31 +69,23 @@ const SignupForm = () => {
 
 
   return (
-    <div style={{ padding: 30 }}>
-      <Paper>
-        <Grid
-          container
-          spacing={0}
-          direction={'column'}
-          justify={'center'}
-          alignItems={'center'}
-        >
-          <Grid item xs={12}>
+    <div>
+      <Grid item xs={12} style={theme.flex}>
             <TextField 
               label="Username" 
               onChange={e => setUsername(e.target.value)}
               error={fieldError}
               helperText={help}/>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} style={theme.flex}>
             <TextField label="Password" type={'password'} onChange={e => setPassword(e.target.value)}> </TextField>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} style={theme.flex}>
             <TextField label="Confirm Password" type={'password'} onChange={e => setconfirmPassword(e.target.value)}></TextField>
           </Grid>
           <PasswordChecklist rules={["minLength", "specialChar", "number", "capital", "match"]} minLength={8} value={password} valueAgain={confirmpassword} onChange={(isValid)=>{setFormValid(Valid => !Valid)}}
           />
-          <Grid item xs={12}>
+      <Grid item xs={12} style={theme.flex}>
             <FormControlLabel
               control={
                 <Checkbox
@@ -105,12 +98,10 @@ const SignupForm = () => {
               label="Receive Notifications"
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} style={theme.flex}>
             <Button disabled={formValid} onClick={handleRegister} fullWidth > Sign Up </Button>
           </Grid>
-        </Grid>
-      </Paper>
-    </div>
+          </div>
   );
 };
 

@@ -3,6 +3,8 @@ import { useHistory } from "react-router-dom";
 import AuthService from "../../services/auth.service";
 import { GoogleLogin } from "react-google-login";
 import { gapi } from "gapi-script";
+import { Grid } from '@material-ui/core';
+import theme from '../../theme';
 
 const GoogleLoginButton = () => {
 
@@ -38,8 +40,8 @@ const GoogleLoginButton = () => {
   }
 
   return (
-    <div>
-      <GoogleLogin
+    <Grid item xs={12} style={theme.flex}>
+    <GoogleLogin
         style={{ marginTop: '100px' }}
         clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
         buttonText="Log in with Google"
@@ -47,7 +49,7 @@ const GoogleLoginButton = () => {
         onFailure={() => { console.log("failed")}}
         cookiePolicy={'single_host_origin'}
       />
-    </div>
+    </Grid>
   );
 };
 

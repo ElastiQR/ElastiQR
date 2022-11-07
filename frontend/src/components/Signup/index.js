@@ -6,8 +6,8 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import Navbar from "../Navbar";
 import SignupForm from "./SignupForm";
+import CardContainer from "../shared/CardContainer";
 
 const backgroundShape = require("../../images/shape.svg");
 
@@ -99,16 +99,9 @@ class Signup extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <React.Fragment>
-        <CssBaseline />
-        <Navbar />
-        <div className={classes.root}>
-          <Grid container justify="center">
-
+          <CardContainer>
             <SignupForm />
-          </Grid>
-        </div>
-      </React.Fragment>
+          </CardContainer>
     );
   }
 }
