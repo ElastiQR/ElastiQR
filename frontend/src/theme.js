@@ -46,7 +46,11 @@ export const theme = createTheme({
     container: {
       maxWidth: 500,
       width: "80vw",
-      marginTop: "4vh"
+    },
+    listTitle: {
+      color: "#62D2A2",
+      fontWeight: "bold",
+      margin: "1rem 0"
     },
     buttonContainer: {
       marginBottom: "3vh"
@@ -63,14 +67,12 @@ export const theme = createTheme({
     },
     buttonBase: {
       width: "100%",
-      marginBottom: "1rem",
+      marginTop: "1rem",
       color: "#FFFFFF"
     },
     link: {
       textDecoration: "none"
     },
-
-
     card: {
       width: "100%",
       textAlign: "left",

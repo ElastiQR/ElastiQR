@@ -7,17 +7,31 @@ import Typography from '@material-ui/core/Typography'
 import theme from '../../theme'
 import QRList from './QRList'
 import CardContainer from '../shared/CardContainer'
+import { mergeClasses } from '@material-ui/styles'
 
+const styles = theme => ({
+  button: {
+    backgroundColor: "#62D2A2",
+    color: "#FFFFFF",
+    textTransform: "none",
+    width: "100%",
+    height: "100%",
+    "&:hover": {
+      backgroundColor: "#AAAAAA"
+    }
+  }
+})
 
 class ExplorePage extends Component {
   render() {
+    const { classes } = this.props;
 
     return (
           <CardContainer>
-            <Grid container spacing={3} style={theme.container}>
+            <Grid container spacing={0} style={theme.container}>
               <Grid item xs={12} style={theme.buttonContainer}>
                 <Link to="/create-qr" style={theme.link}>
-                  <Button variant="contained" style={theme.button}>
+                  <Button variant="contained" className={classes.button}>
                     <Typography variant="h6">
                       Create New QR Code
                     </Typography>
@@ -25,7 +39,7 @@ class ExplorePage extends Component {
                 </Link>
               </Grid>
               <Grid item xs={12} style={theme.flex}>
-                <Typography variant="h5" style={theme.listTitle}>
+                <Typography variant="h4" style={theme.listTitle}>
                   Your QR Codes
                 </Typography>
               </Grid>
@@ -38,4 +52,4 @@ class ExplorePage extends Component {
   }
 }
 
-export default withRouter(ExplorePage);
+export default withRouter(withStyles(styles)(ExplorePage));
