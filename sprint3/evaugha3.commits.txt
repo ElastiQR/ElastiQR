@@ -1,0 +1,244 @@
+frontend/src/theme.js:
+a72ef221 (VaughanEric 2022-11-07 22:48:39 -0500 14)         white: "#FFFFFF",
+a72ef221 (VaughanEric 2022-11-07 22:48:39 -0500 15)         green: "#62D2A2"
+b8c71255 (VaughanEric 2022-11-07 23:37:58 -0500 49)     },
+b8c71255 (VaughanEric 2022-11-07 23:37:58 -0500 50)     listTitle: {
+b8c71255 (VaughanEric 2022-11-07 23:37:58 -0500 51)       color: "#62D2A2",
+b8c71255 (VaughanEric 2022-11-07 23:37:58 -0500 52)       fontWeight: "bold",
+b8c71255 (VaughanEric 2022-11-07 23:37:58 -0500 53)       margin: "1rem 0"
+b8c71255 (VaughanEric 2022-11-07 23:37:58 -0500 70)       marginTop: "1rem",
+
+frontend/src/components/QRDetailsPage.js:
+1b86ed6b (VaughanEric  2022-11-07 18:17:01 -0500   8) import { QRCode } from 'react-qrcode-logo'
+2b300263 (VaughanEric  2022-11-08 06:57:42 -0500  14) import CardContainer from './shared/CardContainer'
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500  26)   header: {
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500  27)     backgroundColor: theme.palette.background.green,
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500  28)     paddingBottom: "1.5rem"
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500  29)   },
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500  35)     color: theme.palette.text.white,
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500  36)     fontWeight: "bold",
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500  37)     backgroundColor: theme.palette.background.green,
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500  38)     paddingTop: "1rem",
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500  39)     width: "100%",
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500  40)     textAlign: "center",
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500  41)     borderTopLeftRadius: "14px",
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500  42)     borderTopRightRadius: "14px",
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500  43)     paddingBottom: "1.5rem"
+f3e9e7e3 (VaughanEric  2022-11-07 22:51:36 -0500  50)       backgroundColor: theme.palette.button.mediumGray,
+f3e9e7e3 (VaughanEric  2022-11-07 22:51:36 -0500  51)       color: theme.palette.text.white
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500  54)   statsPage: {
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500  55)     margin: "1rem 0"
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500  56)   },
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500  60)   whiteButton: {
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500  61)     backgroundColor: theme.palette.button.white,
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500  62)     color: theme.palette.text.green,
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500  63)     width: "80%",
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500  64)   },
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500  66)     backgroundColor: theme.palette.button.green,
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500  67)     color: theme.palette.text.white
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500  70)     backgroundColor: theme.palette.button.darkGray,
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500  71)     color: theme.palette.text.white
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500  74)     margin: "1rem 0"
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500  83)     marginBottom: "2vh",
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500  84)     border: "5rem",
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500  85)     borderRadius: "14px"
+1b86ed6b (VaughanEric  2022-11-07 18:17:01 -0500  99)       name: this.props.location.state.name,
+1b86ed6b (VaughanEric  2022-11-07 18:17:01 -0500 151)   downloadQRCode = () => {
+1b86ed6b (VaughanEric  2022-11-07 18:17:01 -0500 152)     var qrCodeURL = document.getElementById('qrcode')
+1b86ed6b (VaughanEric  2022-11-07 18:17:01 -0500 153)       .toDataURL("image/png")
+1b86ed6b (VaughanEric  2022-11-07 18:17:01 -0500 154)       .replace("image/png", "image/octet-stream");
+1b86ed6b (VaughanEric  2022-11-07 18:17:01 -0500 155)     console.log(qrCodeURL)
+1b86ed6b (VaughanEric  2022-11-07 18:17:01 -0500 156)     let aEl = document.createElement("a");
+1b86ed6b (VaughanEric  2022-11-07 18:17:01 -0500 157)     aEl.href = qrCodeURL;
+1b86ed6b (VaughanEric  2022-11-07 18:17:01 -0500 158)     aEl.download = this.state.name + ".png";
+1b86ed6b (VaughanEric  2022-11-07 18:17:01 -0500 159)     document.body.appendChild(aEl);
+1b86ed6b (VaughanEric  2022-11-07 18:17:01 -0500 160)     aEl.click();
+1b86ed6b (VaughanEric  2022-11-07 18:17:01 -0500 161)     document.body.removeChild(aEl);
+1b86ed6b (VaughanEric  2022-11-07 18:17:01 -0500 162)   }
+1b86ed6b (VaughanEric  2022-11-07 18:17:01 -0500 163) 
+1b86ed6b (VaughanEric  2022-11-07 18:17:01 -0500 164) 
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500 170)         <CardContainer>
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500 173)               <Grid container spacing={0} className={classes.container}>
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500 175)                   <Typography variant="h4" className={classes.qrName}>
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500 176)                     {this.state.name}
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500 180)                 <Grid item xs={12} className={`${classes.flex} ${classes.header}`}>
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500 191)                 <Grid item xs={12} className={`${classes.flex} ${classes.header}`}>
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500 192)                   <Button variant="contained" onClick={this.downloadQRCode} className={`${classes.button} ${classes.whiteButton}`}>
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500 199)                 <Grid item xs={12} className={classes.statsPage}>
+413f9f10 (VaughanEric  2022-11-08 07:12:18 -0500 200)                   <QRStatPage id={this.props.location.state.id}></QRStatPage>
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500 211)                       required={false}
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500 219)                       required={false}
+a72ef221 (VaughanEric  2022-11-07 22:48:39 -0500 244)         </CardContainer>
+
+frontend/src/components/TextInput.js:
+98cb8a9d (VaughanEric  2022-11-07 18:20:00 -0500 29)     const { classes, label, value, onChangeValue, error, helperText, required } = this.props;
+98cb8a9d (VaughanEric  2022-11-07 18:20:00 -0500 48)               required={this.required}
+
+frontend/src/components/shared/shared.css:
+a72ef221 (VaughanEric 2022-11-07 22:48:39 -0500  2)   margin: 35px 0;
+98cb8a9d (VaughanEric 2022-11-07 18:20:00 -0500  4) 	background-color: #F5F4F4;
+9e40c4c7 (VaughanEric 2022-11-08 00:14:03 -0500  5) 	min-width: 400px;
+
+frontend/src/components/QRStatPage/StatPage.js:
+a72ef221 (VaughanEric 2022-11-07 22:48:39 -0500 31)     <div style={{width: '100%', textAlign: 'center'}}>
+a72ef221 (VaughanEric 2022-11-07 22:48:39 -0500 32)         <h2 style={{color: "#62D2A2"}}>Your QR Code's Stats</h2>
+
+frontend/src/components/QRStatPage/index.js:
+413f9f10 (VaughanEric 2022-11-08 07:12:18 -0500  13) import '../Profile/ProfileCard.css'
+413f9f10 (VaughanEric 2022-11-08 07:12:18 -0500 114)       <div style={{width: '100%', padding: 30, textAlign: "center"}}>
+413f9f10 (VaughanEric 2022-11-08 07:12:18 -0500 118)                   <Typography variant="h5" id="bold-text">
+413f9f10 (VaughanEric 2022-11-08 07:12:18 -0500 119)                      {total}
+413f9f10 (VaughanEric 2022-11-08 07:12:18 -0500 120)                   </Typography>
+413f9f10 (VaughanEric 2022-11-08 07:12:18 -0500 121)                   <Typography variant="subtitle1" id="smaller-text">
+413f9f10 (VaughanEric 2022-11-08 07:12:18 -0500 122)                     Total Uses
+413f9f10 (VaughanEric 2022-11-08 07:12:18 -0500 123)                   </Typography>
+413f9f10 (VaughanEric 2022-11-08 07:12:18 -0500 126)                   <Typography variant="h5" id="bold-text">
+413f9f10 (VaughanEric 2022-11-08 07:12:18 -0500 127)                     0
+413f9f10 (VaughanEric 2022-11-08 07:12:18 -0500 128)                   </Typography>
+413f9f10 (VaughanEric 2022-11-08 07:12:18 -0500 129)                   <Typography variant="subtitle1" id="smaller-text">
+413f9f10 (VaughanEric 2022-11-08 07:12:18 -0500 130)                     Failed Uses
+413f9f10 (VaughanEric 2022-11-08 07:12:18 -0500 131)                   </Typography>
+
+frontend/src/components/Profile/ProfileCard.js:
+4f41a064 (VaughanEric  2022-11-08 05:53:05 -0500  17) import Typography from '@material-ui/core/Typography'
+4f41a064 (VaughanEric  2022-11-08 05:53:05 -0500  72)         <div className="flex">
+4f41a064 (VaughanEric  2022-11-08 05:53:05 -0500  73)           <Typography variant="h4" className="username">
+4f41a064 (VaughanEric  2022-11-08 05:53:05 -0500  75)           </Typography>
+4f41a064 (VaughanEric  2022-11-08 05:53:05 -0500  76)         </div>
+d2bb7aa5 (VaughanEric  2022-11-08 06:08:58 -0500  79)                 <Typography variant="h5" id="bold-text">
+2b300263 (VaughanEric  2022-11-08 06:57:42 -0500  80)                   {totalCodes}
+d2bb7aa5 (VaughanEric  2022-11-08 06:08:58 -0500  81)                 </Typography>
+d2bb7aa5 (VaughanEric  2022-11-08 06:08:58 -0500  82)                 <Typography variant="subtitle1" id="smaller-text">
+d2bb7aa5 (VaughanEric  2022-11-08 06:08:58 -0500  83)                   QR Codes
+d2bb7aa5 (VaughanEric  2022-11-08 06:08:58 -0500  84)                 </Typography>
+d2bb7aa5 (VaughanEric  2022-11-08 06:08:58 -0500  87)                 <Typography variant="h5" id="bold-text">
+d2bb7aa5 (VaughanEric  2022-11-08 06:08:58 -0500  88)                   0
+d2bb7aa5 (VaughanEric  2022-11-08 06:08:58 -0500  89)                 </Typography>
+d2bb7aa5 (VaughanEric  2022-11-08 06:08:58 -0500  90)                 <Typography variant="subtitle1" id="smaller-text">
+d2bb7aa5 (VaughanEric  2022-11-08 06:08:58 -0500  91)                   Broken Links
+d2bb7aa5 (VaughanEric  2022-11-08 06:08:58 -0500  92)                 </Typography>
+
+frontend/src/components/Profile/ProfileCard.css:
+d2bb7aa5 (VaughanEric 2022-11-08 06:08:58 -0500 20) #bold-text {
+d2bb7aa5 (VaughanEric 2022-11-08 06:08:58 -0500 23) 	padding: 20px 20px 0px 20px;
+d2bb7aa5 (VaughanEric 2022-11-08 06:08:58 -0500 35) #smaller-text {
+d2bb7aa5 (VaughanEric 2022-11-08 06:08:58 -0500 40) 	padding: 16px 0 32px;
+9899e18f (VaughanEric 2022-11-08 06:31:34 -0500 50) .home-container {
+9899e18f (VaughanEric 2022-11-08 06:31:34 -0500 51) 	border-bottom: solid rgb(206, 206, 206) 1px;             
+9899e18f (VaughanEric 2022-11-08 06:31:34 -0500 52) }
+9899e18f (VaughanEric 2022-11-08 06:31:34 -0500 53) 
+4f41a064 (VaughanEric 2022-11-08 05:53:05 -0500 64) }
+4f41a064 (VaughanEric 2022-11-08 05:53:05 -0500 65) 
+4f41a064 (VaughanEric 2022-11-08 05:53:05 -0500 66) .flex {
+4f41a064 (VaughanEric 2022-11-08 05:53:05 -0500 67) 	display: flex;
+4f41a064 (VaughanEric 2022-11-08 05:53:05 -0500 68) 	justify-content: center;
+4f41a064 (VaughanEric 2022-11-08 05:53:05 -0500 69) 	margin: 1rem 0
+4f41a064 (VaughanEric 2022-11-08 05:53:05 -0500 70) }
+4f41a064 (VaughanEric 2022-11-08 05:53:05 -0500 71) .username {
+4f41a064 (VaughanEric 2022-11-08 05:53:05 -0500 72) 	font-weight: bold;
+
+frontend/src/components/Main/LineChart.js:
+9e40c4c7 (VaughanEric 2022-11-08 00:14:03 -0500 33)       <h2 style={{color: theme.palette.button.green, textAlign: "center"}}>Users in the last 5 days</h2>
+9899e18f (VaughanEric 2022-11-08 06:31:34 -0500 34)       <div style={{margin: "0 auto"}}>
+9899e18f (VaughanEric 2022-11-08 06:31:34 -0500 35)         <ResponsiveContainer width={600} aspect={2.5}>
+
+frontend/src/components/Main/Main.js:
+9899e18f (VaughanEric 2022-11-08 06:31:34 -0500  7) import Typography from '@material-ui/core/Typography'
+9899e18f (VaughanEric 2022-11-08 06:31:34 -0500  8) import '../Profile/ProfileCard.css'
+9899e18f (VaughanEric 2022-11-08 06:31:34 -0500 64)               <div className="social-container home-container">
+9899e18f (VaughanEric 2022-11-08 06:31:34 -0500 66)                     <Typography variant="h5" id="bold-text">
+2b300263 (VaughanEric 2022-11-08 06:57:42 -0500 67)                       {QRCodes.length}
+9899e18f (VaughanEric 2022-11-08 06:31:34 -0500 68)                     </Typography>
+9899e18f (VaughanEric 2022-11-08 06:31:34 -0500 69)                     <Typography variant="subtitle1" id="smaller-text">
+9899e18f (VaughanEric 2022-11-08 06:31:34 -0500 70)                       QR Codes
+9899e18f (VaughanEric 2022-11-08 06:31:34 -0500 71)                     </Typography>
+9899e18f (VaughanEric 2022-11-08 06:31:34 -0500 74)                     <Typography variant="h5" id="bold-text">
+9899e18f (VaughanEric 2022-11-08 06:31:34 -0500 75)                       0
+9899e18f (VaughanEric 2022-11-08 06:31:34 -0500 76)                     </Typography>
+9899e18f (VaughanEric 2022-11-08 06:31:34 -0500 77)                     <Typography variant="subtitle1" id="smaller-text">
+9899e18f (VaughanEric 2022-11-08 06:31:34 -0500 78)                       Broken Links
+9899e18f (VaughanEric 2022-11-08 06:31:34 -0500 79)                     </Typography>
+
+
+frontend/src/components/ExplorePage/ExplorePage.js:
+b8c71255 (VaughanEric 2022-11-07 23:37:58 -0500 12) const styles = theme => ({
+b8c71255 (VaughanEric 2022-11-07 23:37:58 -0500 13)   button: {
+b8c71255 (VaughanEric 2022-11-07 23:37:58 -0500 14)     backgroundColor: "#62D2A2",
+b8c71255 (VaughanEric 2022-11-07 23:37:58 -0500 15)     color: "#FFFFFF",
+b8c71255 (VaughanEric 2022-11-07 23:37:58 -0500 16)     textTransform: "none",
+b8c71255 (VaughanEric 2022-11-07 23:37:58 -0500 17)     width: "100%",
+b8c71255 (VaughanEric 2022-11-07 23:37:58 -0500 18)     height: "100%",
+b8c71255 (VaughanEric 2022-11-07 23:37:58 -0500 19)     "&:hover": {
+b8c71255 (VaughanEric 2022-11-07 23:37:58 -0500 20)       backgroundColor: "#AAAAAA"
+b8c71255 (VaughanEric 2022-11-07 23:37:58 -0500 21)     }
+b8c71255 (VaughanEric 2022-11-07 23:37:58 -0500 22)   }
+b8c71255 (VaughanEric 2022-11-07 23:37:58 -0500 23) })
+b8c71255 (VaughanEric 2022-11-07 23:37:58 -0500 27)     const { classes } = this.props;
+b8c71255 (VaughanEric 2022-11-07 23:37:58 -0500 31)             <Grid container spacing={0} style={theme.container}>
+b8c71255 (VaughanEric 2022-11-07 23:37:58 -0500 34)                   <Button variant="contained" className={classes.button}>
+b8c71255 (VaughanEric 2022-11-07 23:37:58 -0500 42)                 <Typography variant="h4" style={theme.listTitle}>
+b8c71255 (VaughanEric 2022-11-07 23:37:58 -0500 55) export default withRouter(withStyles(styles)(ExplorePage));
+
+frontend/src/components/ExplorePage/QRListItem.js:
+b8c71255 (VaughanEric  2022-11-07 23:37:58 -0500 11) const styles = theme => ({
+b8c71255 (VaughanEric  2022-11-07 23:37:58 -0500 12)   card: {
+b8c71255 (VaughanEric  2022-11-07 23:37:58 -0500 13)     width: "100%",
+b8c71255 (VaughanEric  2022-11-07 23:37:58 -0500 14)     textAlign: "left",
+b8c71255 (VaughanEric  2022-11-07 23:37:58 -0500 15)     "&:hover": {
+b8c71255 (VaughanEric  2022-11-07 23:37:58 -0500 16)       boxShadow: "4px 4px 4px #AAAAAA",
+b8c71255 (VaughanEric  2022-11-07 23:37:58 -0500 17)     }
+b8c71255 (VaughanEric  2022-11-07 23:37:58 -0500 18)   }
+b8c71255 (VaughanEric  2022-11-07 23:37:58 -0500 19) })
+b8c71255 (VaughanEric  2022-11-07 23:37:58 -0500 23)     const { classes } = this.props;
+b8c71255 (VaughanEric  2022-11-07 23:37:58 -0500 38)           <Card className={classes.card}>
+b8c71255 (VaughanEric  2022-11-07 23:37:58 -0500 54) export default withStyles(styles)(QRListItem);
+
+frontend/src/components/CreateQRPage/CreateQRForm.js:
+98cb8a9d (VaughanEric  2022-11-07 18:20:00 -0500  11) import TextInput from '../TextInput';
+98cb8a9d (VaughanEric  2022-11-07 18:20:00 -0500  12) 
+9899e18f (VaughanEric  2022-11-08 06:31:34 -0500  16)   const [link, setLink] = useState();
+98cb8a9d (VaughanEric  2022-11-07 18:20:00 -0500  18)   const [description, setDescription] = useState();  /* Add this field to the QR code creation process */
+98cb8a9d (VaughanEric  2022-11-07 18:20:00 -0500  65)     <CardContainer className="card">
+98cb8a9d (VaughanEric  2022-11-07 18:20:00 -0500  67)           <div className="qr-container">
+98cb8a9d (VaughanEric  2022-11-07 18:20:00 -0500  69)           </div>
+98cb8a9d (VaughanEric  2022-11-07 18:20:00 -0500  71)         <div className="body">
+98cb8a9d (VaughanEric  2022-11-07 18:20:00 -0500  72)           <TextInput
+98cb8a9d (VaughanEric  2022-11-07 18:20:00 -0500  73)             label="QR Code Name"
+98cb8a9d (VaughanEric  2022-11-07 18:20:00 -0500  74)             value={qrname}
+98cb8a9d (VaughanEric  2022-11-07 18:20:00 -0500  75)             onChangeValue={e => setName(e.target.value)}
+98cb8a9d (VaughanEric  2022-11-07 18:20:00 -0500  76)             required={true}
+98cb8a9d (VaughanEric  2022-11-07 18:20:00 -0500  77)           />
+98cb8a9d (VaughanEric  2022-11-07 18:20:00 -0500  78)           <div className="spacer" />
+98cb8a9d (VaughanEric  2022-11-07 18:20:00 -0500  79)           <TextInput
+98cb8a9d (VaughanEric  2022-11-07 18:20:00 -0500  80)             label="Link"
+98cb8a9d (VaughanEric  2022-11-07 18:20:00 -0500  81)             value={link}
+98cb8a9d (VaughanEric  2022-11-07 18:20:00 -0500  82)             onChangeValue={e => setLink(e.target.value)}
+98cb8a9d (VaughanEric  2022-11-07 18:20:00 -0500  83)             required={true}
+98cb8a9d (VaughanEric  2022-11-07 18:20:00 -0500  84)             error={error}
+98cb8a9d (VaughanEric  2022-11-07 18:20:00 -0500  85)             helperText={help}
+98cb8a9d (VaughanEric  2022-11-07 18:20:00 -0500  86)           />
+98cb8a9d (VaughanEric  2022-11-07 18:20:00 -0500  87)           <div className="spacer" />
+98cb8a9d (VaughanEric  2022-11-07 18:20:00 -0500  88)           <TextInput
+98cb8a9d (VaughanEric  2022-11-07 18:20:00 -0500  89)             label="Description"
+98cb8a9d (VaughanEric  2022-11-07 18:20:00 -0500  90)             value={description}
+98cb8a9d (VaughanEric  2022-11-07 18:20:00 -0500  91)             onChangeValue={e => setDescription(e.target.value)}
+98cb8a9d (VaughanEric  2022-11-07 18:20:00 -0500  92)             required={false}
+98cb8a9d (VaughanEric  2022-11-07 18:20:00 -0500  93)           />
+98cb8a9d (VaughanEric  2022-11-07 18:20:00 -0500  94)         </div>
+98cb8a9d (VaughanEric  2022-11-07 18:20:00 -0500 104)                 id="loading-button"
+
+frontend/src/components/CreateQRPage/CreateQRForm.css:
+98cb8a9d (VaughanEric 2022-11-07 18:20:00 -0500 11) #react-qrcode-logo {
+98cb8a9d (VaughanEric 2022-11-07 18:20:00 -0500 12) 	border-radius: 14px;
+98cb8a9d (VaughanEric 2022-11-07 18:20:00 -0500 13) 	margin: 1rem 0 0.75rem
+98cb8a9d (VaughanEric 2022-11-07 18:20:00 -0500 14) }
+98cb8a9d (VaughanEric 2022-11-07 18:20:00 -0500 15) 
+98cb8a9d (VaughanEric 2022-11-07 18:20:00 -0500 26) .body {
+98cb8a9d (VaughanEric 2022-11-07 18:20:00 -0500 27) 	margin: 1rem 0 1.5rem;
+98cb8a9d (VaughanEric 2022-11-07 18:20:00 -0500 28) }
+98cb8a9d (VaughanEric 2022-11-07 18:20:00 -0500 29) 
+98cb8a9d (VaughanEric 2022-11-07 18:20:00 -0500 30) .spacer {
+98cb8a9d (VaughanEric 2022-11-07 18:20:00 -0500 31) 	height: 0.5rem;
+98cb8a9d (VaughanEric 2022-11-07 18:20:00 -0500 32) }
+98cb8a9d (VaughanEric 2022-11-07 18:20:00 -0500 33) 
+98cb8a9d (VaughanEric 2022-11-07 18:20:00 -0500 63) 	padding-top: 1rem;
