@@ -8,7 +8,6 @@ import { QRCode } from 'react-qrcode-logo';
 import CardContainer from '../shared/CardContainer';
 import AuthService from '../../services/auth.service';
 import UserService from '../../services/user.service';
-
 import TextInput from '../TextInput';
 
 const CreateQRForm = () => {

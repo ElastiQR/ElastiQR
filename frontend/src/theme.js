@@ -11,7 +11,8 @@ export const theme = createTheme({
       },
       background: {
         lightGray: "#F5F4F4",
-        white: "#FFFFFF"
+        white: "#FFFFFF",
+        green: "#62D2A2"
       },
       button: {
         green: "#62D2A2",
