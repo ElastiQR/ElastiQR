@@ -166,7 +166,7 @@ class QRStatPage extends Component {
           label: "Your QR Code's Usage",
           backgroundColor: "#62D2A2",
           borderColor: "#62D2A2",
-          data: [{lastyear}, {last30}, {lastweek}, {today}],
+          data: [lastyear, last30, lastweek, today],
         },
       ],
     };
