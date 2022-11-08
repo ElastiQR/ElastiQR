@@ -5,12 +5,11 @@ import {
   Grid,
   TextField,
   FormControlLabel,
-  Paper,
-  Button
 } from '@material-ui/core';
 import { useHistory } from "react-router-dom";
 import AuthService from "../../services/auth.service";
 import LoadingButton from '../shared/LoadingButton';
+import theme from '../../theme';
 
 const LoginForm = () => {
   let history = useHistory();
@@ -31,12 +30,11 @@ const LoginForm = () => {
     setMessage("");
     setLoading(true);
 
-    AuthService.login(username, password).then(
+    AuthService.login(username, password, checked).then(
       () => {
         setTimeout(() => { history.push('/'); }, 500);
       },
       error => {
-        console.log("USERNAME: " + username, "PASSWORD" + password);
         const resMessage =
           (error.response &&
             error.response.data &&
@@ -53,47 +51,37 @@ const LoginForm = () => {
   }
 
   return (
-    <div style={{ width: '21%', padding: 30 }}>
-      <Paper>
-        <Grid
-          container
-          spacing={0}
-          direction={'column'}
-          justify={'center'}
-          alignItems={'center'}
-        >
-          <h2 style={{color: '#62D2A2'}}>ElastiQR</h2>
-          <Grid item xs={12}>
-            <TextField label="Username" onChange={e => setUsername(e.target.value)}></TextField>
-          </Grid>
-          <Grid item xs={12}>
-            <TextField label="Password" type={'password'} onChange={e => setPassword(e.target.value)}></TextField>
-          </Grid>
-          <Grid item xs={12}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={checked}
-                  onChange={handleChange}
-                  label={'Keep me logged in'}
-                  inputProps={{ 'aria-label': 'primary checkbox' }}
-                />
-              }
-              label="Keep me logged in"
+    <div>
+      <h2 style={{color: '#62D2A2', textAlign: 'center'}}>ElastiQR</h2>
+      <Grid item xs={12} style={theme.flex}>
+        <TextField label="Username" onChange={e => setUsername(e.target.value)}></TextField>
+      </Grid>
+      <Grid item xs={12} style={theme.flex}>
+        <TextField label="Password" type={'password'} onChange={e => setPassword(e.target.value)}></TextField>
+      </Grid>
+      <Grid item xs={12}  style={theme.flex}>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={checked}
+              onChange={handleChange}
+              label={'Keep me logged in'}
+              inputProps={{ 'aria-label': 'primary checkbox' }}
             />
-          </Grid>
-          <Grid item xs={12}>
-            <LoadingButton 
-              onClick={handleLogin} 
-              loading={loading}
-              variant="contained"
-              color="primary"
-              fullWidth>
-              Login
-            </LoadingButton>
-          </Grid>
-        </Grid>
-      </Paper>
+          }
+          label="Keep me logged in"
+        />
+      </Grid>
+      <Grid item xs={12} style={theme.flex}>
+        <LoadingButton 
+          onClick={handleLogin} 
+          loading={loading}
+          variant="contained"
+          color="primary"
+          fullWidth>
+          Login
+        </LoadingButton>
+      </Grid>
     </div>
   );
 };

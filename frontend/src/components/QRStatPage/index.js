@@ -12,7 +12,6 @@ import Chart from "chart.js/auto";
 import UserService from "../../services/user.service";
 
 
-import Navbar from "../Navbar";
 
 const backgroundShape = require("../../images/shape.svg");
 
@@ -185,11 +184,11 @@ class QRStatPage extends Component {
     return (
       <div>
         <Grid container justify='center'>
-         <this.StatPage></this.StatPage>
-         <this.BarChart></this.BarChart>
+          <this.StatPage></this.StatPage>
+          <this.BarChart></this.BarChart>
         </Grid>
       </div>
-    )
+    );
   }
 }
 

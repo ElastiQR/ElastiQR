@@ -8,8 +8,8 @@ import { ThemeProvider } from '@material-ui/styles'
 import QRCode from 'react-qr-code'
 
 import theme from '../theme'
-import NavBar from './Navbar'
 import TextInput from './TextInput'
+import AuthService from "../services/auth.service"
 import UserService from '../services/user.service'
 import QRStatPage from './QRStatPage'
 
@@ -110,14 +110,19 @@ class QRDetailsPage extends Component {
         // might want to add some logic here in the future to indicate success
       },
       (error) => {
-        const resMessage =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-        console.log(resMessage);
-        console.log(error);
+        if (error.response?.data?.message === 'Token error') {
+          AuthService.logout();
+          setTimeout(() => { this.props.history.push('/login') }, 500);
+        } else {
+          const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+          console.log(resMessage);
+          console.log(error);
+        }
       }
     )
   }
@@ -128,7 +133,6 @@ class QRDetailsPage extends Component {
     return (
       <ThemeProvider theme={theme}>
         <div className={classes.page}>
-        <NavBar />
           <div className={classes.flex}>
             <Grid container spacing={3} className={classes.container}>
               <Grid item xs={12} className={classes.flex}>
