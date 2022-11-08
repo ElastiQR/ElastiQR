@@ -20,41 +20,47 @@ const ProfileCard = () => {
   let history = useHistory();
 
   const [loading, setLoading] = useState(false);
+  const [name, setName] = useState("")
   const [totalCodes, setTotalCodes] = useState(0);
 
   const user = AuthService.getCurrentUser();
 
   useEffect(()=> {
-    UserService.getUserQRs(user.userID)
-      .then(
-        (response) => {
-          setTotalCodes(response.data.codes.length)
-        },
-        (error) => {
-          if (error.response?.data?.message === 'Token error') {
-            AuthService.logout();
-            setTimeout(() => { this.props.history.push('/login') }, 500)
-          } else {
-            const resMessage =
-              (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-              error.message ||
-              error.toString();
-            console.log(resMessage);
-            console.log(error);
+    if (user) {
+      setName(user.username ? user.username : user.first + " " + user.last)
+      
+      UserService.getUserQRs(user.userID)
+        .then(
+          (response) => {
+            setTotalCodes(response.data.codes.length)
+          },
+          (error) => {
+            if (error.response?.data?.message === 'Token error') {
+              AuthService.logout();
+              setTimeout(() => { this.props.history.push('/login') }, 500)
+            } else {
+              const resMessage =
+                (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+                error.message ||
+                error.toString();
+              console.log(resMessage);
+              console.log(error);
+            }
           }
-        }
-      )
-  })
+        )
+    }
+  }, [user])
 
   const handleClick = () => {
     if (!user.accessToken) {
       console.log("User is not logged in. You shouldn't be here.");
       return;
     }
-    AuthService.logout();
     setLoading(true);
+    setName("")
+    AuthService.logout();
     setTimeout(() => { history.push('/login'); }, 1000);
   }
 
@@ -65,7 +71,7 @@ const ProfileCard = () => {
         </header>
         <div className="flex">
           <Typography variant="h4" className="username">
-            {user.username ? user.username : user.first + " " + user.last}
+            {name}
           </Typography>
         </div>
         <div className="social-container">
