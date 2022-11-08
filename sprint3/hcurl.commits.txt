@@ -1,0 +1,174 @@
+Hcurl.commits.txt
+userController:
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500   1) const mysql = require("mysql")
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500   2) const db = require("../helpers/database")
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500   3) 
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500   4) module.exports = {
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500   5)     deleteUserController: (req, res)=> {
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500   6) //      const qrname = req.body.name
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500   7) //      const qrURL = req.body.url 
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500   8) //      const description = req.body.description
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500   9)       const userID = req.body.userID
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  10)       const username = req.body.username
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  11)   
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  12)       db.getConnection ( async (err, connection)=> {
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  13)         if (err) throw (err)
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  14)   
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  15)         const sqlSearch = `SELECT * FROM users 
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  16)                            WHERE username = ?` //should use userID
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  17)         const search_query = mysql.format(sqlSearch, [username])
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  18)         const sqlDelete = `DELETE FROM users WHERE username = ?`
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  19)         const delete_query = mysql.format(sqlDelete, [username])
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  20) 
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  21)         const qrsqlSearch = `SELECT * FROM QRCodes 
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  22)                              WHERE userID = ?`
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  23)         const qrsearch_query = mysql.format(qrsqlSearch, [userID])
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  24)         const qrsqlDelete = `DELETE FROM QRCodes WHERE userID = ?`
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  25)         const qrdelete_query = mysql.format(qrsqlDelete, [userID])
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  26)         var codesfound = 1
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  27)   
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  28)         await connection.query (search_query, async (err, result)=> {
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  29)           if (err) throw (err)
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  30)           console.log("--------> Search Results")
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  31)           console.log(result.length)
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  32)           if (result.length == 0) {
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  33)             console.log("--------> User not found")
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  34)             res.sendStatus(409)
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  35)           } else {
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  36)               await connection.query (delete_query, (err, result)=> {
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  37)                // connection.release()
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  38)                 if (err) throw (err)
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  39)                 console.log("--------> Successfully deleted User")
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  40)                 //console.log(result.insertId)              
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  41)               })
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  42)             //delete deleted user's QR CODES
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  43)               await connection.query (qrsearch_query, (err, result)=> {
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  44)                 if (err) throw (err)
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  45)                 console.log("--------> User's QR codes to be deleted")
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  46)                 console.log(result.length)
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  47)                 if (result.length == 0) {
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  48)                     res.sendStatus(200)
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  49)                     codesfound = 0
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  50)                 } 
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  51)               })
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  52)               if (codesfound == 1) {  
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  53)                 await connection.query (qrdelete_query, (err, result)=> {
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  54)                     if (err) throw (err)
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  55)                     connection.release
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  56)                     if (err) throw (err)
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  57)                     console.log("--------> Deleted QR Codes of Deleted User")
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  58)                     res.sendStatus(200)
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  59)                 })
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  60)               }            
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  61)           }
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  62)         })
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  63)       })
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  64)     },
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  65)     updateUserController: (req, res)=> {
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  66) 
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  67)       const userID = req.body.userID
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  68)       const username = req.body.username
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  69) 
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  70)       var newuserID = req.body.newuserID // take out user id, can update wantsnotifications/prefs/
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  71)       var newusername = req.body.newusername //change password, encrypt new password, replace in table
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  72)      
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  73)       if (newusername == null) {
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  74)         newusername = username
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  75)       }
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  76)       if (newuserID == null) {
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  77)         newuserID = userID
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  78)       }
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  79) 
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  80)       db.getConnection ( async (err, connection)=> {
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  81)         if (err) throw (err)
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  82)   
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  83)         const sqlSearch = `SELECT * FROM users 
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  84)                            WHERE username = ? LIMIT 1` //when changing username search by userID
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  85)         const search_query = mysql.format(sqlSearch, [username])
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  86)         const sqlUpdate = `UPDATE users SET username = ? 
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  87)                            WHERE username = ?`
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  88)         const update_query = mysql.format(sqlUpdate, [newusername, username])
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  89)   
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  90)         const qrsqlSearch = 'SELECT * FROM QRCodes WHERE userID = ?'
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  91)         const sqlUpdateuserID = `UPDATE QRCodes SET userID = ? 
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  92)         WHERE userID = ?`
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  93)         const update_queryuserID = mysql.format(sqlUpdateuserID, [newuserID, userID])
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  94) 
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  95)         await connection.query (update_query, async (err, result)=> {
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  96)           if (err) throw (err)
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  97)           console.log("--------> Updated Username")
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  98)           //console.log(result.insertId)
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500  99)            //res.sendStatus(201) 
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500 100)         }) 
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500 101) 
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500 102)         await connection.query (update_queryuserID, async (err, result)=> {
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500 103)           if (err) throw (err)
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500 104)           connection.release()
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500 105)           if (err) throw (err)
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500 106)           console.log("--------> Updated QR Codes to new UserID")
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500 107)           //console.log(result.insertId)
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500 108)         })
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500 109)         res.sendStatus(200) 
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500 110)       })
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500 111)     }
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500 112)   }
+
+userRoute:
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500 1) const router = require('express').Router()
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500 2) 
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500 3) const {deleteUserController, updateUserController} = require('../controllers/UserController')
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500 4) 
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500 5) router.delete('/deleteUser', deleteUserController)
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500 6) router.patch('/updateUser', updateUserController)
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500 7) 
+fbd03509 (hcurl 2022-11-06 20:07:15 -0500 8) module.exports = router
+
+fixing userController.js
+9cdfa48a (hcurl 2022-11-07 00:37:08 -0500 15)         const search_query = mysql.format(sqlSearch, [userID])
+9cdfa48a (hcurl 2022-11-07 00:37:08 -0500 16)         const sqlDelete = `DELETE FROM users WHERE userID = ?`
+9cdfa48a (hcurl 2022-11-07 00:37:08 -0500 17)         const delete_query = mysql.format(sqlDelete, [userID])
+9cdfa48a (hcurl 2022-11-07 00:37:08 -0500 41)       const password = req.body.password
+9cdfa48a (hcurl 2022-11-07 00:37:08 -0500 42)       const wantsnotifications = req.body.wantsnotifications
+9cdfa48a (hcurl 2022-11-07 00:37:08 -0500 46)       var newnotificationschoice = req.body.newnotificationschoice
+9cdfa48a (hcurl 2022-11-07 00:37:08 -0500 51)         passwordHash = await bcrypt.hash(password,10);
+9cdfa48a (hcurl 2022-11-07 00:37:08 -0500 52)       } 
+9cdfa48a (hcurl 2022-11-07 00:37:08 -0500 53)       else {
+9cdfa48a (hcurl 2022-11-07 00:37:08 -0500 54)         passwordHash = await bcrypt.hash(newpassword,10);
+9cdfa48a (hcurl 2022-11-07 00:37:08 -0500 56)       if (newnotificationschoice == null) {
+9cdfa48a (hcurl 2022-11-07 00:37:08 -0500 57)         newnotificationschoice = wantsnotifications
+9cdfa48a (hcurl 2022-11-07 00:37:08 -0500 62)         const sqlSearch = `SELECT * FROM users 
+9cdfa48a (hcurl 2022-11-07 00:37:08 -0500 63)                           WHERE userID = ? LIMIT 1` //when changing username search by userID
+9cdfa48a (hcurl 2022-11-07 00:37:08 -0500 64)         const search_query = mysql.format(sqlSearch, [userID])
+9cdfa48a (hcurl 2022-11-07 00:37:08 -0500 65)         const sqlUpdate = `UPDATE users SET username = ?, password = ?, wantsnotifications = ? 
+9cdfa48a (hcurl 2022-11-07 00:37:08 -0500 67)         const update_query = mysql.format(sqlUpdate, [newusername, passwordHash, newnotificationschoice, userID])
+9cdfa48a (hcurl 2022-11-07 00:37:08 -0500 68)         
+9cdfa48a (hcurl 2022-11-07 00:37:08 -0500 69)         await connection.query (search_query, async (err, result)=> {
+9cdfa48a (hcurl 2022-11-07 00:37:08 -0500 71)           if (result.length() == 0) {
+9cdfa48a (hcurl 2022-11-07 00:37:08 -0500 72)             console.log("--------> Could not find user")
+9cdfa48a (hcurl 2022-11-07 00:37:08 -0500 73)             res.sendStatus(400)
+9cdfa48a (hcurl 2022-11-07 00:37:08 -0500 74)           }
+9cdfa48a (hcurl 2022-11-07 00:37:08 -0500 75)           else {
+9cdfa48a (hcurl 2022-11-07 00:37:08 -0500 76)             await connection.query (update_query, async (err, result)=> {
+9cdfa48a (hcurl 2022-11-07 00:37:08 -0500 77)               if (err) throw (err)
+9cdfa48a (hcurl 2022-11-07 00:37:08 -0500 78)               console.log("--------> Updated User")
+9cdfa48a (hcurl 2022-11-07 00:37:08 -0500 79)               console.log(result.insertId)
+9cdfa48a (hcurl 2022-11-07 00:37:08 -0500 80)               res.sendStatus(200) 
+9cdfa48a (hcurl 2022-11-07 00:37:08 -0500 81)             })
+9cdfa48a (hcurl 2022-11-07 00:37:08 -0500 82)           }
+
+authController:
+fbd03509 (hcurl        2022-11-06 20:07:15 -0500  17)         const wantsnotifications = req.body.wantsnotifications;
+fbd03509 (hcurl        2022-11-06 20:07:15 -0500  23)             const sqlInsert = "INSERT INTO users (username, password, wantsnotifications) VALUES (?,?,?)"
+
+index.js:
+fbd03509 (hcurl        2022-11-06 20:07:15 -0500 13) const userRouter = require('./routes/userRoute')
+fbd03509 (hcurl        2022-11-06 20:07:15 -0500 35) app.use('/user', userRouter)
+
+Signupform.js:
+fbd03509 (hcurl        2022-11-06 20:07:15 -0500  41)         password,
+fbd03509 (hcurl        2022-11-06 20:07:15 -0500  42)         checked
+
+auth.services.js
+fbd03509 (hcurl        2022-11-06 20:07:15 -0500 39)   register(username, password, notify) {
+fbd03509 (hcurl        2022-11-06 20:07:15 -0500 42)       "password": password,
+fbd03509 (hcurl        2022-11-06 20:07:15 -0500 43)       "wantsnotifications": notify
