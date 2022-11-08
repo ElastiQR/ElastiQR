@@ -1,0 +1,271 @@
+src/components/Main/Main.js
+
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500  1) import React, { Component, useState } from 'react'
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500  9) import AuthService from "../../services/auth.service"
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 10) import UserService from '../../services/user.service'
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 13)   constructor(props) {
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 14)     super(props);
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 15)     this.state = {
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 16)       error: null,
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 17)       isLoaded: false,
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 18)       QRCodes: []
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 19)     };
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 20)   }
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 21)
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 22)   componentDidMount() {
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 23)     const user = AuthService.getCurrentUser()
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 24)     if (!user) {
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 25)       this.setState({ error:
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 26)         {message: "User needs to login. In the future, we'll want to hide this page    
+until logged in"}
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 27)       });
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 28)       return;
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 29)     }
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 30)
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 31)     //const [total, setTotal] = useState(0);
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 32)     UserService.getUserQRs(user.userID)
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 33)     .then(
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 34)       (response) => {
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 35)         this.setState({
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 36)           isLoaded: true,
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 37)           QRCodes: response.data.codes
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 38)         });
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 39)         //setTotal(QRCodes.length);
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 40)       },
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 41)       (error) => {
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 42)         if (error.response?.data?.message === 'Token error') {
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 43)           AuthService.logout();
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 44)           setTimeout(() => { this.props.history.push('/login') }, 500)
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 45)         } else {
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 46)           this.setState({
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 47)             isLoaded: true
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 48)           });
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 49)           if (error.response?.status != 400) {
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 50)             this.setState({
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 51)               error
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 52)             });
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 53)           }
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 54)         }
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 55)       }
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 56)     )
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 57)   }
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 58)
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 60)     const { QRCodes } = this.state;
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 61)       return (
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 62)              <CardContainer>
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 82)              <SimpleChart></SimpleChart>
+e6facddb (jacobking61 2022-11-07 20:48:30 -0500 83)              </CardContainer>
+
+src/components/QRStatPage/index.js
+
+93691108 (jacobking61 2022-11-07 19:17:14 -0500   1) import React, { Component, useState } from "react";
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500   2) import withStyles from "@material-ui/styles/withStyles";
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500   3) import { withRouter } from "react-router-dom";
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500   4) import CssBaseline from "@material-ui/core/CssBaseline";
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500   5) import { green } from '@material-ui/core/colors'
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500   6) import Paper from "@material-ui/core/Paper";
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500   7) import Typography from "@material-ui/core/Typography";
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500   8) import Grid from "@material-ui/core/Grid";
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500   9) import Button from "@material-ui/core/Button";
+93691108 (jacobking61 2022-11-07 19:17:14 -0500  10) import { Bar } from "react-chartjs-2";
+93691108 (jacobking61 2022-11-07 19:17:14 -0500  11) import Chart from "chart.js/auto";
+93691108 (jacobking61 2022-11-07 19:17:14 -0500  12) import UserService from "../../services/user.service";
+93691108 (jacobking61 2022-11-07 19:17:14 -0500  14)
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  15)
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  16)
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  17) const backgroundShape = require("../../images/shape.svg");
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  18)
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  19) const styles = theme => ({
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  20)   root: {
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  21)     flexGrow: 1,
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  22)     backgroundColor: theme.palette.grey["100"],
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  23)     overflow: "hidden",
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  24)     background: `url(${backgroundShape}) no-repeat`,
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  25)     backgroundSize: "cover",
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  26)     backgroundPosition: "0 400px",
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  27)     paddingBottom: 200
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  28)   },
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  29)   grid: {
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  30)     width: 1200,
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  31)     marginTop: 40,
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  32)     [theme.breakpoints.down("sm")]: {
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  33)       width: "calc(100% - 20px)"
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  34)     }
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  35)   },
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  36)   paper: {
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  37)     padding: theme.spacing(3),
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  38)     textAlign: "left",
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  39)     color: theme.palette.text.secondary
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  40)   },
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  41)   rangeLabel: {
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  42)     display: "flex",
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  43)     justifyContent: "space-between",
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  44)     paddingTop: theme.spacing(2)
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  45)   },
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  46)   navBar: {
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  47)     display: "flex",
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  48)     justifyContent: "space-between",
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  49)     alignItems: "center",
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  50)     marginTop: 32
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  51)   },
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  52)   outlinedButtom: {
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  53)     textTransform: "uppercase",
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  54)     margin: theme.spacing(1)
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  55)   },
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  56)   actionButtom: {
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  57)     textTransform: "uppercase",
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  58)     margin: theme.spacing(1),
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  59)     width: 152
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  60)   },
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  61)   blockCenter: {
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  62)     padding: theme.spacing(2),
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  63)     textAlign: "center"
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  64)   },
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  65)   block: {
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  66)     padding: theme.spacing(2)
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  67)   },
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  68)   box: {
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  69)     marginBottom: 40,
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  70)     height: 65
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  71)   },
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  72)   inlining: {
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  73)     display: "inline-block",
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  74)     marginRight: 10
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  75)   },
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  76)   buttonBar: {
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  77)     display: "flex"
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  78)   },
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  79)   alignRight: {
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  80)     display: "flex",
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  81)     justifyContent: "flex-end"
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  82)   },
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  83)   noBorder: {
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  84)     borderBottomStyle: "hidden"
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  85)   },
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  86)   loadingState: {
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  87)     opacity: 0.05
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  88)   },
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  89)   loadingMessage: {
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  90)     position: "absolute",
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  91)     top: "40%",
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  92)     left: "40%"
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  93)   }
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  94) });
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  95)
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  96) class QRStatPage extends Component {
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  97)   state = {
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  98)     learnMoredialog: false,
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500  99)     getStartedDialog: false
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500 100)   };
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500 101) 
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 102)   StatPage = () => {
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 103)     const [total, setTotal] = useState(0);
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 104)     console.log(this.props);
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 105)
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 106)     UserService.countQR(this.props.location.state.id, 1000)
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 107)     .then(
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 108)       (response) => {
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 109)         setTotal(response.data.quantity);
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 110)       }
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 111)     )
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 112)   
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 113)     return (
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 115)           <h1 style={{color: "#62D2A2"}}>Your QR Code's Stats</h1>
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 116)           <div className="social-container">
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 117)               <div className="followers">
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 124)               </div>
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 125)               <div className="likes">
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 132)               </div>
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 133)           </div>
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 134)       </div>
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 135)     );
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 136)   };
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 137)
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 138)   BarChart = () => {
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 139)
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 140)     const [lastyear, setLastYear] = useState(0);
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 141)     const [last30, set30] = useState(0);
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 142)     const [lastweek, setlastweek] = useState(0);
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 143)     const [today, settoday] = useState(0);
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 144)
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 145)     UserService.countQR(this.props.location.state.id, 365)
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 146)     .then(
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 147)       (response) => {
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 148)         setLastYear(response.data.quantity);
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 149)       }
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 150)     )
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 151)     UserService.countQR(this.props.location.state.id, 30)
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 152)     .then(
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 153)       (response) => {
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 154)         set30(response.data.quantity);
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 155)       }
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 156)     )
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 157)     UserService.countQR(this.props.location.state.id, 7)
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 158)     .then(
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 159)       (response) => {
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 160)         setlastweek(response.data.quantity);
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 161)       }
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 162)     )
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 163)     UserService.countQR(this.props.location.state.id, 1)
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 164)     .then(
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 165)       (response) => {
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 166)         settoday(response.data.quantity);
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 167)       }
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 168)     )
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 169)
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 170)     const labels = ["Last Year", "Last 30 Days", "Last Week", "Today"];
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 171)     const data = {
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 172)       labels: labels,
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 173)       datasets: [
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 174)         {
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 175)           label: "Your QR Code's Usage",
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 176)           backgroundColor: "#62D2A2",
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 177)           borderColor: "#62D2A2",
+b341b89f (jacobking61 2022-11-07 19:56:23 -0500 178)           data: [lastyear, last30, lastweek, today],
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 179)         },
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 180)       ],
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 181)     };
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 182)     return (
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 183)       <div style={{width: '100%', padding: 30}}>
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 184)         <Bar data={data} />
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 185)       </div>
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 186)     );
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 187)   };
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 188)
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500 189)   componentDidMount() {}
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500 190)
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500 191)   render() {
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 192)     const {classes} = this.props;
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500 193)     return (
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 194)       <div>
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 195)         <Grid container justify='center'>
+7f5d11c2 (jacobking61 2022-11-07 19:31:30 -0500 196)           <this.StatPage></this.StatPage>
+7f5d11c2 (jacobking61 2022-11-07 19:31:30 -0500 197)           <this.BarChart></this.BarChart>
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 198)         </Grid>
+93691108 (jacobking61 2022-11-07 19:17:14 -0500 199)       </div>
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500 200)     );
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500 201)   }
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500 202) }
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500 203)
+cbdd7c44 (jacobking61 2022-11-06 10:29:14 -0500 204) export default withRouter(withStyles(styles)(QRStatPage));
+
+src/services/user.service.js
+
+5c9db375 (jacobking61  2022-11-07 19:21:17 -0500 14)   countQR(id, span) {
+5c9db375 (jacobking61  2022-11-07 19:21:17 -0500 15)     return axios.get(QR_API_URL + 'qr/count?' + new URLSearchParams({
+5c9db375 (jacobking61  2022-11-07 19:21:17 -0500 16)       qrID: id,
+5c9db375 (jacobking61  2022-11-07 19:21:17 -0500 17)       span
+5c9db375 (jacobking61  2022-11-07 19:21:17 -0500 18)     }));
+5c9db375 (jacobking61  2022-11-07 19:21:17 -0500 19)   }
+5c9db375 (jacobking61  2022-11-07 19:21:17 -0500 20)
+
+src/components/Navbar.js
+
+1212ec5d (jacobking61  2022-11-06 10:38:24 -0500 129)                     <span className={classes.tagline}>ElastiQR</span>
+
+src/components/QRDetailsPage.js
+
+
+7f5d11c2 (jacobking61  2022-11-07 19:31:30 -0500  12) import AuthService from "../services/auth.service"
+cbdd7c44 (jacobking61  2022-11-06 10:29:14 -0500 179)
+
