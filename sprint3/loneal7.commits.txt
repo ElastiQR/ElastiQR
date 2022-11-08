@@ -1,0 +1,636 @@
+backend/src/controllers/qrController.js
+d445c3a5 (loganoneal   2022-10-30 22:33:29 -0400  82)     redirectQRController: (req,res)=> {
+d445c3a5 (loganoneal   2022-10-30 22:33:29 -0400  83)       const qrID = req.query.qrID;
+d445c3a5 (loganoneal   2022-10-30 22:33:29 -0400  84)       console.log("QR ID: " + qrID);
+d445c3a5 (loganoneal   2022-10-30 22:33:29 -0400  85)
+d445c3a5 (loganoneal   2022-10-30 22:33:29 -0400  86)       db.getConnection(async (err, connection) => {      
+d445c3a5 (loganoneal   2022-10-30 22:33:29 -0400  87)         if (err) throw (err)
+d445c3a5 (loganoneal   2022-10-30 22:33:29 -0400  88)         sqlSearch = 'SELECT * FROM QRCodes WHERE qrID = 
+? LIMIT 1'
+d445c3a5 (loganoneal   2022-10-30 22:33:29 -0400  89)         search_query = mysql.format(sqlSearch, [qrID])   
+d445c3a5 (loganoneal   2022-10-30 22:33:29 -0400  93)
+d445c3a5 (loganoneal   2022-10-30 22:33:29 -0400  94)         await connection.query(search_query, async 
+(err, result)=> {
+d445c3a5 (loganoneal   2022-10-30 22:33:29 -0400  95)           if (err) throw (err)
+d445c3a5 (loganoneal   2022-10-30 22:33:29 -0400  96)
+d445c3a5 (loganoneal   2022-10-30 22:33:29 -0400  97)           if (result.length != 0) {
+d445c3a5 (loganoneal   2022-10-30 22:33:29 -0400  98)             console.log("--------> Requested QR Code 
+has been found successfully")
+d445c3a5 (loganoneal   2022-10-30 22:33:29 -0400  99)
+d445c3a5 (loganoneal   2022-10-30 22:33:29 -0400 105)             res.redirect(result[0].qrURL);
+d445c3a5 (loganoneal   2022-10-30 22:33:29 -0400 106)           } else {
+d445c3a5 (loganoneal   2022-10-30 22:33:29 -0400 108)             console.log("--------> Error, could not 
+find the requested QR Code")
+d445c3a5 (loganoneal   2022-10-30 22:33:29 -0400 109)             res.sendStatus(400)
+d445c3a5 (loganoneal   2022-10-30 22:33:29 -0400 110)           }
+d445c3a5 (loganoneal   2022-10-30 22:33:29 -0400 111)         });
+d445c3a5 (loganoneal   2022-10-30 22:33:29 -0400 112)       });
+
+backend/src/index.js
+d445c3a5 (loganoneal 2022-10-30 22:33:29 -0400 12) const qrRouter = require('./routes/qrRoute')
+d445c3a5 (loganoneal 2022-10-30 22:33:29 -0400 31) app.use('/qr', qrRouter)
+
+backend/src/routes/qrRoute.js
+d445c3a5 (loganoneal   2022-10-30 22:33:29 -0400  1) const router = require('express').Router()
+d445c3a5 (loganoneal   2022-10-30 22:33:29 -0400  4)
+d445c3a5 (loganoneal   2022-10-30 22:33:29 -0400  7) router.get('/redirect', redirectQRController)
+d445c3a5 (loganoneal   2022-10-30 22:33:29 -0400  9)
+d445c3a5 (loganoneal   2022-10-30 22:33:29 -0400 10) module.exports = router
+
+frontend/src/components/CreateQRPage/index.js
+a3a81e42 (loganoneal 2022-11-06 19:37:45 -0500 22)         <CreateQRForm></CreateQRForm>
+a3a81e42 (loganoneal 2022-11-06 19:37:45 -0500 27) export default withRouter(CreateQRPage);
+
+* frontend/src/components/ExplorePage/ExplorePage.js
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500  9) import CardContainer from '../shared/CardContainer'
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 30)           <CardContainer>
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 32)               <Grid item xs={12}
+style={theme.buttonContainer}>
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 33)                 <Link to="/create-qr" style={theme.link}>  
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 41)               <Grid item xs={12} style={theme.flex}>       
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 50)           </CardContainer>
+
+* frontend/src/components/ExplorePage/QRListItem.js
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 26)         <Link style={theme.link}
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 37)           <ButtonBase style={theme.buttonBase}>
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 40)               <Typography variant="h6"
+style={theme.cardTitle}>
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 43)               <Typography variant="body2"
+style={theme.cardDescription}>
+
+frontend/src/components/Login/GoogleLoginButton.js
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500  6) import { Grid } from '@material-ui/core';
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500  7) import theme from '../../theme';
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 43)     <Grid item xs={12} style={theme.flex}>
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 44)     <GoogleLogin
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 52)     </Grid>
+
+frontend/src/components/Login/index.js
+a3a81e42 (loganoneal 2022-11-06 19:37:45 -0500  12) import CardContainer from "../shared/CardContainer";
+a3a81e42 (loganoneal 2022-11-06 19:37:45 -0500 104)           <CardContainer>
+a3a81e42 (loganoneal 2022-11-06 19:37:45 -0500 107)           </CardContainer>
+
+frontend/src/components/Login/LoginForm.js
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 12) import theme from '../../theme';
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 54)     <div>
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 55)       <h2 style={{color: '#62D2A2', textAlign:
+'center'}}>ElastiQR</h2>
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 56)       <Grid item xs={12} style={theme.flex}>
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 57)         <TextField label="Username" onChange={e =>        
+setUsername(e.target.value)}></TextField>
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 58)       </Grid>
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 59)       <Grid item xs={12} style={theme.flex}>
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 60)         <TextField label="Password" type={'password'} 
+onChange={e => setPassword(e.target.value)}></TextField>
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 61)       </Grid>
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 62)       <Grid item xs={12}  style={theme.flex}>
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 63)         <FormControlLabel
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 64)           control={
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 65)             <Checkbox
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 66)               checked={checked}
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 67)               onChange={handleChange}
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 68)               label={'Keep me logged in'}
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 69)               inputProps={{ 'aria-label': 'primary        
+checkbox' }}
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 71)           }
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 72)           label="Keep me logged in"
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 73)         />
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 74)       </Grid>
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 75)       <Grid item xs={12} style={theme.flex}>
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 76)         <LoadingButton
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 77)           onClick={handleLogin}
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 78)           loading={loading}
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 79)           variant="contained"
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 80)           color="primary"
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 81)           fullWidth>
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 82)           Login
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 83)         </LoadingButton>
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 84)       </Grid>
+
+frontend/src/components/Main/Main.js
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500  2) import withStyles from '@material-ui/styles/withStyles'
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500  3) import { withRouter } from 'react-router-dom'
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500  4) import theme from '../../theme'
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500  5) import CardContainer from '../shared/CardContainer'        
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500  6) import SimpleChart from './LineChart';
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 63)               <h1 style={{color: 
+theme.palette.button.green, textAlign: 'center'}}>Welcome to ElastiQR</h1>
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 65)                   <div className="followers">
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 72)                   </div>
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 73)                   <div className="likes">
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 80)                   </div>
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 81)               </div>
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 84)     )
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 88) export default withRouter(Main);
+
+frontend/src/components/Navbar.js
+495707be (loganoneal   2022-11-06 23:25:26 -0500  20) const logo = require("../images/qr_logo.png");
+495707be (loganoneal   2022-11-06 23:25:26 -0500  27)     backgroundColor: "white",
+495707be (loganoneal   2022-11-06 23:25:26 -0500  28)     borderRadius: "0px",
+495707be (loganoneal   2022-11-06 23:25:26 -0500 128)                     <img width={25} src={logo} alt="" /> 
+
+frontend/src/components/Profile/index.js
+a3a81e42 (loganoneal 2022-11-06 19:37:45 -0500 16)         <Grid container justify="center">
+a3a81e42 (loganoneal 2022-11-06 19:37:45 -0500 17)           <ProfileCard></ProfileCard>
+a3a81e42 (loganoneal 2022-11-06 19:37:45 -0500 18)         </Grid>
+a3a81e42 (loganoneal 2022-11-06 19:37:45 -0500 23) export default withRouter(Signup);
+
+frontend/src/components/shared/AnimatedBackground/AnimatedBackground.css
+495707be (loganoneal 2022-11-06 23:25:26 -0500   1) @keyframes animate {
+495707be (loganoneal 2022-11-06 23:25:26 -0500   2)     0%{
+495707be (loganoneal 2022-11-06 23:25:26 -0500   3)         transform: translateY(0) rotate(0deg);
+495707be (loganoneal 2022-11-06 23:25:26 -0500   4)         opacity: 1;
+495707be (loganoneal 2022-11-06 23:25:26 -0500   5)         border-radius: 0;
+495707be (loganoneal 2022-11-06 23:25:26 -0500   6)     }
+495707be (loganoneal 2022-11-06 23:25:26 -0500   7)     100%{
+495707be (loganoneal 2022-11-06 23:25:26 -0500   8)         transform: translateY(-1000px) rotate(720deg);     
+495707be (loganoneal 2022-11-06 23:25:26 -0500   9)         opacity: 0;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  10)         border-radius: 50%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  11)     }
+495707be (loganoneal 2022-11-06 23:25:26 -0500  12) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500  13)
+495707be (loganoneal 2022-11-06 23:25:26 -0500  14) .background {
+495707be (loganoneal 2022-11-06 23:25:26 -0500  15)     position: fixed;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  16)     width: 100vw;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  17)     height: 100vh;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  18)     top: 0;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  19)     left: 0;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  20)     margin: 0;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  21)     padding: 0;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  22)     background: #62d2a2;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  23)     overflow: hidden;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  24)     z-index: -1;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  25) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500  26) .background li {
+495707be (loganoneal 2022-11-06 23:25:26 -0500  27)     position: absolute;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  28)     display: block;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  29)     list-style: none;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  30)     width: 20px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  31)     height: 20px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  32)     background: rgba(255, 255, 255, 0.2);
+495707be (loganoneal 2022-11-06 23:25:26 -0500  33)     animation: animate 19s linear infinite;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  34) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500  35)
+495707be (loganoneal 2022-11-06 23:25:26 -0500  36)
+495707be (loganoneal 2022-11-06 23:25:26 -0500  37)
+495707be (loganoneal 2022-11-06 23:25:26 -0500  38) 
+495707be (loganoneal 2022-11-06 23:25:26 -0500  39) .background li:nth-child(0) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500  40)     left: 89%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  41)     width: 59px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  42)     height: 59px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  43)     bottom: -59px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  44)     animation-delay: 1s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  45) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500  46) .background li:nth-child(1) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500  47)     left: 61%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  48)     width: 77px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  49)     height: 77px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  50)     bottom: -77px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  51)     animation-delay: 3s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  52) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500  53) .background li:nth-child(2) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500  54)     left: 52%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  55)     width: 54px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  56)     height: 54px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  57)     bottom: -54px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  58)     animation-delay: 7s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  59) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500  60) .background li:nth-child(3) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500  61)     left: 5%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  62)     width: 230px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  63)     height: 230px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  64)     bottom: -230px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  65)     animation-delay: 6s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  66) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500  67) .background li:nth-child(4) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500  68)     left: 13%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  69)     width: 220px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  70)     height: 220px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  71)     bottom: -220px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  72)     animation-delay: 11s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  73) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500  74) .background li:nth-child(5) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500  75)     left: 58%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  76)     width: 111px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  77)     height: 111px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  78)     bottom: -111px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  79)     animation-delay: 1s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  80) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500  81) .background li:nth-child(6) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500  82)     left: 88%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  83)     width: 258px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  84)     height: 258px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  85)     bottom: -258px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  86)     animation-delay: 4s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  87) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500  88) .background li:nth-child(7) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500  89)     left: 7%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  90)     width: 71px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  91)     height: 71px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  92)     bottom: -71px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  93)     animation-delay: 19s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  94) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500  95) .background li:nth-child(8) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500  96)     left: 44%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  97)     width: 128px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  98)     height: 128px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500  99)     bottom: -128px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 100)     animation-delay: 2s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 101) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500 102) .background li:nth-child(9) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500 103)     left: 61%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 104)     width: 163px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 105)     height: 163px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 106)     bottom: -163px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 107)     animation-delay: 35s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 108) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500 109) .background li:nth-child(10) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500 110)     left: 41%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 111)     width: 94px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 112)     height: 94px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 113)     bottom: -94px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 114)     animation-delay: 1s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 115) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500 116) .background li:nth-child(11) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500 117)     left: 23%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 118)     width: 267px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 119)     height: 267px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 120)     bottom: -267px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 121)     animation-delay: 3s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 122) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500 123) .background li:nth-child(12) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500 124)     left: 42%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 125)     width: 101px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 126)     height: 101px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 127)     bottom: -101px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 128)     animation-delay: 26s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 129) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500 130) .background li:nth-child(13) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500 131)     left: 85%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 132)     width: 52px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 133)     height: 52px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 134)     bottom: -52px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 135)     animation-delay: 54s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 136) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500 137) .background li:nth-child(14) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500 138)     left: 27%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 139)     width: 222px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 140)     height: 222px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 141)     bottom: -222px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 142)     animation-delay: 53s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 143) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500 144) .background li:nth-child(15) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500 145)     left: 78%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 146)     width: 107px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 147)     height: 107px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 148)     bottom: -107px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 149)     animation-delay: 13s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 150) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500 151) .background li:nth-child(16) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500 152)     left: 36%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 153)     width: 140px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 154)     height: 140px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 155)     bottom: -140px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 156)     animation-delay: 1s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 157) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500 158) .background li:nth-child(17) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500 159)     left: 39%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 160)     width: 61px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 161)     height: 61px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 162)     bottom: -61px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 163)     animation-delay: 84s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 164) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500 165) .background li:nth-child(18) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500 166)     left: 63%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 167)     width: 105px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 168)     height: 105px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 169)     bottom: -105px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 170)     animation-delay: 8s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 171) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500 172) .background li:nth-child(19) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500 173)     left: 83%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 174)     width: 114px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 175)     height: 114px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 176)     bottom: -114px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 177)     animation-delay: 56s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 178) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500 179) .background li:nth-child(20) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500 180)     left: 33%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 181)     width: 173px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 182)     height: 173px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 183)     bottom: -173px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 184)     animation-delay: 65s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 185) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500 186) .background li:nth-child(21) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500 187)     left: 9%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 188)     width: 203px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 189)     height: 203px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 190)     bottom: -203px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 191)     animation-delay: 61s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 192) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500 193) .background li:nth-child(22) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500 194)     left: 20%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 195)     width: 230px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 196)     height: 230px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 197)     bottom: -230px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 198)     animation-delay: 79s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 199) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500 200) .background li:nth-child(23) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500 201)     left: 6%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 202)     width: 118px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 203)     height: 118px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 204)     bottom: -118px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 205)     animation-delay: 83s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 206) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500 207) .background li:nth-child(24) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500 208)     left: 84%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 209)     width: 233px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 210)     height: 233px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 211)     bottom: -233px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 212)     animation-delay: 114s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 213) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500 214) .background li:nth-child(25) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500 215)     left: 72%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 216)     width: 92px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 217)     height: 92px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 218)     bottom: -92px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 219)     animation-delay: 46s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 220) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500 221) .background li:nth-child(26) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500 222)     left: 78%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 223)     width: 235px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 224)     height: 235px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 225)     bottom: -235px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 226)     animation-delay: 83s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 227) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500 228) .background li:nth-child(27) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500 229)     left: 34%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 230)     width: 136px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 231)     height: 136px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 232)     bottom: -136px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 233)     animation-delay: 121s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 234) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500 235) .background li:nth-child(28) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500 236)     left: 40%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 237)     width: 98px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 238)     height: 98px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 239)     bottom: -98px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 240)     animation-delay: 99s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 241) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500 242) .background li:nth-child(29) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500 243)     left: 87%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 244)     width: 178px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 245)     height: 178px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 246)     bottom: -178px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 247)     animation-delay: 51s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 248) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500 249) .background li:nth-child(30) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500 250)     left: 89%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 251)     width: 150px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 252)     height: 150px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 253)     bottom: -150px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 254)     animation-delay: 89s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 255) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500 256) .background li:nth-child(31) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500 257)     left: 36%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 258)     width: 273px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 259)     height: 273px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 260)     bottom: -273px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 261)     animation-delay: 101s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 262) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500 263) .background li:nth-child(32) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500 264)     left: 7%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 265)     width: 69px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 266)     height: 69px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 267)     bottom: -69px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 268)     animation-delay: 143s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 269) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500 270) .background li:nth-child(33) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500 271)     left: 2%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 272)     width: 176px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 273)     height: 176px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 274)     bottom: -176px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 275)     animation-delay: 156s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 276) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500 277) .background li:nth-child(34) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500 278)     left: 9%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 279)     width: 84px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 280)     height: 84px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 281)     bottom: -84px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 282)     animation-delay: 99s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 283) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500 284) .background li:nth-child(35) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500 285)     left: 15%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 286)     width: 232px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 287)     height: 232px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 288)     bottom: -232px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 289)     animation-delay: 35s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 290) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500 291) .background li:nth-child(36) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500 292)     left: 83%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 293)     width: 74px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 294)     height: 74px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 295)     bottom: -74px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 296)     animation-delay: 89s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 297) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500 298) .background li:nth-child(37) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500 299)     left: 67%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 300)     width: 143px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 301)     height: 143px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 302)     bottom: -143px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 303)     animation-delay: 173s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 304) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500 305) .background li:nth-child(38) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500 306)     left: 40%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 307)     width: 259px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 308)     height: 259px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 309)     bottom: -259px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 310)     animation-delay: 94s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 311) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500 312) .background li:nth-child(39) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500 313)     left: 39%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 314)     width: 204px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 315)     height: 204px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 316)     bottom: -204px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 317)     animation-delay: 169s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 318) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500 319) .background li:nth-child(40) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500 320)     left: 68%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 321)     width: 280px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 322)     height: 280px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 323)     bottom: -280px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 324)     animation-delay: 22s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 325) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500 326) .background li:nth-child(41) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500 327)     left: 58%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 328)     width: 129px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 329)     height: 129px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 330)     bottom: -129px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 331)     animation-delay: 29s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 332) }
+495707be (loganoneal 2022-11-06 23:25:26 -0500 333) .background li:nth-child(42) {
+495707be (loganoneal 2022-11-06 23:25:26 -0500 334)     left: 38%;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 335)     width: 130px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 336)     height: 130px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 337)     bottom: -130px;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 338)     animation-delay: 63s;
+495707be (loganoneal 2022-11-06 23:25:26 -0500 339) }
+
+frontend/src/components/shared/AnimatedBackground/AnimatedBackground.js
+495707be (loganoneal 2022-11-06 23:25:26 -0500  1) import React from 'react';
+495707be (loganoneal 2022-11-06 23:25:26 -0500  2) import './AnimatedBackground.css'
+495707be (loganoneal 2022-11-06 23:25:26 -0500  3)
+495707be (loganoneal 2022-11-06 23:25:26 -0500  4) const AnimatedBackground = (props) => {
+495707be (loganoneal 2022-11-06 23:25:26 -0500  5)   return (
+495707be (loganoneal 2022-11-06 23:25:26 -0500  6) <ul class="background">
+495707be (loganoneal 2022-11-06 23:25:26 -0500  7)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500  8)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500  9)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 10)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 11)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 12)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 13)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 14)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 15)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 16)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 17)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 18)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 19)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 20)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 21)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 22)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 23)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 24)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 25)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 26)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 27)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 28)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 29)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 30)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 31)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 32)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 33)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 34)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 35)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 36)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 37)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 38)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 39)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 40)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 41)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 42)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 43)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 44)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 45)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 46)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 47)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 48)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 49)    <li></li>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 50) </ul>
+495707be (loganoneal 2022-11-06 23:25:26 -0500 51)   );
+495707be (loganoneal 2022-11-06 23:25:26 -0500 52) };
+495707be (loganoneal 2022-11-06 23:25:26 -0500 53)
+495707be (loganoneal 2022-11-06 23:25:26 -0500 54) export default AnimatedBackground;
+
+frontend/src/components/Signup/index.js
+a3a81e42 (loganoneal 2022-11-06 19:37:45 -0500  10) import CardContainer from "../shared/CardContainer";
+a3a81e42 (loganoneal 2022-11-06 19:37:45 -0500 102)           <CardContainer>
+a3a81e42 (loganoneal 2022-11-06 19:37:45 -0500 104)           </CardContainer>
+
+frontend/src/components/Signup/SignupForm.js
+3a81e42 (loganoneal   2022-11-06 19:37:45 -0500  13) import theme from '../../theme';
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500  72)     <div>
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500  73)       <Grid item xs={12} style={theme.flex}>
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500  80)           <Grid item xs={12} style={theme.flex}>
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500  83)           <Grid item xs={12} style={theme.flex}>
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500  88)       <Grid item xs={12} style={theme.flex}>
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 101)           <Grid item xs={12} style={theme.flex}>
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 104)           </div>
+
+frontend/src/routes.js
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 12) import { ThemeProvider } from '@material-ui/styles'
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 13) import Navbar from './components/Navbar'
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 14) import theme from './theme'
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 15)
+495707be (loganoneal   2022-11-06 23:25:26 -0500 18) import AnimatedBackground from
+'./components/shared/AnimatedBackground/AnimatedBackground'
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 23)       <ThemeProvider theme={theme}>
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 24)         <Navbar/>
+495707be (loganoneal   2022-11-06 23:25:26 -0500 25)         <AnimatedBackground></AnimatedBackground>
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 26)         <div style={theme.page}>
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 27)           <div style={theme.flex}>
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 28)             <Switch>
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 29)               <Route exact path='/' render={
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 30)                   () => (AuthService.getCurrentUser()) ?  
+<Main /> : <Redirect to="/login" />
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 31)                 } />
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 32)               <Route exact path='/login' component={      
+Login } />
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 33)               <Route exact path='/signup' component={     
+Signup } />
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 34)               <Route exact path='/my-qrs' component={ 
+ExplorePage } />
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 35)               <Route exact path='/qr-details-testing'     
+component={ QRDetailsPage } />
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 36)               <Route exact path='/create-qr' component={  
+CreateQRPage } />
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 37)               <Route exact path='/profile' component={ 
+Profile } />
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 38)             </Switch>
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 39)           </div>
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 40)         </div>
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 41)         </ThemeProvider>
+
+frontend/src/services/user.service.js
+d445c3a5 (loganoneal   2022-10-30 22:33:29 -0400 22)     return axios.post(QR_API_URL + 'qr/createQR', {
+
+frontend/src/theme.js
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500  1) import { colors } from '@material-ui/core';
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 36)     },
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 37)     page: {
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 38)       width: "100vw",
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 39)       minHeight: "100vh",
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 40)       overflow: "hidden"
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 41)     },
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 42)     flex: {
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 43)       display: "flex",
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 44)       justifyContent: "center",
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 45)     },
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 46)     container: {
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 47)       maxWidth: 500,
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 48)       width: "80vw",
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 54)     },
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 55)     buttonContainer: {
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 56)       marginBottom: "3vh"
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 57)     },
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 58)     button: {
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 59)       backgroundColor: "#62D2A2",
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 60)       color: "#FFFFFF",
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 61)       textTransform: "none",
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 62)       width: "100%",
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 63)       height: "100%",
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 64)       "&:hover": {
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 65)         backgroundColor: "#AAAAAA"
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 66)       }
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 67)     },
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 68)     buttonBase: {
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 69)       width: "100%",
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 71)       color: "#FFFFFF"
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 72)     },
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 73)     link: {
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 74)       textDecoration: "none"
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 75)     },
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 76)     card: {
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 77)       width: "100%",
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 78)       textAlign: "left",
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 79)       "&:hover": {
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 80)         boxShadow: "4px 4px 4px #AAAAAA",
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 81)         backgroundColor: "#F9F9F9"
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 82)       }
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 83)     },
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 84)     cardTitle: {
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 85)       color: "#000000",
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 86)       marginBottom: 5
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 87)     },
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 88)     cardDescription: {
+a3a81e42 (loganoneal  2022-11-06 19:37:45 -0500 89)       color: "#888888"

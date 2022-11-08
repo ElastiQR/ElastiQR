@@ -1,0 +1,540 @@
+[33mcommit b6f6195fe22f5c015c3f1bf4271cfeb78571bbe9[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: jacobking61 <jacobking61@gmail.com>
+Date:   Tue Oct 18 08:48:39 2022 -0400
+
+    gh-62 Disabled Login button until username and password are inputed
+
+[33mcommit 225db13655e97d25ce9af5b2673b548bcbedb919[m
+Author: jacobking61 <jacobking61@gmail.com>
+Date:   Tue Oct 18 08:25:53 2022 -0400
+
+    gh-62 took away the ability to log in without username
+
+[33mcommit 9c9208cd00c1ce00b5c172808b7c84f6de93e0f9[m
+Author: jacobking61 <jacobking61@gmail.com>
+Date:   Mon Oct 17 20:36:01 2022 -0400
+
+    gh-62 Added button disabling until password requirements are met
+
+[33mcommit 47924164c7807731b37b0582457ef2d1dc83ca6b[m
+Merge: 89e2be0 d0ebdb4
+Author: cfisher36 <89479610+cfisher36@users.noreply.github.com>
+Date:   Mon Oct 17 17:53:36 2022 -0400
+
+    Merge pull request #69 from cfisher36/qr-characteristics
+    
+    linking qr backend w list page
+
+[33mcommit d0ebdb4aa660ecca44ca5231f93c2df13bc10859[m
+Author: Caleb Fisher <cfishe36@vols.utk.edu>
+Date:   Mon Oct 17 17:49:39 2022 -0400
+
+    ElastiQRgh-60: linked qr backend w list page
+
+[33mcommit e1904b1262f0fb54b1a74812f75c8dfbdfef9a36[m
+Author: Caleb Fisher <cfishe36@vols.utk.edu>
+Date:   Mon Oct 17 15:52:59 2022 -0400
+
+    ElastiQRgh-54: linked users with qr codes
+
+[33mcommit 89e2be02daae9308abf1942691f3421ada82b1a8[m
+Merge: d524bfd 3d30666
+Author: cfisher36 <89479610+cfisher36@users.noreply.github.com>
+Date:   Tue Oct 11 15:30:04 2022 -0400
+
+    Merge pull request #68 from cfisher36/main
+    
+    cfishe36 sprint1
+
+[33mcommit 3d30666f829a01afbe6e45770102f13d62fba446[m
+Author: Caleb Fisher <cfishe36@vols.utk.edu>
+Date:   Tue Oct 11 15:26:16 2022 -0400
+
+    cfishe36 sprint1
+
+[33mcommit bc4272d476e3563bd3f66d933986446136c4d9b9[m
+Author: Caleb Fisher <cfishe36@vols.utk.edu>
+Date:   Tue Oct 11 15:22:11 2022 -0400
+
+    cfishe36 sprint1
+
+[33mcommit d524bfd440d2b8d00a6cc0c94f8f41367dfe4db2[m
+Author: VaughanEric <emv212@gmail.com>
+Date:   Tue Oct 11 12:17:17 2022 -0400
+
+    evaugha3 Sprint 1
+
+[33mcommit fb495a7a5fa628b9e97c2f44784b4757f9a3a7d5[m
+Author: jacobking61 <jacobking61@gmail.com>
+Date:   Tue Oct 11 09:30:36 2022 -0400
+
+    jking148 sprint 1
+
+[33mcommit 37f1bebbff2ee8aa01fe7d8e97ecfd36be182143[m
+Author: jacobking61 <jacobking61@gmail.com>
+Date:   Tue Oct 11 09:29:14 2022 -0400
+
+    jking148 sprint 1
+
+[33mcommit 6508f82ae6b0e8acbc9b540fb5f9afcf424beec8[m
+Merge: a65daa0 1a6a476
+Author: jacobking61 <jacobking61@gmail.com>
+Date:   Tue Oct 11 09:27:32 2022 -0400
+
+    Merge branch 'main' of https://github.com/ElastiQR/ElastiQR
+
+[33mcommit a65daa059aa9a25371eaa2025b454b8d987b8f8b[m
+Author: jacobking61 <jacobking61@gmail.com>
+Date:   Tue Oct 11 09:26:15 2022 -0400
+
+    jking148 sprint 1
+
+[33mcommit 1a6a476290c50871fabd186205029e9073f357c0[m
+Author: hcurl <hcurl@vols.utk.edu>
+Date:   Tue Oct 11 09:24:51 2022 -0400
+
+    hcurl sprint1
+
+[33mcommit 2b61e9b62c2126755e45582904441444b6d91e01[m
+Merge: 92599ed 3733a6d
+Author: hcurl <hcurl@vols.utk.edu>
+Date:   Tue Oct 11 09:20:31 2022 -0400
+
+    Merge branch 'main' of https://github.com/ElastiQR/ElastiQR
+
+[33mcommit 3733a6dc2c0ee9590da48d56d453d6c989a10047[m
+Author: jacobking61 <jacobking61@gmail.com>
+Date:   Tue Oct 11 08:40:35 2022 -0400
+
+    Adding password length requirement
+
+[33mcommit 611d888c0e89916d7141a663778205a7c069f4fc[m
+Author: loganofneal <loneal7@vols.utk.edu>
+Date:   Tue Oct 11 08:26:38 2022 -0400
+
+    fixed deletes
+
+[33mcommit cc75a437109f4bfc9e3f3e0f12fe3681e579da30[m
+Author: loganofneal <loneal7@vols.utk.edu>
+Date:   Tue Oct 11 08:24:35 2022 -0400
+
+    sprint 1 folder
+
+[33mcommit 92599ed2d723b4503d4bb58ce6e06999c1c93e2a[m
+Author: loganoneal <loganoneal@gmail.com>
+Date:   Mon Oct 10 22:28:02 2022 -0400
+
+    sprint 1 changes loneal7
+
+[33mcommit 1fbc714d75c318a688e8fdc8134b9f87bb08ee19[m
+Author: loganoneal <loganoneal@gmail.com>
+Date:   Mon Oct 10 21:42:34 2022 -0400
+
+    sprint 1 folder
+
+[33mcommit cf0a607ca6d2f64b0408991510c35fe5bcea9c51[m
+Author: hcurl <hcurl@vols.utk.edu>
+Date:   Mon Oct 10 18:43:26 2022 -0400
+
+    gh-52 changing so response isn't sent twice
+
+[33mcommit 70a87f06db3ca1643f9ecac3c27ece501140f828[m
+Author: hcurl <hcurl@vols.utk.edu>
+Date:   Mon Oct 10 18:13:52 2022 -0400
+
+    gh-52 logs and statuses
+
+[33mcommit e0bb5f5b3f7a19dd6d10773434e43b5766625fed[m
+Merge: 7ef6475 a969cc4
+Author: cfisher36 <89479610+cfisher36@users.noreply.github.com>
+Date:   Mon Oct 10 17:26:08 2022 -0400
+
+    Merge pull request #51 from cfisher36/sync-qr-db
+    
+    Sync QR Endpoints w/ DB
+
+[33mcommit a969cc4c65edf42a6b0bf214fc581b31b61449c6[m
+Author: Caleb Fisher <cfishe36@vols.utk.edu>
+Date:   Mon Oct 10 17:21:33 2022 -0400
+
+    ElastiQRgh-50: sync RetrieveQR w/ db
+
+[33mcommit bd3e4ebbfdd2e63cc31b69363b19a167e1f98ebc[m
+Author: Caleb Fisher <cfishe36@vols.utk.edu>
+Date:   Mon Oct 10 16:43:46 2022 -0400
+
+    ElastiQRgh-50: sync CreateQR w/ db
+
+[33mcommit 7ef6475a623f477e796e3c03955e3486f4bcff98[m
+Merge: 5376fd2 2a775b8
+Author: cfisher36 <89479610+cfisher36@users.noreply.github.com>
+Date:   Mon Oct 10 16:23:09 2022 -0400
+
+    Merge pull request #48 from ElastiQR/createqr
+    
+    gh-41 start on qrController get request
+
+[33mcommit 2a775b8d4b4271b0bbf1083bdede9d9cf9dea98e[m[33m ([m[1;31morigin/createqr[m[33m)[m
+Author: hcurl <hcurl@vols.utk.edu>
+Date:   Mon Oct 10 16:15:18 2022 -0400
+
+    gh-41 GET request
+
+[33mcommit 17062b100c88b0fcd51aa372a340df4dbe059650[m
+Author: hcurl <hcurl@vols.utk.edu>
+Date:   Mon Oct 10 14:05:35 2022 -0400
+
+    gh-41 start on qrController get request
+
+[33mcommit 5376fd22b0da6d9c609842b1d0dd23d53759f32f[m
+Merge: fcebee7 a9b5484
+Author: Logan O'Neal <loneal7@vols.utk.edu>
+Date:   Mon Oct 10 11:53:00 2022 -0400
+
+    Merge pull request #47 from ElastiQR/login_functional
+    
+    Login functional
+
+[33mcommit a9b5484c94f08f78832073af9f895dcef0a21044[m[33m ([m[1;31morigin/login_functional[m[33m, [m[1;32mlogin_functional[m[33m)[m
+Author: loganofneal <loneal7@vols.utk.edu>
+Date:   Mon Oct 10 11:52:01 2022 -0400
+
+    gh-46 link llogin and signup to backend, make functional
+
+[33mcommit 7a24b218f5541db57b555876c5cf065a9ff30f52[m
+Author: loganofneal <loneal7@vols.utk.edu>
+Date:   Mon Oct 10 11:27:30 2022 -0400
+
+    more cors changes
+
+[33mcommit e609d055fa104e40b974751e082e6347ec2522b6[m
+Author: loganofneal <loneal7@vols.utk.edu>
+Date:   Mon Oct 10 11:19:31 2022 -0400
+
+    CORS allow backend
+
+[33mcommit 066bddd8fd29bcde638d4636d092e1b0e50336fa[m
+Author: loganofneal <loneal7@vols.utk.edu>
+Date:   Mon Oct 10 11:18:38 2022 -0400
+
+    create user frontend call
+
+[33mcommit 4693f11cdb86b542fa3f397b03b1244ac57b62ef[m
+Author: loganofneal <loneal7@vols.utk.edu>
+Date:   Mon Oct 10 10:44:15 2022 -0400
+
+    added mising dotenv lib call to find .env file
+
+[33mcommit fcebee7026b4e2235e037785934fabf8e249924c[m
+Merge: 2be6573 f9da3ae
+Author: Jacobking61 <112121938+Jacobking61@users.noreply.github.com>
+Date:   Sun Oct 9 11:35:27 2022 -0400
+
+    Merge pull request #44 from ElastiQR/Signup
+    
+    gh-30 Adding Password Requirements and Password Validation
+
+[33mcommit f9da3ae8dd7b6463ed715a26c506c9bef7e00ecc[m[33m ([m[1;31morigin/Signup[m[33m)[m
+Author: jacobking61 <jacobking61@gmail.com>
+Date:   Sun Oct 9 11:34:04 2022 -0400
+
+    gh-30 Adding Password Requirements and Password Validation
+
+[33mcommit 0ddce3ea6f051eda133e86e413f563b2e44af10a[m
+Author: jacobking61 <jacobking61@gmail.com>
+Date:   Sun Oct 9 11:14:57 2022 -0400
+
+    gh-30 Adding Password Requirements and Password Validation
+
+[33mcommit 2be6573decd95f88d8c161aed0d215d986edadb0[m
+Merge: e5670f6 270ea82
+Author: Jacobking61 <112121938+Jacobking61@users.noreply.github.com>
+Date:   Sat Oct 8 11:11:50 2022 -0400
+
+    Merge pull request #43 from ElastiQR/login
+    
+    gh-23 Signup Form without password validation
+
+[33mcommit 270ea826c3a19eb1c0f6e014fe43038127357e32[m[33m ([m[1;31morigin/login[m[33m)[m
+Merge: 420bd9b e5670f6
+Author: Jacobking61 <112121938+Jacobking61@users.noreply.github.com>
+Date:   Sat Oct 8 11:11:12 2022 -0400
+
+    Merge branch 'main' into login
+
+[33mcommit e5670f6a1165a9ccaed9d8dedbcfbac5404154d7[m
+Merge: 048ea12 8a64c71
+Author: VaughanEric <64029116+VaughanEric@users.noreply.github.com>
+Date:   Wed Oct 5 14:44:52 2022 -0400
+
+    Merge pull request #42 from ElastiQR/list-item-component
+    
+    Explore Page
+
+[33mcommit 8a64c71fcafc246ebf1a66b3273eb368e504cc13[m[33m ([m[1;31morigin/list-item-component[m[33m)[m
+Author: VaughanEric <emv212@gmail.com>
+Date:   Wed Oct 5 14:40:09 2022 -0400
+
+    Removed Duplicate Files
+
+[33mcommit d65e243bbb7073222e37191377d40a98c0040c6c[m
+Author: VaughanEric <emv212@gmail.com>
+Date:   Wed Oct 5 14:36:54 2022 -0400
+
+    Merging
+
+[33mcommit 8fa7c2177b3b2b7341c65df5c925ba9c04245d99[m
+Author: VaughanEric <emv212@gmail.com>
+Date:   Wed Oct 5 14:36:36 2022 -0400
+
+    Merging
+
+[33mcommit 0e8ed8c5a1318068a39c6c8b0d2fb069347eaf79[m
+Merge: 64eeced 048ea12
+Author: VaughanEric <emv212@gmail.com>
+Date:   Wed Oct 5 14:25:57 2022 -0400
+
+    Merging
+
+[33mcommit 64eecedafb34ed66fd8ca10599c8cd710eb47ff7[m
+Author: VaughanEric <emv212@gmail.com>
+Date:   Wed Oct 5 12:27:28 2022 -0400
+
+    gh-27: Functionality, Layout, & Styling
+
+[33mcommit efeac1233c745587f8dc038345b7cf3bd3b92c16[m
+Author: VaughanEric <emv212@gmail.com>
+Date:   Wed Oct 5 12:11:32 2022 -0400
+
+    gh-26: Test with Mock Data
+
+[33mcommit 5a572797e42ce7d6dd686ab24e628d3c5e8c836f[m
+Author: VaughanEric <emv212@gmail.com>
+Date:   Wed Oct 5 12:08:54 2022 -0400
+
+    gh-25: List Item Styling
+
+[33mcommit c44dedb09e1324c2deb6e3aa72dbb283259d43c4[m
+Author: VaughanEric <emv212@gmail.com>
+Date:   Tue Oct 4 21:11:21 2022 -0400
+
+    gh-26 List Mock Data
+
+[33mcommit 88a6c640420047d570e206bd9fcd1f3f5ab56a3c[m
+Author: VaughanEric <emv212@gmail.com>
+Date:   Tue Oct 4 21:10:31 2022 -0400
+
+    gh-27 Routing to Explore Page
+
+[33mcommit 728c054f7a17bebcd94311514ecba533334e40d9[m
+Author: VaughanEric <emv212@gmail.com>
+Date:   Tue Oct 4 21:09:01 2022 -0400
+
+    gh-27 Create Explore Page
+
+[33mcommit c055cba8a9aebbeb7e52333c013057e0bd905907[m
+Author: VaughanEric <emv212@gmail.com>
+Date:   Tue Oct 4 21:08:09 2022 -0400
+
+    gh-26 Create List Component
+
+[33mcommit 8a330ddae2c836a8d947378ac3dc1e0758bd6b26[m
+Author: VaughanEric <emv212@gmail.com>
+Date:   Tue Oct 4 21:05:33 2022 -0400
+
+    gh-25 Create List Item Component
+
+[33mcommit 420bd9b8f7960c59d856f61bf12cb2ab5a88b944[m
+Author: jacobking61 <jacobking61@gmail.com>
+Date:   Tue Oct 4 12:38:19 2022 -0400
+
+    gh-23 Signup Form without password validation
+
+[33mcommit 048ea12d11fc147bd1793103a1dbdcf4b898f893[m
+Merge: 5036319 6b5cc9b
+Author: cfisher36 <89479610+cfisher36@users.noreply.github.com>
+Date:   Sat Oct 1 23:09:25 2022 -0400
+
+    Merge pull request #40 from cfisher36/login-db
+    
+    sync login endpoints with db
+
+[33mcommit 6b5cc9bbc0712c28190c8968e69dd341cab76a8d[m
+Author: Caleb Fisher <cfishe36@vols.utk.edu>
+Date:   Sat Oct 1 23:07:12 2022 -0400
+
+    ElastiQRgh-28: sync login endpoints with db
+
+[33mcommit 5036319e574069394790d0de010711f14909cc8d[m
+Merge: 069b28d 4942544
+Author: hcurl <112360907+hcurl@users.noreply.github.com>
+Date:   Tue Sep 27 10:01:42 2022 -0400
+
+    Merge pull request #39 from ElastiQR/createqr
+    
+    gh-18 qrController
+
+[33mcommit 069b28d137a0ef5e82254b5130dbe83068764b5c[m
+Merge: 749be26 f4d4583
+Author: Jacobking61 <112121938+Jacobking61@users.noreply.github.com>
+Date:   Tue Sep 27 09:43:51 2022 -0400
+
+    Merge pull request #38 from ElastiQR/login
+    
+    gh-17 Fixed Spacing
+
+[33mcommit f4d4583196cfd712c1b0d29b36e4710f99801d35[m
+Author: jacobking61 <jacobking61@gmail.com>
+Date:   Tue Sep 27 09:38:43 2022 -0400
+
+    gh-17 Fixed Spacing
+
+[33mcommit 4942544f23b6afb266b1c249a6a0445a16ca9900[m
+Author: hcurl <hcurl@vols.utk.edu>
+Date:   Tue Sep 27 09:38:16 2022 -0400
+
+    gh-18 qrController
+
+[33mcommit 749be269581f15b00ff802e61eb7e0982f69d9ce[m
+Merge: c3c7c6b f9e200b
+Author: Jacobking61 <112121938+Jacobking61@users.noreply.github.com>
+Date:   Tue Sep 27 09:15:34 2022 -0400
+
+    Merge pull request #37 from ElastiQR/login
+    
+    gh-17 login componenet
+
+[33mcommit f9e200b27f040f605205488daec2fa26cfc6cc36[m
+Author: jacobking61 <jacobking61@gmail.com>
+Date:   Tue Sep 27 09:14:12 2022 -0400
+
+    gh-17 login componenet
+
+[33mcommit c3c7c6b71ff18b583f80803701efcbc92fdc6ae0[m
+Author: loganofneal <loneal7@vols.utk.edu>
+Date:   Tue Sep 27 08:42:25 2022 -0400
+
+    fix theme
+
+[33mcommit c41c9d9fd3f7b59e93eaaac645e007d34f8fdd86[m
+Author: loganofneal <loneal7@vols.utk.edu>
+Date:   Tue Sep 27 08:34:30 2022 -0400
+
+    Theme to seperate file
+
+[33mcommit f85edacf37cad53f7dd179413cfa3d7b530eb4b9[m
+Merge: 3ae4221 707e657
+Author: cfisher36 <89479610+cfisher36@users.noreply.github.com>
+Date:   Mon Sep 26 15:05:30 2022 -0400
+
+    Merge pull request #35 from cfisher36/deploy-script
+    
+    Cloud Run deploy script
+
+[33mcommit 707e6570a6f9442a881c53b56184dabf07916b1f[m
+Author: Caleb Fisher <cfishe36@vols.utk.edu>
+Date:   Mon Sep 26 15:02:54 2022 -0400
+
+    ElastiQRgh-19:added Cloud Run deploy script
+
+[33mcommit 3ae422167419ecd6eb8e91bfeac9221501c4cefb[m
+Merge: dae2c70 a3b8200
+Author: Logan O'Neal <loneal7@vols.utk.edu>
+Date:   Mon Sep 26 00:17:01 2022 -0400
+
+    Merge pull request #34 from ElastiQR/navbar-fixed
+    
+    gh-32 : added navbar. TODO: add theme
+
+[33mcommit a3b820078742d7d5515dc979e2038f45deefee40[m[33m ([m[1;31morigin/navbar-fixed[m[33m)[m
+Author: loganoneal <loganoneal@gmail.com>
+Date:   Mon Sep 26 00:15:24 2022 -0400
+
+    gh-32 : added navbar. TODO: add theme
+
+[33mcommit dae2c706c2e7834981256ea3064a258d857b2ed7[m
+Merge: d373090 373ba77
+Author: cfisher36 <89479610+cfisher36@users.noreply.github.com>
+Date:   Fri Sep 23 16:37:47 2022 -0400
+
+    Merge pull request #31 from cfisher36/db-config
+    
+    configured db connection for dev environment
+
+[33mcommit 373ba77a7cad06a8bc48d55f36635ed55fdd2f2a[m
+Author: Caleb Fisher <cfishe36@vols.utk.edu>
+Date:   Fri Sep 23 15:27:56 2022 -0400
+
+    configured db connection for dev environment
+
+[33mcommit e6b71a090755f10d5d47a6c41794e5a290f3c615[m
+Author: Caleb Fisher <cfishe36@vols.utk.edu>
+Date:   Fri Sep 23 15:14:26 2022 -0400
+
+    configured db connection for dev environment
+
+[33mcommit 859f636f9b55438e89d00b023144f4682632b391[m
+Author: Caleb Fisher <cfishe36@vols.utk.edu>
+Date:   Fri Sep 23 15:05:44 2022 -0400
+
+    configured db connection for dev environment
+
+[33mcommit d373090645df455316812e2d451e6a81690835ac[m
+Author: loganoneal <loganoneal@gmail.com>
+Date:   Mon Sep 19 20:59:12 2022 -0400
+
+    gh-20 : added LOGIN and REGISTER endpoints, structure for backend
+
+[33mcommit c76fd988f655d3fc59a6a06008b3b18379df8894[m
+Merge: 62f261e acecb28
+Author: Logan O'Neal <loneal7@vols.utk.edu>
+Date:   Mon Sep 19 21:00:59 2022 -0400
+
+    Merge pull request #21 from ElastiQR/backend_auth
+    
+    added LOGIN and REGISTER endpoints, structure for backend
+
+[33mcommit acecb28037fe5f855ec4a4fd81fff665f30b384d[m[33m ([m[1;31morigin/backend_auth[m[33m)[m
+Author: loganoneal <loganoneal@gmail.com>
+Date:   Mon Sep 19 20:59:12 2022 -0400
+
+    added LOGIN and REGISTER endpoints, structure for backend
+
+[33mcommit 62f261eae0c09edcd441b8ae9a6b3666ef0d0bf2[m
+Merge: 1be17a0 9844a0c
+Author: cfisher36 <89479610+cfisher36@users.noreply.github.com>
+Date:   Sun Sep 18 17:24:08 2022 -0400
+
+    Merge pull request #8 from cfisher36/backend-general-changes
+    
+    small structure changes
+
+[33mcommit 9844a0ce1b498c304c0f5d9d8e84db66d2a48031[m
+Author: Caleb Fisher <cfishe36@vols.utk.edu>
+Date:   Sun Sep 18 17:02:05 2022 -0400
+
+    small structure changes
+
+[33mcommit 1be17a0da0294c84ba946e5920dfb3def7efdcd7[m
+Author: loganoneal <elasticqr@elasticqr.us-east1-b.c.crypto-will-362612.internal>
+Date:   Thu Sep 15 13:34:33 2022 +0000
+
+    backend index.js start
+
+[33mcommit 25926c8ac22ece543ea5ed835bda9a37da8aaf15[m
+Author: loganoneal <elasticqr@elasticqr.us-east1-b.c.crypto-will-362612.internal>
+Date:   Thu Sep 15 13:28:16 2022 +0000
+
+    backend init
+
+[33mcommit 054367e269c1c529e63c879310738fc1163d9e12[m
+Author: loganofneal <loneal7@vols.utk.edu>
+Date:   Thu Sep 8 08:18:10 2022 -0400
+
+    frontend initialized
+
+[33mcommit 3ac77baebb6fa286a7f30043e519a9ea182924af[m
+Author: Logan O'Neal <loganofneal@gmail.com>
+Date:   Wed Sep 7 20:43:43 2022 -0400
+
+    Initial commit
