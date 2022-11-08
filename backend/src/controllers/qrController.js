@@ -87,16 +87,24 @@ module.exports = {
         if (err) throw (err)
         sqlSearch = 'SELECT * FROM QRCodes WHERE qrID = ? LIMIT 1'
         search_query = mysql.format(sqlSearch, [qrID])
+        const sqlInsert = `INSERT INTO QRScans (qrID, accessTime)
+                           VALUES (?, CURRENT_TIMESTAMP())`
+        const insert_query = mysql.format(sqlInsert, [qrID]);
 
         await connection.query(search_query, async (err, result)=> {
           if (err) throw (err)
-          connection.release()
 
           if (result.length != 0) {
             console.log("--------> Requested QR Code has been found successfully")
 
+            await connection.query(insert_query, async (err, result)=> {
+              if (err) throw (err)
+              connection.release()
+              console.log("--------> Scan logged successfully" + result.insertId)
+            })
             res.redirect(result[0].qrURL);
           } else {
+            connection.release()
             console.log("--------> Error, could not find the requested QR Code")
             res.sendStatus(400)
           }

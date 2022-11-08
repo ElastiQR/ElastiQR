@@ -9,10 +9,10 @@ import { QRCode } from 'react-qrcode-logo'
 
 import theme from '../theme'
 import TextInput from './TextInput'
+import AuthService from "../services/auth.service"
 import UserService from '../services/user.service'
 import StatPage from './QRStatPage/StatPage'
-import AuthService from '../services/auth.service'
-import CardContainer from './shared/CardContainer';
+import CardContainer from './shared/CardContainer'
 
 const styles = theme => ({
   page: {
