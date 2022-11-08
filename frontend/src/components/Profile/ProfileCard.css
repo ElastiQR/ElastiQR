@@ -60,3 +60,12 @@ header {
 .photos {
 	flex: 1;
 }
+
+.flex {
+	display: flex;
+	justify-content: center;
+	margin: 1rem 0
+}
+.username {
+	font-weight: bold;
+}
