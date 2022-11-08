@@ -11,8 +11,8 @@ import theme from '../theme'
 import TextInput from './TextInput'
 import AuthService from "../services/auth.service"
 import UserService from '../services/user.service'
-import StatPage from './QRStatPage/StatPage'
 import CardContainer from './shared/CardContainer'
+import QRStatPage from './QRStatPage'
 
 const styles = theme => ({
   page: {
@@ -197,7 +197,7 @@ class QRDetailsPage extends Component {
                 </Grid>
 
                 <Grid item xs={12} className={classes.statsPage}>
-                  <StatPage></StatPage>
+                  <QRStatPage id={this.props.location.state.id}></QRStatPage>
                 </Grid>
 
                 <Grid container item spacing={1}>
