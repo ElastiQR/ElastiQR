@@ -47,6 +47,10 @@ header {
 	text-align: center;
 }
 
+.home-container {
+	border-bottom: solid rgb(206, 206, 206) 1px;             
+}
+
 .followers {
 	flex: 1;
 }

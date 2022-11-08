@@ -13,7 +13,7 @@ import TextInput from '../TextInput';
 const CreateQRForm = () => {
   let history = useHistory();
 
-  const [link, setLink] = useState("elasticqr.com");
+  const [link, setLink] = useState();
   const [qrname, setName] = useState();
   const [description, setDescription] = useState();  /* Add this field to the QR code creation process */
   const [error, setError] = useState(false);
