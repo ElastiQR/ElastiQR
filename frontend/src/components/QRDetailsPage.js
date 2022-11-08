@@ -60,7 +60,6 @@ const styles = theme => ({
     backgroundColor: theme.palette.button.white,
     color: theme.palette.text.green,
     width: "80%",
-//    margin: "1.5rem 0"
   },
   greenButton: {
     backgroundColor: theme.palette.button.green,
