@@ -14,6 +14,7 @@ import "./ProfileCard.css";
 import avatar from "../../images/avatar.png";
 import CardContainer from '../shared/CardContainer';
 import LoadingButton from '../shared/LoadingButton';
+import Typography from '@material-ui/core/Typography'
 
 const ProfileCard = () => {
   let history = useHistory();
@@ -62,17 +63,27 @@ const ProfileCard = () => {
         <header>
             <img class="avatar-img" src={avatar}/>
         </header>
-        <h1 className="bold-text">
+        <div className="flex">
+          <Typography variant="h4" className="username">
             {user.username ? user.username : user.first + " " + user.last}
-        </h1>
+          </Typography>
+        </div>
         <div className="social-container">
             <div className="followers">
-                <h1 className="bold-text">{totalCodes}</h1>
-                <h2 className="smaller-text">QR Codes</h2>
+                <Typography variant="h5" id="bold-text">
+                  {totalCodes}
+                </Typography>
+                <Typography variant="subtitle1" id="smaller-text">
+                  QR Codes
+                </Typography>
             </div>
             <div className="likes">
-                <h1 className="bold-text">0</h1>
-                <h2 className="smaller-text">Broken Links</h2>
+                <Typography variant="h5" id="bold-text">
+                  0
+                </Typography>
+                <Typography variant="subtitle1" id="smaller-text">
+                  Broken Links
+                </Typography>
             </div>
         </div>
         <div className="footer-container">

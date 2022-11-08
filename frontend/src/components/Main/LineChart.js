@@ -30,14 +30,16 @@ const simpleData = [
 function SimpleChart(){
     return (
     <React.Fragment>
-      <h2 style={{color: theme.palette.button.green}}>Users in the last 5 days</h2>
-      <ResponsiveContainer width="100%" aspect={3} >
-       <LineChart data= {simpleData}>
-         <XAxis dataKey ="subject" />
-         <Line dataKey="fees" />
-         <YAxis />
-       </LineChart>
-      </ResponsiveContainer>
+      <h2 style={{color: theme.palette.button.green, textAlign: "center"}}>Users in the last 5 days</h2>
+      <div style={{margin: "0 auto"}}>
+        <ResponsiveContainer width={600} aspect={2.5}>
+          <LineChart data={simpleData}>
+            <XAxis dataKey="subject" />
+            <Line dataKey="fees" />
+            <YAxis />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
     </React.Fragment>
     );
 };

@@ -28,8 +28,8 @@ const StatPage = () => {
   )
 
   return (
-    <div style={{width: '100%', padding: 30}}>
-        <h1 style={{color: "#62D2A2"}}>Your QR Code's Stats</h1>
+    <div style={{width: '100%', textAlign: 'center'}}>
+        <h2 style={{color: "#62D2A2"}}>Your QR Code's Stats</h2>
         <div className="social-container">
             <div className="followers">
                 <h1 className="bold-text">0</h1>

@@ -1,8 +1,8 @@
 .card-container {
-    margin-top: 35px;
+  margin: 35px 0;
 	padding: 15px;
-	background-color: white;
-	min-width: 350px;
+	background-color: #F5F4F4;
+	min-width: 400px;
 	max-width: 600px;
 	height: auto;
 	border-radius: 14px;
