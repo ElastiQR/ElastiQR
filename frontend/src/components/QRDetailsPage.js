@@ -10,11 +10,8 @@ import QRCode from 'react-qr-code'
 import theme from '../theme'
 import NavBar from './Navbar'
 import TextInput from './TextInput'
-<<<<<<< HEAD
-import StatPage from './QRStatPage/StatPage'
-=======
 import UserService from '../services/user.service'
->>>>>>> 1ad3f0da0e4ec74fcceb62ac7bc119b02bc2461e
+import QRStatPage from './QRStatPage'
 
 const styles = theme => ({
   page: {
@@ -159,7 +156,7 @@ class QRDetailsPage extends Component {
               </Grid>
 
               <Grid item xs={12}>
-                <StatPage></StatPage>
+                <QRStatPage id={this.props.location.state.id}></QRStatPage>
               </Grid>
 
               <Grid container item spacing={1}>

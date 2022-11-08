@@ -11,6 +11,13 @@ class UserService {
     }));
   }
 
+  countQR(id, span) {
+    return axios.get(QR_API_URL + 'qr/count?' + new URLSearchParams({
+      qrID: id,
+      span
+    }));
+  }
+
   createQR(id, name, url) {
     return axios.post(QR_API_URL + 'qr/createQR', {
       userID: id,
