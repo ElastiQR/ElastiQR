@@ -5,54 +5,73 @@ import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { ThemeProvider } from '@material-ui/styles'
-import QRCode from 'react-qr-code'
+import { QRCode } from 'react-qrcode-logo'
 
 import theme from '../theme'
 import TextInput from './TextInput'
 import AuthService from "../services/auth.service"
 import UserService from '../services/user.service'
+import CardContainer from './shared/CardContainer'
 import QRStatPage from './QRStatPage'
 
 const styles = theme => ({
   page: {
     backgroundColor: theme.palette.background.lightGray,
-    width: "100vw",
-    minHeight: "100vh",
     overflow: "hidden"
   },
   flex: {
     display: "flex",
     justifyContent: "center"
   },
+  header: {
+    backgroundColor: theme.palette.background.green,
+    paddingBottom: "1.5rem"
+  },
   container: {
     maxWidth: 500,
     width: "80vw",
-    marginTop: "4vh"
   },
   qrName: {
-    color: theme.palette.text.green,
-    fontWeight: "bold"
+    color: theme.palette.text.white,
+    fontWeight: "bold",
+    backgroundColor: theme.palette.background.green,
+    paddingTop: "1rem",
+    width: "100%",
+    textAlign: "center",
+    borderTopLeftRadius: "14px",
+    borderTopRightRadius: "14px",
+    paddingBottom: "1.5rem"
   },
   button: {
-    color: theme.palette.text.white,
     textTransform: "none",
     width: "100%",
     height: "100%",
     "&:hover": {
-      backgroundColor: theme.palette.button.mediumGray
+      backgroundColor: theme.palette.button.mediumGray,
+      color: theme.palette.text.white
     }
+  },
+  statsPage: {
+    margin: "1rem 0"
   },
   link: {
     textDecoration: "none"
   },
+  whiteButton: {
+    backgroundColor: theme.palette.button.white,
+    color: theme.palette.text.green,
+    width: "80%",
+  },
   greenButton: {
-    backgroundColor: theme.palette.button.green
+    backgroundColor: theme.palette.button.green,
+    color: theme.palette.text.white
   },
   grayButton: {
-    backgroundColor: theme.palette.button.darkGray
+    backgroundColor: theme.palette.button.darkGray,
+    color: theme.palette.text.white
   },
   backButton: {
-    marginBottom: "4vh"
+    margin: "1rem 0"
   },
   linkText: {
     marginTop: "2vh",
@@ -61,10 +80,11 @@ const styles = theme => ({
     marginBottom: "5vh",
   },
   qrCode: {
-    marginBottom: "2vh"
+    marginBottom: "2vh",
+    border: "5rem",
+    borderRadius: "14px"
   }
 })
-
 
 class QRDetailsPage extends Component {
   constructor(props) {
@@ -76,6 +96,7 @@ class QRDetailsPage extends Component {
        QRListItem component. I just needed something to test with until we can
        connect with the backend. */
     this.state = {
+      name: this.props.location.state.name,
       link: this.props.location.state.url,
       description: this.props.location.state.description,
       error: false,
@@ -127,80 +148,100 @@ class QRDetailsPage extends Component {
     )
   }
 
+  downloadQRCode = () => {
+    var qrCodeURL = document.getElementById('qrcode')
+      .toDataURL("image/png")
+      .replace("image/png", "image/octet-stream");
+    console.log(qrCodeURL)
+    let aEl = document.createElement("a");
+    aEl.href = qrCodeURL;
+    aEl.download = this.state.name + ".png";
+    document.body.appendChild(aEl);
+    aEl.click();
+    document.body.removeChild(aEl);
+  }
+
+
   render() {
     const { classes } = this.props;
 
     return (
       <ThemeProvider theme={theme}>
-        <div className={classes.page}>
-          <div className={classes.flex}>
-            <Grid container spacing={3} className={classes.container}>
-              <Grid item xs={12} className={classes.flex}>
-                <Typography variant="h5" className={classes.qrName}>
-                  {this.props.location.state.name}
-                </Typography>
-              </Grid>
-
-              <Grid item xs={12} className={classes.flex}>
-                <QRCode
-                  size={144}
-                  value={this.state.link}
-                  viewBox={`0 0 144 144`}
-                  bgColor={theme.palette.background.lightGray}
-                  className={classes.qrCode}
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <Button variant="contained" className={`${classes.button} ${classes.greenButton}`}>
-                  <Typography variant="h6">
-                    Download
+        <CardContainer>
+          <div className={classes.page}>
+            <div className={classes.flex}>
+              <Grid container spacing={0} className={classes.container}>
+                <Grid item xs={12} className={classes.flex}>
+                  <Typography variant="h4" className={classes.qrName}>
+                    {this.state.name}
                   </Typography>
-                </Button>
-              </Grid>
+                </Grid>
 
-              <Grid item xs={12}>
-                <QRStatPage id={this.props.location.state.id}></QRStatPage>
-              </Grid>
-
-              <Grid container item spacing={1}>
-                <Grid item xs={12} className={classes.linkText}>
-                  <TextInput 
-                    label="Link"
+                <Grid item xs={12} className={`${classes.flex} ${classes.header}`}>
+                  <QRCode
+                    size={144}
                     value={this.state.link}
-                    onChangeValue={this.handleLinkChange} 
-                    error={this.state.error}
-                    helperText={this.state.help}
+                    viewBox={`0 0 144 144`}
+                    bgColor={theme.palette.background.lightGray}
+                    className={classes.qrCode}
+                    id="qrcode"
                   />
                 </Grid>
-                <Grid item xs={12} className={classes.descriptionText}>
-                  <TextInput
-                    label="Description"
-                    value={this.state.description}
-                    onChangeValue={this.handleDescriptionChange} />
-                </Grid>             
-              </Grid>
 
-              <Grid item xs={12}>
-                <Button variant="contained" onClick={this.update} className={`${classes.button} ${classes.greenButton}`}>
-                  <Typography variant="h6">
-                    Update
-                  </Typography>
-                </Button>
-              </Grid>
-
-              <Grid item xs={12} className={classes.backButton}>
-                <Link to="/my-qrs" className={classes.link}>
-                  <Button variant="contained" className={`${classes.button} ${classes.grayButton}`}>
+                <Grid item xs={12} className={`${classes.flex} ${classes.header}`}>
+                  <Button variant="contained" onClick={this.downloadQRCode} className={`${classes.button} ${classes.whiteButton}`}>
                     <Typography variant="h6">
-                      Back
+                      Download
                     </Typography>
                   </Button>
-                </Link>
+                </Grid>
+
+                <Grid item xs={12} className={classes.statsPage}>
+                  <QRStatPage id={this.props.location.state.id}></QRStatPage>
+                </Grid>
+
+                <Grid container item spacing={1}>
+                  <Grid item xs={12} className={classes.linkText}>
+                    <TextInput 
+                      label="Link"
+                      value={this.state.link}
+                      onChangeValue={this.handleLinkChange} 
+                      error={this.state.error}
+                      helperText={this.state.help}
+                      required={false}
+                    />
+                  </Grid>
+                  <Grid item xs={12} className={classes.descriptionText}>
+                    <TextInput
+                      label="Description"
+                      value={this.state.description}
+                      onChangeValue={this.handleDescriptionChange} 
+                      required={false}
+                    />  
+                  </Grid>             
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Button variant="contained" onClick={this.update} className={`${classes.button} ${classes.greenButton}`}>
+                    <Typography variant="h6">
+                      Update
+                    </Typography>
+                  </Button>
+                </Grid>
+
+                <Grid item xs={12} className={classes.backButton}>
+                  <Link to="/my-qrs" className={classes.link}>
+                    <Button variant="contained" className={`${classes.button} ${classes.grayButton}`}>
+                      <Typography variant="h6">
+                        Back
+                      </Typography>
+                    </Button>
+                  </Link>
+                </Grid>
               </Grid>
-            </Grid>
+            </div>
           </div>
-        </div>
+        </CardContainer>
       </ThemeProvider>
     )
   }

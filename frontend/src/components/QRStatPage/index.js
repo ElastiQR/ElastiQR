@@ -10,6 +10,7 @@ import Button from "@material-ui/core/Button";
 import { Bar } from "react-chartjs-2";
 import Chart from "chart.js/auto";
 import UserService from "../../services/user.service";
+import '../Profile/ProfileCard.css'
 
 
 
@@ -110,16 +111,24 @@ class QRStatPage extends Component {
     )
   
     return (
-      <div style={{width: '100%', padding: 30}}>
+      <div style={{width: '100%', padding: 30, textAlign: "center"}}>
           <h1 style={{color: "#62D2A2"}}>Your QR Code's Stats</h1>
           <div className="social-container">
               <div className="followers">
-                  <h1 className="bold-text">{total}</h1>
-                  <h2 className="smaller-text">Total Uses</h2>
+                  <Typography variant="h5" id="bold-text">
+                     {total}
+                  </Typography>
+                  <Typography variant="subtitle1" id="smaller-text">
+                    Total Uses
+                  </Typography>
               </div>
               <div className="likes">
-                  <h1 className="bold-text">0</h1>
-                  <h2 className="smaller-text">Failed Uses</h2>
+                  <Typography variant="h5" id="bold-text">
+                    0
+                  </Typography>
+                  <Typography variant="subtitle1" id="smaller-text">
+                    Failed Uses
+                  </Typography>
               </div>
           </div>
       </div>

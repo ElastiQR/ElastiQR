@@ -8,8 +8,20 @@ import { ThemeProvider } from '@material-ui/styles'
 import ButtonBase from '@material-ui/core/ButtonBase'
 import theme from '../../theme'
 
+const styles = theme => ({
+  card: {
+    width: "100%",
+    textAlign: "left",
+    "&:hover": {
+      boxShadow: "4px 4px 4px #AAAAAA",
+    }
+  }
+})
+
 class QRListItem extends Component {
   render() {
+    const { classes } = this.props;
+
     return (
         <Link style={theme.link}
           to={{
@@ -23,7 +35,7 @@ class QRListItem extends Component {
           }}
         >
           <ButtonBase style={theme.buttonBase}>
-          <Card style={theme.card}>
+          <Card className={classes.card}>
             <CardContent>
               <Typography variant="h6" style={theme.cardTitle}>
                 {this.props.name}
@@ -39,4 +51,4 @@ class QRListItem extends Component {
   }
 }
 
-export default QRListItem;
+export default withStyles(styles)(QRListItem);

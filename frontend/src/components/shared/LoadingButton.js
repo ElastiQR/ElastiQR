@@ -6,7 +6,16 @@ import {Button , CircularProgress} from '@material-ui/core';
 const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
-  },
+    backgroundColor: "#62D2A2",
+    color: "#FFFFFF",
+    textTransform: "none",
+    width: "100%",
+    height: "100%",
+    "&:hover": {
+      backgroundColor: "#AAAAAA"
+    },
+    fontSize: "1.25rem"
+  }
 });
 
 const LoadingButton = (props) => {

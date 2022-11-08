@@ -17,11 +17,10 @@ header {
     margin-bottom: 15%;
 }
 
-.bold-text {
+#bold-text {
 	font-weight: bold;
-	font-size: 1.1rem;
 	text-align: center;
-	padding: 10px 20px 0px 20px;
+	padding: 20px 20px 0px 20px;
 }
 
 .normal-text {
@@ -33,13 +32,12 @@ header {
 }
 
 /* SOCIAL STATS */
-.smaller-text {
+#smaller-text {
 	font-weight: normal;
-	font-size: 0.7rem;
 	color: hsl(0, 0%, 50%);
 	text-align: center;
 	letter-spacing: 1px;
-	padding-bottom: 20px;
+	padding: 16px 0 32px;
 	line-height: 5px;
 }
 
@@ -47,6 +45,10 @@ header {
 	display: flex;
 	border-top: solid rgb(206, 206, 206) 1px;
 	text-align: center;
+}
+
+.home-container {
+	border-bottom: solid rgb(206, 206, 206) 1px;             
 }
 
 .followers {
@@ -59,4 +61,13 @@ header {
 
 .photos {
 	flex: 1;
+}
+
+.flex {
+	display: flex;
+	justify-content: center;
+	margin: 1rem 0
+}
+.username {
+	font-weight: bold;
 }

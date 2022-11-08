@@ -14,46 +14,53 @@ import "./ProfileCard.css";
 import avatar from "../../images/avatar.png";
 import CardContainer from '../shared/CardContainer';
 import LoadingButton from '../shared/LoadingButton';
+import Typography from '@material-ui/core/Typography'
 
 const ProfileCard = () => {
   let history = useHistory();
 
   const [loading, setLoading] = useState(false);
+  const [name, setName] = useState("")
   const [totalCodes, setTotalCodes] = useState(0);
 
   const user = AuthService.getCurrentUser();
 
   useEffect(()=> {
-    UserService.getUserQRs(user.userID)
-      .then(
-        (response) => {
-          setTotalCodes(response.data.codes.length)
-        },
-        (error) => {
-          if (error.response?.data?.message === 'Token error') {
-            AuthService.logout();
-            setTimeout(() => { this.props.history.push('/login') }, 500)
-          } else {
-            const resMessage =
-              (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-              error.message ||
-              error.toString();
-            console.log(resMessage);
-            console.log(error);
+    if (user) {
+      setName(user.username ? user.username : user.first + " " + user.last)
+      
+      UserService.getUserQRs(user.userID)
+        .then(
+          (response) => {
+            setTotalCodes(response.data.codes.length)
+          },
+          (error) => {
+            if (error.response?.data?.message === 'Token error') {
+              AuthService.logout();
+              setTimeout(() => { this.props.history.push('/login') }, 500)
+            } else {
+              const resMessage =
+                (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+                error.message ||
+                error.toString();
+              console.log(resMessage);
+              console.log(error);
+            }
           }
-        }
-      )
-  })
+        )
+    }
+  }, [user])
 
   const handleClick = () => {
     if (!user.accessToken) {
       console.log("User is not logged in. You shouldn't be here.");
       return;
     }
-    AuthService.logout();
     setLoading(true);
+    setName("")
+    AuthService.logout();
     setTimeout(() => { history.push('/login'); }, 1000);
   }
 
@@ -62,17 +69,27 @@ const ProfileCard = () => {
         <header>
             <img class="avatar-img" src={avatar}/>
         </header>
-        <h1 className="bold-text">
-            {user.username ? user.username : user.first + " " + user.last}
-        </h1>
+        <div className="flex">
+          <Typography variant="h4" className="username">
+            {name}
+          </Typography>
+        </div>
         <div className="social-container">
             <div className="followers">
-                <h1 className="bold-text">{totalCodes}</h1>
-                <h2 className="smaller-text">QR Codes</h2>
+                <Typography variant="h5" id="bold-text">
+                  {totalCodes}
+                </Typography>
+                <Typography variant="subtitle1" id="smaller-text">
+                  QR Codes
+                </Typography>
             </div>
             <div className="likes">
-                <h1 className="bold-text">0</h1>
-                <h2 className="smaller-text">Broken Links</h2>
+                <Typography variant="h5" id="bold-text">
+                  0
+                </Typography>
+                <Typography variant="subtitle1" id="smaller-text">
+                  Broken Links
+                </Typography>
             </div>
         </div>
         <div className="footer-container">
