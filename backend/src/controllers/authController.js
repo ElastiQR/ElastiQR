@@ -146,6 +146,7 @@ module.exports = {
                     const accessToken = generateAccessToken({user: user.email})   
                     console.log(accessToken)
                     res.json({
+                        ...user,
                         userID: result[0].userID,
                         accessToken
                     })
