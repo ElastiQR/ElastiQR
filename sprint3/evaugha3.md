@@ -46,3 +46,4 @@ Fortunately, I only struggled with one issue this sprint, and I was able to reso
 ### What I accomplished
 
 I essentially had two main goals this sprint. My first task was to focus on the functionality of the download button for our QR codes. Now, when users click the download button, their QR code will be converted to a PNG file and downloaded onto their device as file with a name that matches that of their QR code. My other main task, which was broken down into quite a few subtasks, was to ensure that the overall styling of our website was cleaner and more consistent. First, I redid the styling of the QR Creation page so that its header, text inputs, and button were more similar to those of the other pages. Then, I updated the styling of the QR code details page and uncovered the animated background which was being blocked. Additionally, we have stats and graphs displayed on a few pages, and I styled them to look cleaner and be more legible.
+

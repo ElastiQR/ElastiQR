@@ -242,3 +242,4 @@ frontend/src/components/CreateQRPage/CreateQRForm.css:
 98cb8a9d (VaughanEric 2022-11-07 18:20:00 -0500 32) }
 98cb8a9d (VaughanEric 2022-11-07 18:20:00 -0500 33) 
 98cb8a9d (VaughanEric 2022-11-07 18:20:00 -0500 63) 	padding-top: 1rem;
+
