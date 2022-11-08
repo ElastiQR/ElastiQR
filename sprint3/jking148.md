@@ -22,9 +22,9 @@
 
 ### Issues I worked on
 
-* Format Login Page [link](https://github.com/ElastiQR/ElastiQR/issues/66)
-* Disable Sign Up Button until Password Requirements are met [link](https://github.com/ElastiQR/ElastiQR/issues/62)
-* Modify Home Page [link](https://github.com/ElastiQR/ElastiQR/issues/61)
+* Fix Navbar name issue [link](https://github.com/ElastiQR/ElastiQR/issues/106)
+* QR Code Statistics Page [link](https://github.com/ElastiQR/ElastiQR/issues/88)
+* Link Home Page with Real Data [link](https://github.com/ElastiQR/ElastiQR/issues/87)
 
 ### Files I worked on
 
