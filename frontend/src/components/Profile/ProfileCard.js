@@ -67,7 +67,7 @@ const ProfileCard = () => {
   return (
     <CardContainer>
         <header>
-            <img class="avatar-img" src={avatar}/>
+            <img className="avatar-img" src={avatar}/>
         </header>
         <div className="flex">
           <Typography variant="h4" className="username">

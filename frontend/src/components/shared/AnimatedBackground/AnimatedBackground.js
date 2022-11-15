@@ -3,7 +3,7 @@ import './AnimatedBackground.css'
 
 const AnimatedBackground = (props) => {
   return (
-<ul class="background">
+<ul className="background">
    <li></li>
    <li></li>
    <li></li>

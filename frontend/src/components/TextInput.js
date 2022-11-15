@@ -41,7 +41,7 @@ class TextInput extends Component {
               value={this.props.value}
               onChange={this.props.onChangeValue}
               variant="outlined"
-              color={`${theme.palette.text.green}`}
+              color="primary"
               className={classes.textField}
               error={this.props.error}
               helperText={this.props.helperText}
