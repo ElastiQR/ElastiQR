@@ -7,10 +7,12 @@ const logger = winston.createLogger({
   transports: [
     new winston.transports.File({
       filename: './logs/backend-info.log',
+      options: { flags : 'w' }
     }),
     new winston.transports.File({
       filename: './logs/backend-error.log',
-      level: 'error'
+      level: 'error',
+      options: { flags: 'w' }
     })
   ],
 });
