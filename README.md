@@ -3,18 +3,18 @@
 [INSERT GRAPHIC]
 
 ## Contributors
-Eric Vaughan (VaughanEric)
-Logan O'Neal (LoganOneal)
-Jacob King (Jacobking61)
-Hayden Curl (hcurl)
-Caleb Fisher (cfisher36)
+- Eric Vaughan (VaughanEric)
+- Logan O'Neal (LoganOneal)
+- Jacob King (Jacobking61)
+- Hayden Curl (hcurl)
+- Caleb Fisher (cfisher36)
 
 ## Product Description
 
 ## Instructions about how to download, install, and run the product
 
 ```shell
-/* Need to have Node.js installed. We're testing and stable at v16.13.0.*/
+/* Need to have Node.js installed. We're testing and stable at v16.13.0. */
 
 /* Install cors dependency in base project directory. */
 $ npm i
