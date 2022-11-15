@@ -87,6 +87,31 @@ export const theme = createTheme({
     },
     cardDescription: {
       color: "#888888"
+    },
+    textInput: {
+      padding: "4px"
+    },
+    passwordChecklist: {
+      margin: "1rem 0 0.5rem"
+    },
+    notifications: {
+      marginBottom: "0.5rem"
+    },
+    logInSignUpButton: {
+      backgroundColor: "#62D2A2",
+      color: "#FFFFFF",
+      textTransform: "none",
+      width: "100%",
+      height: "100%",
+      "&:hover": {
+        backgroundColor: "#AAAAAA"
+      },
+      margin: "1rem 4px 4px 4px"
+    },
+    logInSignUpButtonContainer: {
+      borderTop: "solid rgb(206, 206, 206) 1px",
+      display: "flex",
+      justifyContent: "center"
     }
 });
 
