@@ -5,11 +5,13 @@ import {
   Grid,
   TextField,
   FormControlLabel,
+  Typography
 } from '@material-ui/core';
 import { useHistory } from "react-router-dom";
 import AuthService from "../../services/auth.service";
 import LoadingButton from '../shared/LoadingButton';
 import theme from '../../theme';
+import TextInput from '../TextInput';
 
 const LoginForm = () => {
   let history = useHistory();
@@ -52,12 +54,27 @@ const LoginForm = () => {
 
   return (
     <div>
-      <h2 style={{color: '#62D2A2', textAlign: 'center'}}>ElastiQR</h2>
       <Grid item xs={12} style={theme.flex}>
-        <TextField label="Username" onChange={e => setUsername(e.target.value)}></TextField>
+        <Typography variant="h4" style={theme.listTitle}>
+          ElastiQR
+        </Typography>
       </Grid>
-      <Grid item xs={12} style={theme.flex}>
-        <TextField label="Password" type={'password'} onChange={e => setPassword(e.target.value)}></TextField>
+      <Grid item xs={12} style={theme.flex, theme.textInput}>
+        <TextInput
+          label="Username"
+          value={username}
+          onChangeValue={e => setUsername(e.target.value)}
+          required={false}
+        />
+      </Grid>
+      <Grid item xs={12} style={theme.flex, theme.textInput}>
+        <TextInput
+          label="Password"
+          value={password}
+          onChangeValue={e => setPassword(e.target.value)}
+          required={false}
+          type={'password'}
+        />
       </Grid>
       <Grid item xs={12}  style={theme.flex}>
         <FormControlLabel
@@ -70,16 +87,21 @@ const LoginForm = () => {
             />
           }
           label="Keep me logged in"
+          style={theme.keepLoggedIn}
         />
       </Grid>
-      <Grid item xs={12} style={theme.flex}>
+      <Grid item xs={12} style={theme.logInSignUpButtonContainer}>
         <LoadingButton 
           onClick={handleLogin} 
           loading={loading}
           variant="contained"
           color="primary"
-          fullWidth>
-          Login
+          fullWidth
+          style={theme.logInSignUpButton}
+        >
+          <Typography variant="h6">
+            Login
+          </Typography>
         </LoadingButton>
       </Grid>
     </div>

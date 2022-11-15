@@ -97,6 +97,9 @@ export const theme = createTheme({
     notifications: {
       marginBottom: "0.5rem"
     },
+    keepLoggedIn: {
+      marginBottom: "0.25rem"
+    },
     logInSignUpButton: {
       backgroundColor: "#62D2A2",
       color: "#FFFFFF",
@@ -112,6 +115,25 @@ export const theme = createTheme({
       borderTop: "solid rgb(206, 206, 206) 1px",
       display: "flex",
       justifyContent: "center"
+    },
+    googleContainer: {
+      borderTop: "solid rgb(206, 206, 206) 1px",
+      display: "flex",
+      justifyContent: "center",
+      marginTop: "1rem"
+    },
+    googleLogIn: {
+      backgroundColor: "#FFFFFF",
+      color: "#696969",
+      textTransform: "none",
+      width: "100%",
+      height: "100%",
+      "&:hover": {
+        backgroundColor: "#AAAAAA",
+        color: "#FFFFFF"
+      },
+      margin: "1rem 4px 4px 4px",
+      border: "1px solid #62D2A2"
     }
 });
 

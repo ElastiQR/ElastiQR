@@ -5,6 +5,8 @@ import { GoogleLogin } from "react-google-login";
 import { gapi } from "gapi-script";
 import { Grid } from '@material-ui/core';
 import theme from '../../theme';
+import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
 
 const GoogleLoginButton = () => {
 
@@ -40,9 +42,15 @@ const GoogleLoginButton = () => {
   }
 
   return (
-    <Grid item xs={12} style={theme.flex}>
+    <Grid item xs={12} style={theme.googleContainer} >
     <GoogleLogin
-        style={{ marginTop: '100px' }}
+        render={(renderProps) => (
+          <Button style={theme.googleLogIn} onClick={renderProps.onClick} disabled={renderProps.disabled}>
+            <Typography variant="h6">
+              Login with Google
+            </Typography>
+          </Button>
+        )}
         clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
         buttonText="Log in with Google"
         onSuccess={handleGoogleLogin}
