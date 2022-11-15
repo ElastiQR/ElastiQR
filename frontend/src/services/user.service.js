@@ -18,11 +18,12 @@ class UserService {
     }));
   }
 
-  createQR(id, name, url) {
+  createQR(id, name, url, description) {
     return axios.post(QR_API_URL + 'qr/createQR', {
       userID: id,
       name,
-      url
+      url,
+      description
     }, { headers: authHeader() })
   }
 

@@ -35,7 +35,7 @@ const CreateQRForm = () => {
       return;
     }
 
-    UserService.createQR(user.userID, qrname, link)
+    UserService.createQR(user.userID, qrname, link, description)
     .then(
       (response) => {
         console.log(response);
