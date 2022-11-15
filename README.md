@@ -13,18 +13,20 @@
 
 ## Instructions about how to download, install, and run the product
 
-```shell
-/* Need to have Node.js installed. We're testing and stable at v16.13.0. */
+[ Need to figure out how we're distributing .env files. ]
 
-/* Install cors dependency in base project directory. */
+```shell
+# Need to have Node.js installed. We're testing and stable at v16.13.0.
+
+# Install cors dependency in base project directory.
 $ npm i
 
-/* Install dependencies and run backend */
+# Install dependencies and run backend
 $ cd backend
 $ npm i
 $ npm start
 
-/* Install dependencies and run frontend */
+# Install dependencies and run frontend
 $ cd frontend
 $ npm i
 $ npm start
