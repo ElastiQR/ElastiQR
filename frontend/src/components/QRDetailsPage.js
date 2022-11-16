@@ -6,6 +6,11 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { ThemeProvider } from '@material-ui/styles'
 import { QRCode } from 'react-qrcode-logo'
+import { ChromePicker } from 'react-color'
+import Accordion from '@material-ui/core/Accordion'
+import AccordionSummary from '@material-ui/core/AccordionSummary'
+import AccordionDetails from '@material-ui/core/AccordionDetails'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
 import theme from '../theme'
 import TextInput from './TextInput'
@@ -83,6 +88,25 @@ const styles = theme => ({
     marginBottom: "2vh",
     border: "5rem",
     borderRadius: "14px"
+  },
+  accordion: {
+    width: "80%"
+  },
+  accordionSummary: {
+    "&:hover": {
+      backgroundColor: theme.palette.button.mediumGray,
+      color: theme.palette.text.white
+    },
+    color: theme.palette.neutral.main
+  },
+  accordionDetails: {
+    borderTop: `1px solid ${theme.palette.neutral.main}`
+  },
+  colorSelection: {
+    margin: "0.25rem 0 1rem"
+  },
+  addLogo: {
+    margin: "2.5rem 0 1rem"
   }
 })
 
@@ -100,9 +124,15 @@ class QRDetailsPage extends Component {
       link: this.props.location.state.url,
       description: this.props.location.state.description,
       error: false,
-      help: ""
+      help: "",
+      qrColor: "#000000",
+      qrLogo: ""
     }
+
+//    const input = document.getElementById('qrlogo');
+//    input.addEventListener('input', this.handleQRLogoChange)
   }
+
 
   handleLinkChange = event => {
     this.setState({link: event.target.value})
@@ -111,7 +141,21 @@ class QRDetailsPage extends Component {
   handleDescriptionChange = event => {
     this.setState({description: event.target.value})
   }
-  
+
+  handleQRColorChange = color => {
+    this.setState({qrColor: color.hex})
+  }
+
+  handleQRLogoChange = event => {
+    var reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+    reader.onloadend = e => {
+      this.setState({qrLogo: reader.result})
+    }
+  }
+
+  /* Currently, I am using the update function just to make sure that the link
+     and description have the correct value after being changed */
   update = () => {
     this.setState({ error: false, help: "" });
     const regex = new RegExp(
@@ -153,7 +197,6 @@ class QRDetailsPage extends Component {
     var qrCodeURL = document.getElementById('qrcode')
       .toDataURL("image/png")
       .replace("image/png", "image/octet-stream");
-    console.log(qrCodeURL)
     let aEl = document.createElement("a");
     aEl.href = qrCodeURL;
     aEl.download = this.state.name + ".png";
@@ -183,7 +226,11 @@ class QRDetailsPage extends Component {
                     size={144}
                     value={this.state.link}
                     viewBox={`0 0 144 144`}
+                    fgColor={this.state.qrColor}
                     bgColor={theme.palette.background.lightGray}
+                    logoImage={this.state.qrLogo}
+                    logoWidth={40}
+                    logoHeight={40}
                     className={classes.qrCode}
                     id="qrcode"
                   />
@@ -195,6 +242,44 @@ class QRDetailsPage extends Component {
                       Download
                     </Typography>
                   </Button>
+                </Grid>
+
+                <Grid item xs={12} className={`${classes.flex} ${classes.header}`}>
+                  <Accordion className={classes.accordion}>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon />} className={classes.accordionSummary}>
+                      <Typography variant="subtitle1">
+                        Download Options
+                      </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails className={classes.accordionDetails}>
+                      <Grid container>
+                        <Grid item xs={12} className={classes.flex}>
+                          <Typography variant="h6" className={classes.colorSelection}>
+                            Select Color
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={12} className={classes.flex}>
+                          <ChromePicker 
+                            color={this.state.qrColor}
+                            onChange={this.handleQRColorChange}
+                          />
+                        </Grid>
+                        <Grid item xs={12} className={classes.flex}>
+                          <Typography variant="h6" className={classes.addLogo}>
+                            Add Logo
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={12} className={classes.flex}>
+                          <Button variant="contained" component="label" className={`${classes.button} ${classes.grayButton}`}>
+                            <Typography variant="subtitle1">
+                              Upload Image
+                            </Typography>
+                            <input type="file" accept="image/*" hidden id="qrlogo" onChange={this.handleQRLogoChange} />
+                          </Button>
+                        </Grid>
+                      </Grid> 
+                    </AccordionDetails>
+                  </Accordion>
                 </Grid>
 
                 <Grid item xs={12} className={classes.statsPage}>

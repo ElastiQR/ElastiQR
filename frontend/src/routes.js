@@ -10,7 +10,7 @@ import CreateQRPage from './components/CreateQRPage'
 import AuthService from './services/auth.service'
 
 import { ThemeProvider } from '@material-ui/styles'
-import Navbar from './components/Navbar'
+import Navbar from './components/Navbar/Navbar'
 import theme from './theme'
 
 /* For testing purposes */

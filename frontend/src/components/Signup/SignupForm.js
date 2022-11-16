@@ -3,13 +3,14 @@ import PasswordChecklist from 'react-password-checklist'
 import {
   Checkbox,
   Grid,
-  TextField,
   FormControlLabel,
-  Button
+  Button,
+  Typography,
 } from '@material-ui/core';
 import { useHistory } from "react-router-dom";
 import AuthService from "../../services/auth.service";
 import theme from '../../theme';
+import TextInput from '../TextInput';
 
 const SignupForm = () => {
   let history = useHistory();
@@ -30,7 +31,6 @@ const SignupForm = () => {
 
   // eslint-disable-next-line no-unused-vars
   const [successful, setSuccessful] = useState(false);
-  // eslint-disable-next-line no-unused-vars
   const [message, setMessage] = useState("");
 
   function handleRegister() {
@@ -68,41 +68,69 @@ const SignupForm = () => {
     }
   }
 
-
   return (
     <div>
       <Grid item xs={12} style={theme.flex}>
-            <TextField 
-              label="Username" 
-              onChange={e => setUsername(e.target.value)}
-              error={fieldError}
-              helperText={help}/>
-          </Grid>
-          <Grid item xs={12} style={theme.flex}>
-            <TextField label="Password" type={'password'} onChange={e => setPassword(e.target.value)}> </TextField>
-          </Grid>
-          <Grid item xs={12} style={theme.flex}>
-            <TextField label="Confirm Password" type={'password'} onChange={e => setconfirmPassword(e.target.value)}></TextField>
-          </Grid>
-          <PasswordChecklist rules={["minLength", "specialChar", "number", "capital", "match"]} minLength={8} value={password} valueAgain={confirmpassword} onChange={(isValid)=>{setFormValid(Valid => !Valid)}}
-          />
+        <Typography variant="h4" style={theme.listTitle}>
+          Create Account
+        </Typography>
+      </Grid>
+      <Grid item xs={12} style={theme.flex, theme.textInput}>
+        <TextInput
+          label="Username"
+          value={username}
+          onChangeValue={e => setUsername(e.target.value)}
+          required={false}
+          error={fieldError}
+          helperText={help}
+        />
+      </Grid>
+      <Grid item xs={12} style={theme.flex, theme.textInput}>
+        <TextInput
+          label="Password"
+          onChangeValue={e => setPassword(e.target.value)}
+          required={false}
+          type={'password'}
+        />
+      </Grid>
+      <Grid item xs={12} style={theme.flex, theme.textInput}>
+        <TextInput
+          label="Confirm Password"
+          onChangeValue={e => setconfirmPassword(e.target.value)}
+          required={false}
+          type={'password'}
+        />
+      </Grid>
       <Grid item xs={12} style={theme.flex}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={checked}
-                  onChange={handleChange}
-                  label={'Receive Notifications'}
-                  inputProps={{ 'aria-label': 'primary checkbox' }}
-                />
-              }
-              label="Receive Notifications"
+        <PasswordChecklist
+          rules={["minLength", "specialChar", "number", "capital", "match"]}
+          minLength={8} value={password} valueAgain={confirmpassword}
+          onChange={(isValid)=>{setFormValid(Valid => !Valid)}}
+          style={theme.passwordChecklist}
+        />
+      </Grid>
+      <Grid item xs={12} style={theme.flex}>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={checked}
+              onChange={handleChange}
+              label={'Receive Notifications'}
+              inputProps={{ 'aria-label': 'primary checkbox' }}
             />
-          </Grid>
-          <Grid item xs={12} style={theme.flex}>
-            <Button disabled={formValid} onClick={handleRegister} fullWidth > Sign Up </Button>
-          </Grid>
-          </div>
+          }
+          label="Receive Notifications"
+          style={theme.notifications}
+        />
+      </Grid>
+      <Grid item xs={12} style={theme.logInSignUpButtonContainer}>
+        <Button disabled={formValid} onClick={handleRegister} style={theme.logInSignUpButton}>
+          <Typography variant="h6">
+            Sign Up
+          </Typography>
+        </Button>
+      </Grid>
+    </div>
   );
 };
 

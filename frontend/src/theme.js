@@ -25,7 +25,10 @@ export const theme = createTheme({
         black: "#000000",
         gray: "#888888",
         green: "#62D2A2"
-      }
+      },
+      neutral: {
+        main: "#757575"
+      },
     },
     typography: {
       fontFamily: [
@@ -86,6 +89,59 @@ export const theme = createTheme({
     },
     cardDescription: {
       color: "#888888"
+    },
+    textInput: {
+      padding: "4px"
+    },
+    passwordChecklist: {
+      margin: "1rem 0 0.5rem"
+    },
+    notifications: {
+      marginBottom: "0.5rem"
+    },
+    keepLoggedIn: {
+      marginBottom: "0.25rem"
+    },
+    logInSignUpButton: {
+      backgroundColor: "#62D2A2",
+      color: "#FFFFFF",
+      textTransform: "none",
+      width: "100%",
+      height: "100%",
+      "&:hover": {
+        backgroundColor: "#AAAAAA"
+      },
+      margin: "1rem 4px 4px 4px"
+    },
+    logInSignUpButtonContainer: {
+      borderTop: "solid rgb(206, 206, 206) 1px",
+      display: "flex",
+      justifyContent: "center"
+    },
+    googleContainer: {
+      borderTop: "solid rgb(206, 206, 206) 1px",
+      display: "flex",
+      justifyContent: "center",
+      marginTop: "1rem"
+    },
+    googleLogIn: {
+      backgroundColor: "#FFFFFF",
+      color: "#696969",
+      textTransform: "none",
+      width: "100%",
+      height: "100%",
+      "&:hover": {
+        backgroundColor: "#AAAAAA",
+        color: "#FFFFFF"
+      },
+      margin: "1rem 4px 4px 4px",
+      border: "1px solid #62D2A2"
+    },
+    navbarLogOutButton: {
+      color: "#757575",
+      "&:hover": {
+        background: "none"
+      }
     }
 });
 
