@@ -1,6 +1,6 @@
 # ElastiQR
 
-![ElastiQR](./frontend/public/../src/images/qr_logo.png =250x)
+![ElastiQR](./frontend/public/../src/images/qr_logo.png =x250)
 
 ## Contributors
 - Eric Vaughan (VaughanEric)
