@@ -1,33 +1,33 @@
 import axios from 'axios';
 import authHeader from './auth-header';
 
-const API_URL = 'http://localhost:3000/api/test/';
-const QR_API_URL = 'http://localhost:3000/';
+const API_URL = 'http://localhost:3000/';
 
 class UserService {
   getUserQRs(userID) {
-    return axios.get(QR_API_URL + 'qr/getQRCodes?' + new URLSearchParams({
+    return axios.get(API_URL + 'qr/getQRCodes?' + new URLSearchParams({
       userID
     }), { headers: authHeader() })
   }
 
   countQR(id, span) {
-    return axios.get(QR_API_URL + 'qr/count?' + new URLSearchParams({
+    return axios.get(API_URL + 'qr/count?' + new URLSearchParams({
       qrID: id,
       span
     }));
   }
 
-  createQR(id, name, url) {
-    return axios.post(QR_API_URL + 'qr/createQR', {
+  createQR(id, name, url, description) {
+    return axios.post(API_URL + 'qr/createQR', {
       userID: id,
       name,
-      url
+      url,
+      description
     }, { headers: authHeader() })
   }
 
   updateQR(id, name, url, description) {
-    return axios.patch(QR_API_URL + 'update/updateQRCodes', {
+    return axios.patch(API_URL + 'update/updateQRCodes', {
       qrID: id,
       name,
       url,

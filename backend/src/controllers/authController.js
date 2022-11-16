@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs')
 const mysql = require("mysql")
 const db = require("../helpers/database")
 const { OAuth2Client } = require('google-auth-library')
+const logger = require("../helpers/logger")
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
 
@@ -30,19 +31,19 @@ module.exports = {
             await connection.query (search_query, async (err, result) => {
             if (err) throw (err)
         
-            console.log("------> Search Results")
-            console.log(result.length)
+            logger.info("------> Search Results")
+            logger.info(result.length)
         
             if (result.length != 0) {
                 connection.release()
-                console.log("------> User already exists")
+                logger.error("------> User already exists")
                 res.sendStatus(409) 
             } else {
                 await connection.query (insert_query, (err, result)=> {
                 connection.release()
                 if (err) throw (err)
-                    console.log ("--------> Created new User")
-                    console.log(result.insertId)
+                    logger.info ("--------> Created new User")
+                    logger.info(result.insertId)
                     res.sendStatus(201)
                 })
             }
@@ -67,23 +68,24 @@ module.exports = {
                 
                 if (err) throw (err)
                 if (result.length == 0) {
-                console.log("--------> User does not exist")
+                logger.error("--------> User does not exist")
                 res.sendStatus(404)
                 } 
                 else {
                     const hashedPassword = result[0].password
                 
                     if (await bcrypt.compare(password, hashedPassword)) {
-                        console.log("---------> Login Successful")
-                        console.log("---------> Generating accessToken")
+                        logger.info("---------> Login Successful")
+                        logger.info("---------> Generating accessToken")
                         const token = generateAccessToken({user: user}, staySignedIn)   
-                        console.log(token)
+                        logger.info(token)
                         res.json({
                             userID: result[0].userID,
                             accessToken: token
                         })
                     } else {
-                        res.send("Password incorrect!")
+                        logger.error("User attempted to login with incorrect password.")
+                        res.status(400).send("Password incorrect!")
                     } 
                 }
             }) 
@@ -122,14 +124,14 @@ module.exports = {
                     await connection.query(insert_query, async (err, results) => {
                         if (err) throw(err)
 
-                        console.log("---------> Creating Google User")
-                        console.log(results.insertId)
+                        logger.info("---------> Creating Google User")
+                        logger.info(results.insertId)
                     })
                     await connection.query(search_query, async (err, results)=> {
                         connection.release()
 
                         if (err) throw(err)
-                        console.log("Confirming and Retrieving Google User Info...")
+                        logger.info("Confirming and Retrieving Google User Info...")
                         const accessToken = generateAccessToken({user: user.email})
                         user = {
                             ...user,
@@ -141,10 +143,10 @@ module.exports = {
                     })
                 } else {
                     connection.release()
-                    console.log("---------> Login Successful")
-                    console.log("---------> Generating accessToken")
+                    logger.info("---------> Login Successful")
+                    logger.info("---------> Generating accessToken")
                     const accessToken = generateAccessToken({user: user.email})   
-                    console.log(accessToken)
+                    logger.info(accessToken)
                     res.json({
                         ...user,
                         userID: result[0].userID,
@@ -153,6 +155,6 @@ module.exports = {
                 }
             }) 
         })
-        console.log("Processing" + " " + name + ": " + email)
+        logger.info("Processing" + " " + name + ": " + email)
     }
 }

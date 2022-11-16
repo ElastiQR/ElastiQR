@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import { green } from '@material-ui/core/colors'
 import {
   Checkbox,
   Grid,
@@ -20,14 +19,20 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
 
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
+  const [nameError, setNameError] = useState(false);
+  const [passError, setPassError] = useState(false);
+  const [nameHelp, setNameHelp] = useState("");
+  const [passHelp, setPassHelp] = useState("");
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
 
   function handleLogin() {
-    setMessage("");
+    setNameHelp("");
+    setPassHelp("");
+    setPassError(false)
+    setNameError(false);
     setLoading(true);
 
     AuthService.login(username, password, checked).then(
@@ -45,7 +50,13 @@ const LoginForm = () => {
           console.log(error);
 
         setLoading(false);
-        setMessage(resMessage);
+        if (error.response.data === 'Password incorrect!') {
+          setPassError(true);
+          setPassHelp('Incorrect Password!');
+        } else {
+          setNameError(true);
+          setNameHelp('Invalid Username!')
+        }
       }
     );
   }
@@ -54,10 +65,20 @@ const LoginForm = () => {
     <div>
       <h2 style={{color: '#62D2A2', textAlign: 'center'}}>ElastiQR</h2>
       <Grid item xs={12} style={theme.flex}>
-        <TextField label="Username" onChange={e => setUsername(e.target.value)}></TextField>
+        <TextField 
+          label="Username" 
+          onChange={e => setUsername(e.target.value)}
+          error={nameError}
+          helperText={nameHelp}>
+        </TextField>
       </Grid>
       <Grid item xs={12} style={theme.flex}>
-        <TextField label="Password" type={'password'} onChange={e => setPassword(e.target.value)}></TextField>
+        <TextField label="Password" 
+          type={'password'} 
+          onChange={e => setPassword(e.target.value)}
+          error={passError}
+          helperText={passHelp}>
+        </TextField>
       </Grid>
       <Grid item xs={12}  style={theme.flex}>
         <FormControlLabel

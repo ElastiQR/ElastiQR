@@ -1,5 +1,4 @@
 import React from "react";
-import { green } from '@material-ui/core/colors'
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis} from "recharts";
 import theme from '../../theme'
 

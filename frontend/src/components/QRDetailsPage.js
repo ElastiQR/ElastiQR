@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react'
+import React, { Component } from 'react'
 import withStyles from '@material-ui/styles/withStyles'
 import { Link, withRouter } from 'react-router-dom'
 import Button from '@material-ui/core/Button'
@@ -111,12 +111,12 @@ class QRDetailsPage extends Component {
   handleDescriptionChange = event => {
     this.setState({description: event.target.value})
   }
-
-  /* Currently, I am using the update function just to make sure that the link
-     and description have the correct value after being changed */
+  
   update = () => {
     const regex = new RegExp(
-      /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/);
+      // eslint-disable-next-line no-useless-escape
+      /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/
+      );
     if (!regex.test(this.state.link)) {
       this.setState({error: true, help: "Invalid URL"});
       return;

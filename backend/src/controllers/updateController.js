@@ -1,5 +1,6 @@
 const mysql = require("mysql")
 const db = require("../helpers/database")
+const logger = require("../helpers/logger")
 
 module.exports = {
     deleteQRController: (req, res)=> {
@@ -17,16 +18,16 @@ module.exports = {
   
         await connection.query (search_query, async (err, result)=> {
           if (err) throw (err)
-          console.log("--------> Search Results")
-          console.log(result.length)
+          logger.info("--------> Search Results")
+          logger.info(result.length)
           if (result.length == 0) {
-            console.log("--------> QR Code does not exist")
+            logger.info("--------> QR Code does not exist")
             res.sendStatus(409)
           } else {
               await connection.query (delete_query, (err, result)=> {
                 connection.release()
                 if (err) throw (err)
-                console.log("--------> Deleted QR Code")
+                logger.info("--------> Deleted QR Code")
                 res.sendStatus(200) 
               })
           }
@@ -51,10 +52,10 @@ module.exports = {
           connection.release();
 
           if (!result.affectedRows) {
-            console.log("-------> Couldn't find the requested QR code")
+            logger.error("-------> Couldn't find the requested QR code")
             res.sendStatus(400);
           } else {
-            console.log("--------> Updated QR Code")
+            logger.info("--------> Updated QR Code")
             res.sendStatus(200);
           }
         }) 

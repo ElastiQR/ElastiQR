@@ -27,10 +27,6 @@ app.use(function(req, res, next) {
 validateLinksService.start();
 
 /* Public Routes */
-app.get("/", (req, res) => {
-  res.send("Backend Running!");
-});
-
 app.use('/qr', qrRouter)
 app.use('/auth', authRouter)
 app.use('/update', updateRouter)
