@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography'
 import { ThemeProvider } from '@material-ui/styles'
 import ButtonBase from '@material-ui/core/ButtonBase'
 import theme from '../../theme'
+import { ToggleButtonGroup, ToggleButton } from '@mui/material';
 
 const styles = theme => ({
   card: {
@@ -15,6 +16,12 @@ const styles = theme => ({
     "&:hover": {
       boxShadow: "4px 4px 4px #AAAAAA",
     }
+  },
+  button: {
+    color: "#62D2A2",
+    textTransform: "none",
+    width: "100%",
+    height: "100%",
   }
 })
 
@@ -30,7 +37,8 @@ class QRListItem extends Component {
               id: this.props.id,
               name: this.props.name,
               description: this.props.description,
-              url: this.props.url
+              url: this.props.url,
+              validLink: this.props.validLink
             }
           }}
         >
@@ -43,7 +51,16 @@ class QRListItem extends Component {
               <Typography variant="body2" style={theme.cardDescription}>
                 {this.props.description}
               </Typography>
-            </CardContent>
+              <ToggleButtonGroup
+                color= "primary"
+                value={this.props.validLink}
+                exclusive
+                aria-label="Platform"
+              >
+                <ToggleButton value={this.props.validLink}>Link Reachable</ToggleButton>
+                <ToggleButton value={!this.props.validLink}>Link Broken</ToggleButton>
+              </ToggleButtonGroup>
+              </CardContent>
           </Card>
           </ButtonBase>
         </Link>

@@ -117,8 +117,7 @@ module.exports = {
 
       db.getConnection(async (err, connection) => {
         if (err) throw (err)
-        sqlSearch = `SELECT COUNT(*) AS quantity FROM QRScans WHERE qrID = ? AND 
-                     accessTime >= DATE_SUB(CURDATE(), INTERVAL ? day)`
+        sqlSearch = `SELECT * FROM QRCodes`
         search_query = mysql.format(sqlSearch, [qrID, daySpan])
 
         await connection.query(search_query, async (err, result) => {
@@ -128,7 +127,6 @@ module.exports = {
           const response = {
             quantity: result[0].quantity
           }
-          res.send(JSON.stringify(response))
         })
       })
     }
