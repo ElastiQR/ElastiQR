@@ -1,7 +1,6 @@
 # ElastiQR
 
-![ElastiQR](./frontend/public/../src/images/qr_logo.png =x250)
-
+[<img src="./frontend/public/../src/images/qr_logo.png" width="250"/>](./frontend/public/../src/images/qr_logo.png.png)
 ## Contributors
 - Eric Vaughan (VaughanEric)
 - Logan O'Neal (LoganOneal)
