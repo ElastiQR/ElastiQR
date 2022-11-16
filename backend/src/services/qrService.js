@@ -5,9 +5,10 @@ const isReachable = require('is-reachable');
 
 
 validateLinksService = cron.schedule("*/60 * * * * *", function () {
+    var broken_count = 0;
+
     console.log("---------------------");
-    console.log("NODE-CRON: validating all QR links...");
-    console.log("---------------------");
+    console.log("NODE-CRON: validating all QR links");
 
     db.getConnection(async (err, connection) => {
         if (err) throw (err)
@@ -17,24 +18,28 @@ validateLinksService = cron.schedule("*/60 * * * * *", function () {
         connection.query(search_query, async (err, result) => {
             if (err) throw (err)
             connection.release()
-        
+            
+
             for(let i = 0; i < result.length; i++) {
                 var qrID = result[i]['qrID'];
                 var validLink = result[i]['validLink'];
                 var url = result[i]['qrURL'];
                 var reachable = await isReachable(url);
 
-                if(reachable != validLink) {
-                    const sqlUpdate = `UPDATE QRCodes SET validLink = ? WHERE qrID = ?`
-                    const update_query = mysql.format(sqlUpdate, [reachable, qrID])
+                if(!validLink) broken_count++;
 
-                    await connection.query (update_query) 
+                if(reachable != validLink) {
+                    const sqlUpdate = `UPDATE QRCodes SET validLink = ? WHERE qrID = ?`;
+                    const update_query = mysql.format(sqlUpdate, [reachable, qrID]);
+                    await connection.query (update_query);
                 }
             }
             connection.end();
         })
 
     })
+    console.log("NODE-CRON: found " + broken_count + " broken links across all users");
+    console.log("---------------------");
 });
 
 module.exports = validateLinksService;
