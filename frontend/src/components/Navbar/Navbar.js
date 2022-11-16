@@ -13,11 +13,13 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
-import AuthService from "../services/auth.service";
-import { Link as MaterialLink } from "@material-ui/core";
-import Menu from "./Menu";
+import AuthService from "../../services/auth.service";
+import { Button, Link as MaterialLink } from "@material-ui/core";
+import Menu from "../Menu";
+import { useHistory } from "react-router-dom";
+import LogOutButton from './LogOutButton';
 
-const logo = require("../images/qr_logo.png");
+const logo = require("../../images/qr_logo.png");
 
 const styles = theme => ({
   appBar: {
@@ -36,7 +38,8 @@ const styles = theme => ({
       display: "flex",
       justifyContent: "space-evenly",
       alignItems: "center"
-    }
+    },
+    width: "100%"
   },
   link: {
     textDecoration: "none",
@@ -77,6 +80,14 @@ const styles = theme => ({
     paddingTop: 20,
     paddingBottom: 20,
     minWidth: "auto"
+  },
+  logOutContainer: {
+    display: "flex",
+    justifyContent: "right",
+    alignItems: "center",
+    width: "40%"
+  },
+  noLogOutContainer: {
   }
 });
 
@@ -113,6 +124,12 @@ class Navbar extends Component {
       return 2;
     }
   };
+
+  signOut = () => {
+    let history = useHistory(); 
+    AuthService.logout();
+    setTimeout(() => { history.push('/login'); }, 1000);
+  }
 
   render() {
     const { classes } = this.props;
@@ -206,6 +223,9 @@ class Navbar extends Component {
                   </div>
                 </React.Fragment>
               )}
+              <div className={AuthService.getCurrentUser() ? classes.logOutContainer : classes.noLogOutContainer}>
+                <LogOutButton className={classes.logOutButton}/>
+              </div>
             </Grid>
           </Grid>
         </Toolbar>

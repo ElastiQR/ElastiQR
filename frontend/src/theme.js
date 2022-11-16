@@ -26,7 +26,10 @@ export const theme = createTheme({
         black: "#000000",
         gray: "#888888",
         green: "#62D2A2"
-      }
+      },
+      neutral: {
+        main: "#757575"
+      },
     },
     typography: {
       fontFamily: [
@@ -134,6 +137,12 @@ export const theme = createTheme({
       },
       margin: "1rem 4px 4px 4px",
       border: "1px solid #62D2A2"
+    },
+    navbarLogOutButton: {
+      color: "#757575",
+      "&:hover": {
+        background: "none"
+      }
     }
 });
 
