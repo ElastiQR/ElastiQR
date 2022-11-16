@@ -118,8 +118,9 @@ module.exports = {
 
       db.getConnection(async (err, connection) => {
         if (err) throw (err)
-        sqlSearch = `SELECT * FROM QRCodes`
-        search_query = mysql.format(sqlSearch, [qrID, daySpan])
+        const sqlSearch = `SELECT COUNT(*) AS quantity FROM QRScans WHERE qrID = ? AND 
+                           accessTime >= DATE_SUB(CURDATE(), INTERVAL ? day)`
+        const search_query = mysql.format(sqlSearch, [qrID, daySpan])
 
         await connection.query(search_query, async (err, result) => {
           if (err) throw (err)
@@ -127,6 +128,62 @@ module.exports = {
           
           const response = {
             quantity: result[0].quantity
+          }
+          res.send(JSON.stringify(response));
+        })
+      })
+    },
+    recentActivityController: (req, res) => {
+      const userID = parseInt(req.query.userID)
+
+      db.getConnection(async (err, connection) => {
+        if (err) throw (err)
+        
+        const sqlSearch = "SELECT * FROM users WHERE userID = ? LIMIT 1"
+        const search_query = mysql.format(sqlSearch, [userID])
+
+        await connection.query(search_query, async (err, result) => {
+          if (err) throw (err)
+
+          if (result.length == 0) {
+            logger.error("User attempting to access recent activity without valid ID.")
+          } else {
+            logger.info("-------> Found user")
+
+            const sqlFindActivity = `SELECT 
+              SUM(CASE
+                WHEN accessTime > DATE_SUB(current_timestamp(), INTERVAL 1 day)
+                THEN 1 ELSE 0
+                END) AS first,
+              SUM(CASE
+                WHEN accessTime > DATE_SUB(current_timestamp(), INTERVAL 2 day)
+                THEN 1 ELSE 0
+                END) AS second,
+              SUM(CASE
+                WHEN accessTime > DATE_SUB(current_timestamp(), INTERVAL 3 day)
+                THEN 1 ELSE 0
+                END) AS third,
+              SUM(CASE
+                WHEN accessTime > DATE_SUB(current_timestamp(), INTERVAL 4 day)
+                THEN 1 ELSE 0
+                END) AS fourth,
+              SUM(CASE
+                WHEN accessTime > DATE_SUB(current_timestamp(), INTERVAL 5 day)
+                THEN 1 ELSE 0
+                END) AS fifth
+              FROM QRScans
+              WHERE qrID IN (SELECT qrID FROM QRCodes WHERE userID = ?)`
+            const sum_query = mysql.format(sqlFindActivity, [userID]);
+
+            connection.query(sum_query, async (err, result) => {
+              if (err) throw (err)
+              connection.release();
+
+              logger.info("Responding to recent activity request.")
+              res.send(JSON.stringify({
+                activity: Object.values(result[0])
+              }))
+            })
           }
         })
       })
