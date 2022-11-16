@@ -125,12 +125,6 @@ class Navbar extends Component {
     }
   };
 
-  signOut = () => {
-    let history = useHistory(); 
-    AuthService.logout();
-    setTimeout(() => { history.push('/login'); }, 1000);
-  }
-
   render() {
     const { classes } = this.props;
 
