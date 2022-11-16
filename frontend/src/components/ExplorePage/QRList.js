@@ -29,6 +29,7 @@ class QRList extends Component {
     UserService.getUserQRs(user.userID)
     .then(
       (response) => {
+        console.log(response.data.codes);
         this.setState({
           isLoaded: true,
           QRCodes: response.data.codes
@@ -70,7 +71,8 @@ class QRList extends Component {
               id={item.qrID} 
               name={item.qrname} 
               description={item.description} 
-              url={item.qrURL} />
+              url={item.qrURL}
+              validLink={item.validLink}  />
           ))}
         </List>
       );
