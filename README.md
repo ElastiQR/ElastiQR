@@ -1,6 +1,6 @@
 # ElastiQR
 
-[INSERT GRAPHIC]
+![ElastiQR](./frontend/public/../src/images/qr_logo.png)
 
 ## Contributors
 - Eric Vaughan (VaughanEric)
