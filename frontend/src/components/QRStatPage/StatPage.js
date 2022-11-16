@@ -1,19 +1,6 @@
 import React, {useState} from 'react';
-import { green } from '@material-ui/core/colors'
-import {
-  Checkbox,
-  Grid,
-  TextField,
-  FormControlLabel,
-  Paper,
-  Button
-} from '@material-ui/core';
 import "../Profile/ProfileCard.css";
-import ProfileCard from '../Profile/ProfileCard';
-import { useHistory } from "react-router-dom";
-import AuthService from "../../services/auth.service";
 import BarChart from './BarChart';
-import SimpleBarChart from './BarChart';
 import UserService from '../../services/user.service';
 
 const StatPage = () => {

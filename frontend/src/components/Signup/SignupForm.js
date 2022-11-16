@@ -5,7 +5,6 @@ import {
   Grid,
   TextField,
   FormControlLabel,
-  Paper,
   Button
 } from '@material-ui/core';
 import { useHistory } from "react-router-dom";
@@ -29,7 +28,9 @@ const SignupForm = () => {
   const [password, setPassword] = useState("");
   const [confirmpassword, setconfirmPassword] = useState("");
 
+  // eslint-disable-next-line no-unused-vars
   const [successful, setSuccessful] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [message, setMessage] = useState("");
 
   function handleRegister() {
@@ -47,7 +48,7 @@ const SignupForm = () => {
           history.push('/login');
         },
         error => {
-          if (error.response.status == 409) {
+          if (error.response.status === 409) {
             setError(true);
             setHelp("Username taken.");
           }

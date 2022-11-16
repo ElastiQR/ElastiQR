@@ -1,13 +1,10 @@
 import React, { Component, useState } from "react";
 import withStyles from "@material-ui/styles/withStyles";
 import { withRouter } from "react-router-dom";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import { green } from '@material-ui/core/colors'
-import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
 import { Bar } from "react-chartjs-2";
+// eslint-disable-next-line no-unused-vars
 import Chart from "chart.js/auto";
 import UserService from "../../services/user.service";
 import '../Profile/ProfileCard.css'
@@ -189,7 +186,6 @@ class QRStatPage extends Component {
   componentDidMount() {}
 
   render() {
-    const {classes} = this.props;
     return (
       <div>
         <Grid container justify='center'>
