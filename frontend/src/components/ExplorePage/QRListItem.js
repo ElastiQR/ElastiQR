@@ -56,8 +56,8 @@ class QRListItem extends Component {
                 exclusive
                 aria-label="Platform"
               >
-                <ToggleButton value={this.props.validLink}>Link Reachable</ToggleButton>
-                <ToggleButton value={!this.props.validLink}>Link Broken</ToggleButton>
+                <ToggleButton value={1}>Link Reachable</ToggleButton>
+                <ToggleButton value={0}>Link Broken</ToggleButton>
               </ToggleButtonGroup>
               </CardContent>
           </Card>

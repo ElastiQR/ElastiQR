@@ -14,7 +14,8 @@ class Main extends Component {
     this.state = {
       error: null,
       isLoaded: false,
-      QRCodes: []
+      QRCodes: [],
+      brokenLinks: 0
     };
   }
 
@@ -31,9 +32,15 @@ class Main extends Component {
     UserService.getUserQRs(user.userID)
     .then(
       (response) => {
+        var broken_links = 0;
+
+        for(let i = 0; i < response.data.codes.length; i++) {
+          if(response.data.codes[i]["validLink"] === 0) broken_links++;
+        }
         this.setState({
           isLoaded: true,
-          QRCodes: response.data.codes
+          QRCodes: response.data.codes,
+          brokenLinks: broken_links
         });
         //setTotal(QRCodes.length);
       },
@@ -56,7 +63,7 @@ class Main extends Component {
   }
 
   render() {
-    const { QRCodes } = this.state;
+    const { QRCodes, brokenLinks} = this.state;
       return (
              <CardContainer>
               <h1 style={{color: theme.palette.button.green, textAlign: 'center'}}>Welcome to ElastiQR</h1>
@@ -71,7 +78,7 @@ class Main extends Component {
                   </div>
                   <div className="likes">
                     <Typography variant="h5" id="bold-text">
-                      0
+                      {brokenLinks}
                     </Typography>
                     <Typography variant="subtitle1" id="smaller-text">
                       Broken Links
