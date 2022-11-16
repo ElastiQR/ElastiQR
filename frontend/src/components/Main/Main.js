@@ -1,5 +1,4 @@
-import React, { Component, useState } from 'react'
-import withStyles from '@material-ui/styles/withStyles'
+import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import theme from '../../theme'
 import CardContainer from '../shared/CardContainer'
@@ -46,7 +45,7 @@ class Main extends Component {
           this.setState({
             isLoaded: true
           });
-          if (error.response?.status != 400) {
+          if (error.response?.status !== 400) {
             this.setState({
               error
             });

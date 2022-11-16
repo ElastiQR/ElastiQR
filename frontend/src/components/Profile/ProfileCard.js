@@ -1,12 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {
-  Checkbox,
-  Grid,
-  TextField,
-  FormControlLabel,
-  Paper,
-  Button
-} from '@material-ui/core';
 import { useHistory } from "react-router-dom";
 import AuthService from "../../services/auth.service";
 import UserService from "../../services/user.service"
@@ -67,7 +59,7 @@ const ProfileCard = () => {
   return (
     <CardContainer>
         <header>
-            <img className="avatar-img" src={avatar}/>
+            <img className="avatar-img" src={avatar} alt="avatar"/>
         </header>
         <div className="flex">
           <Typography variant="h4" className="username">

@@ -85,7 +85,7 @@ module.exports = {
                         })
                     } else {
                         logger.error("User attempted to login with incorrect password.")
-                        res.send("Password incorrect!")
+                        res.status(400).send("Password incorrect!")
                     } 
                 }
             }) 

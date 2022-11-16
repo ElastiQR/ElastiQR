@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
 import { useHistory } from "react-router-dom";
 import "./CreateQRForm.css";
-import avatar from "../../images/avatar.png";
-import { TextField } from '@material-ui/core';
 import LoadingButton from '../shared/LoadingButton';
 import { QRCode } from 'react-qrcode-logo';
 import CardContainer from '../shared/CardContainer';
@@ -28,7 +26,9 @@ const CreateQRForm = () => {
     }
 
     const regex = new RegExp(
-      /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/);
+      // eslint-disable-next-line no-useless-escape
+      /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/
+      );
     if (!regex.test(link)) {
       setError(true);
       setHelp('Invalid URL');
