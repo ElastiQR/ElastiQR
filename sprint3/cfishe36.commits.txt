@@ -1,0 +1,354 @@
+* frontend/src/components/Login/GoogleLoginButton.js
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 25)       .then(
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 26)         () => {
+5d5fa5b3 (Caleb Fisher 2022-11-01 22:03:20 -0400 27)           setTimeout(() => { history.push('/'); }, 500);
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 28)         },
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 29)         (error) => {
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 30)           const resMessage =
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 31)           (error.response &&
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 32)             error.response.data &&
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 33)             error.response.data.message) ||
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 34)           error.message ||
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 35)           error.toString();
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 36)           console.log(resMessage);
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 37)           console.log(error);
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 38)         }
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 39)       )
+
+* frontend/src/components/Menu.js
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400  4)     pathname: "/",
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400  5)     requireSignedIn: true
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400  9)     pathname: "/my-qrs",
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 10)     requireSignedIn: true
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 14)     pathname: "/create-qr",
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 15)     requireSignedIn: true
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 19)     pathname: "/signup",
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 20)     requireSignedIn: false
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 24)     pathname: "/login",
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 25)     requireSignedIn: false
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 29)     pathname: "/profile",
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 30)     requireSignedIn: true
+
+* frontend/src/components/Navbar.js
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400  16) import AuthService from "../services/auth.service";
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 156)                         {Menu.filter((item) => {
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 157)                           const user = AuthService.getCurrentUser();
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 158)                           return (user) ? item.requireSignedIn : !item.requireSignedIn;
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 159)                         }).map((item, index) => (
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 185)                       {Menu.filter((item) => {
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 186)                           const user = AuthService.getCurrentUser();
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 187)                           return (user) ? item.requireSignedIn : !item.requireSignedIn;
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 188)                         }).map((item, index) => (
+
+* frontend/src/components/Profile/ProfileCard.js
+8d71e774 (Caleb Fisher 2022-11-07 21:08:09 -0500  1) import React, {useEffect, useState} from 'react';
+8d71e774 (Caleb Fisher 2022-11-07 21:08:09 -0500 12) import UserService from "../../services/user.service"
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 16) import LoadingButton from '../shared/LoadingButton';
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 21)   const [loading, setLoading] = useState(false);
+8d71e774 (Caleb Fisher 2022-11-07 21:08:09 -0500 22)   const [totalCodes, setTotalCodes] = useState(0);
+8d71e774 (Caleb Fisher 2022-11-07 21:08:09 -0500 23) 
+8d71e774 (Caleb Fisher 2022-11-07 21:08:09 -0500 24)   const user = AuthService.getCurrentUser();
+8d71e774 (Caleb Fisher 2022-11-07 21:08:09 -0500 25) 
+8d71e774 (Caleb Fisher 2022-11-07 21:08:09 -0500 26)   useEffect(()=> {
+8d71e774 (Caleb Fisher 2022-11-07 21:08:09 -0500 27)     UserService.getUserQRs(user.userID)
+8d71e774 (Caleb Fisher 2022-11-07 21:08:09 -0500 28)       .then(
+8d71e774 (Caleb Fisher 2022-11-07 21:08:09 -0500 29)         (response) => {
+8d71e774 (Caleb Fisher 2022-11-07 21:08:09 -0500 30)           setTotalCodes(response.data.codes.length)
+8d71e774 (Caleb Fisher 2022-11-07 21:08:09 -0500 31)         },
+8d71e774 (Caleb Fisher 2022-11-07 21:08:09 -0500 32)         (error) => {
+8d71e774 (Caleb Fisher 2022-11-07 21:08:09 -0500 33)           if (error.response?.data?.message === 'Token error') {
+8d71e774 (Caleb Fisher 2022-11-07 21:08:09 -0500 34)             AuthService.logout();
+8d71e774 (Caleb Fisher 2022-11-07 21:08:09 -0500 35)             setTimeout(() => { this.props.history.push('/login') }, 500)
+8d71e774 (Caleb Fisher 2022-11-07 21:08:09 -0500 36)           } else {
+8d71e774 (Caleb Fisher 2022-11-07 21:08:09 -0500 37)             const resMessage =
+8d71e774 (Caleb Fisher 2022-11-07 21:08:09 -0500 38)               (error.response &&
+8d71e774 (Caleb Fisher 2022-11-07 21:08:09 -0500 39)               error.response.data &&
+8d71e774 (Caleb Fisher 2022-11-07 21:08:09 -0500 40)               error.response.data.message) ||
+8d71e774 (Caleb Fisher 2022-11-07 21:08:09 -0500 41)               error.message ||
+8d71e774 (Caleb Fisher 2022-11-07 21:08:09 -0500 42)               error.toString();
+8d71e774 (Caleb Fisher 2022-11-07 21:08:09 -0500 43)             console.log(resMessage);
+8d71e774 (Caleb Fisher 2022-11-07 21:08:09 -0500 44)             console.log(error);
+8d71e774 (Caleb Fisher 2022-11-07 21:08:09 -0500 45)           }
+8d71e774 (Caleb Fisher 2022-11-07 21:08:09 -0500 46)         }
+8d71e774 (Caleb Fisher 2022-11-07 21:08:09 -0500 47)       )
+8d71e774 (Caleb Fisher 2022-11-07 21:08:09 -0500 48)   })
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 49) 
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 50)   const handleClick = () => {
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 51)     if (!user.accessToken) {
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 52)       console.log("User is not logged in. You shouldn't be here.");
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 53)       return;
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 54)     }
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 55)     AuthService.logout();
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 56)     setLoading(true);
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 57)     setTimeout(() => { history.push('/login'); }, 1000);
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 58)   }
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 59) 
+8d71e774 (Caleb Fisher 2022-11-07 21:08:09 -0500 66)             {user.username ? user.username : user.first + " " + user.last}
+8d71e774 (Caleb Fisher 2022-11-07 21:08:09 -0500 70)                 <h1 className="bold-text">{totalCodes}</h1>
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 78)         <div className="footer-container">
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 79)               <LoadingButton
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 80)                 loading={loading}
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 81)                 onClick={handleClick}
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 82)                 variant="contained"
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 83)                 sx={{ mt: 3, mb: 2 }}
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 84)                 size="small"
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 85)                 color="primary"
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 86)               >
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 87)                 Sign Out
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 88)               </LoadingButton>
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 89)         </div>
+
+* frontend/src/components/Signup/SignupForm.js
+b7c4d280 (Caleb Fisher 2022-11-01 20:34:38 -0400  19)   const [help, setHelp] = useState("");
+b7c4d280 (Caleb Fisher 2022-11-01 20:34:38 -0400  20)   const [fieldError, setError] = useState(false);
+b7c4d280 (Caleb Fisher 2022-11-01 20:34:38 -0400  50)           if (error.response.status == 409) {
+b7c4d280 (Caleb Fisher 2022-11-01 20:34:38 -0400  51)             setError(true);
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  52)             setHelp("Username taken.");
+b7c4d280 (Caleb Fisher 2022-11-01 20:34:38 -0400  53)           }
+b7c4d280 (Caleb Fisher 2022-11-01 20:34:38 -0400  74)             <TextField 
+b7c4d280 (Caleb Fisher 2022-11-01 20:34:38 -0400  75)               label="Username" 
+b7c4d280 (Caleb Fisher 2022-11-01 20:34:38 -0400  76)               onChange={e => setUsername(e.target.value)}
+b7c4d280 (Caleb Fisher 2022-11-01 20:34:38 -0400  77)               error={fieldError}
+b7c4d280 (Caleb Fisher 2022-11-01 20:34:38 -0400  78)               helperText={help}/>
+
+* frontend/src/components/shared/LoadingButton.js
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 18)         <CircularProgress size="1.5rem" color="black"/>
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 23)       <Button className={classes.button} {...other} />
+
+* backend/src/controllers/qrController.js
+e0050050 (Caleb Fisher 2022-11-02 14:25:56 -0400  43)       const resultslimit = parseInt(req.query.resultslimit)
+e0050050 (Caleb Fisher 2022-11-02 14:25:56 -0400  50) 
+e0050050 (Caleb Fisher 2022-11-02 14:25:56 -0400  51)         if (!resultslimit) {
+b317ba64 (Caleb Fisher 2022-11-07 21:06:56 -0500  90)         const sqlInsert = `INSERT INTO QRScans (qrID, accessTime)
+b317ba64 (Caleb Fisher 2022-11-07 21:06:56 -0500  91)                            VALUES (?, CURRENT_TIMESTAMP())`
+b317ba64 (Caleb Fisher 2022-11-07 21:06:56 -0500  92)         const insert_query = mysql.format(sqlInsert, [qrID]);
+b317ba64 (Caleb Fisher 2022-11-07 21:06:56 -0500 100)             await connection.query(insert_query, async (err, result)=> {
+b317ba64 (Caleb Fisher 2022-11-07 21:06:56 -0500 101)               if (err) throw (err)
+b317ba64 (Caleb Fisher 2022-11-07 21:06:56 -0500 102)               connection.release()
+b317ba64 (Caleb Fisher 2022-11-07 21:06:56 -0500 103)               console.log("--------> Scan logged successfully" + result.insertId)
+b317ba64 (Caleb Fisher 2022-11-07 21:06:56 -0500 104)             })
+b317ba64 (Caleb Fisher 2022-11-07 21:06:56 -0500 107)             connection.release()
+28e70d53 (Caleb Fisher 2022-11-06 19:24:19 -0500 113)     },
+28e70d53 (Caleb Fisher 2022-11-06 19:24:19 -0500 114)     countQRScansController: (req, res) => {
+28e70d53 (Caleb Fisher 2022-11-06 19:24:19 -0500 115)       const qrID = parseInt(req.query.qrID);
+28e70d53 (Caleb Fisher 2022-11-06 19:24:19 -0500 116)       const daySpan = parseInt(req.query.span);
+28e70d53 (Caleb Fisher 2022-11-06 19:24:19 -0500 117) 
+28e70d53 (Caleb Fisher 2022-11-06 19:24:19 -0500 118)       db.getConnection(async (err, connection) => {
+28e70d53 (Caleb Fisher 2022-11-06 19:24:19 -0500 119)         if (err) throw (err)
+28e70d53 (Caleb Fisher 2022-11-06 19:24:19 -0500 120)         sqlSearch = `SELECT COUNT(*) AS quantity FROM QRScans WHERE qrID = ? AND 
+28e70d53 (Caleb Fisher 2022-11-06 19:24:19 -0500 121)                      accessTime >= DATE_SUB(CURDATE(), INTERVAL ? day)`
+28e70d53 (Caleb Fisher 2022-11-06 19:24:19 -0500 122)         search_query = mysql.format(sqlSearch, [qrID, daySpan])
+28e70d53 (Caleb Fisher 2022-11-06 19:24:19 -0500 123) 
+28e70d53 (Caleb Fisher 2022-11-06 19:24:19 -0500 124)         await connection.query(search_query, async (err, result) => {
+28e70d53 (Caleb Fisher 2022-11-06 19:24:19 -0500 125)           if (err) throw (err)
+28e70d53 (Caleb Fisher 2022-11-06 19:24:19 -0500 126)           connection.release()
+28e70d53 (Caleb Fisher 2022-11-06 19:24:19 -0500 127)           
+28e70d53 (Caleb Fisher 2022-11-06 19:24:19 -0500 128)           const response = {
+28e70d53 (Caleb Fisher 2022-11-06 19:24:19 -0500 129)             quantity: result[0].quantity
+28e70d53 (Caleb Fisher 2022-11-06 19:24:19 -0500 130)           }
+28e70d53 (Caleb Fisher 2022-11-06 19:24:19 -0500 131)           res.send(JSON.stringify(response))
+28e70d53 (Caleb Fisher 2022-11-06 19:24:19 -0500 132)         })
+28e70d53 (Caleb Fisher 2022-11-06 19:24:19 -0500 133)       })
+
+* backend/src/controllers/updateController.js
+e0050050 (Caleb Fisher 2022-11-02 14:25:56 -0400 40)       const qrID = req.body.qrID
+e0050050 (Caleb Fisher 2022-11-02 14:25:56 -0400 45)         const sqlUpdate = `UPDATE QRCodes SET qrname = ?, qrURL = ?, description = ?  
+e0050050 (Caleb Fisher 2022-11-02 14:25:56 -0400 46)                            WHERE qrID = ?`
+e0050050 (Caleb Fisher 2022-11-02 14:25:56 -0400 47)         const update_query = mysql.format(sqlUpdate, [qrname, qrURL, description, qrID])
+e0050050 (Caleb Fisher 2022-11-02 14:25:56 -0400 51)           connection.release();
+e0050050 (Caleb Fisher 2022-11-02 14:25:56 -0400 53)           if (!result.affectedRows) {
+e0050050 (Caleb Fisher 2022-11-02 14:25:56 -0400 54)             console.log("-------> Couldn't find the requested QR code")
+e0050050 (Caleb Fisher 2022-11-02 14:25:56 -0400 55)             res.sendStatus(400);
+e0050050 (Caleb Fisher 2022-11-02 14:25:56 -0400 56)           } else {
+e0050050 (Caleb Fisher 2022-11-02 14:25:56 -0400 57)             console.log("--------> Updated QR Code")
+e0050050 (Caleb Fisher 2022-11-02 14:25:56 -0400 58)             res.sendStatus(200);
+e0050050 (Caleb Fisher 2022-11-02 14:25:56 -0400 59)           }
+
+* frontend/src/components/ExplorePage/QRList.js
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  5) import { LinearProgress } from '@material-ui/core'
+af693847 (Caleb Fisher 2022-11-06 19:20:52 -0500  9) import UserService from '../../services/user.service'
+af693847 (Caleb Fisher 2022-11-06 19:20:52 -0500 30)     UserService.getUserQRs(user.userID)
+af693847 (Caleb Fisher 2022-11-06 19:20:52 -0500 32)       (response) => {
+af693847 (Caleb Fisher 2022-11-06 19:20:52 -0500 35)           QRCodes: response.data.codes
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 39)         if (error.response?.data?.message === 'Token error') {
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 40)           AuthService.logout();
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 41)           setTimeout(() => { this.props.history.push('/login') }, 500)
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 42)         } else {
+af693847 (Caleb Fisher 2022-11-06 19:20:52 -0500 43)           this.setState({
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 44)             isLoaded: true
+af693847 (Caleb Fisher 2022-11-06 19:20:52 -0500 45)           });
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 46)           if (error.response?.status != 400) {
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 47)             this.setState({
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 48)               error
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 49)             });
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 50)           }
+af693847 (Caleb Fisher 2022-11-06 19:20:52 -0500 51)         }
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 62)       return <LinearProgress/>
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 70)             <QRListItem key={item.qrID} 
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 71)               id={item.qrID} 
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400 72)               name={item.qrname} 
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400 73)               description={item.description} 
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400 74)               url={item.qrURL} />
+
+* frontend/src/components/ExplorePage/QRListItem.js
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400 18)               id: this.props.id,
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400 20)               description: this.props.description,
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400 21)               url: this.props.url
+a762fda7 (Caleb Fisher 2022-11-06 21:52:33 -0500 42) export default QRListItem;
+
+* frontend/src/components/QRDetailsPage.js
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400  13) import UserService from '../services/user.service'
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400  79)       link: this.props.location.state.url,
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400  80)       description: this.props.location.state.description,
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400  81)       error: false,
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400  82)       help: ""
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400  97)     const regex = new RegExp(
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400  98)       /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/);
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400  99)     if (!regex.test(this.state.link)) {
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400 100)       this.setState({error: true, help: "Invalid URL"});
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400 101)       return;
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400 102)     }
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400 103) 
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400 104)     UserService.updateQR(this.props.location.state.id, 
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400 105)       this.props.location.state.name, 
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400 106)       this.state.link, 
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400 107)       this.state.description)
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400 108)     .then(
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400 109)       () => {
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400 110)         // might want to add some logic here in the future to indicate success
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400 111)       },
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400 112)       (error) => {
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 113)         if (error.response?.data?.message === 'Token error') {
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 114)           AuthService.logout();
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 115)           setTimeout(() => { this.props.history.push('/login') }, 500);
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 116)         } else {
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 117)           const resMessage =
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 118)           (error.response &&
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 119)             error.response.data &&
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 120)             error.response.data.message) ||
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 121)           error.message ||
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 122)           error.toString();
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 123)           console.log(resMessage);
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 124)           console.log(error);
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 125)         }
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400 126)       }
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400 127)     )
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400 147)                   value={this.state.link}
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400 172)                     error={this.state.error}
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400 173)                     helperText={this.state.help}
+
+* frontend/src/components/TextInput.js
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400 29)     const { classes, value, onChangeValue, error, helperText } = this.props;
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400 46)               error={this.props.error}
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400 47)               helperText={this.props.helperText}
+
+* frontend/src/services/user.service.js
+af693847 (Caleb Fisher 2022-11-06 19:20:52 -0500  8)   getUserQRs(userID) {
+af693847 (Caleb Fisher 2022-11-06 19:20:52 -0500  9)     return axios.get(QR_API_URL + 'qr/getQRCodes?' + new URLSearchParams({
+af693847 (Caleb Fisher 2022-11-06 19:20:52 -0500 10)       userID
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 11)     }), { headers: authHeader() })
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 26)     }, { headers: authHeader() })
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400 28) 
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400 29)   updateQR(id, name, url, description) {
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400 30)     return axios.patch(QR_API_URL + 'update/updateQRCodes', {
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400 31)       qrID: id,
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400 32)       name,
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400 33)       url,
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400 34)       description
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 35)     }, { headers: authHeader() })
+adb2d9be (Caleb Fisher 2022-11-02 14:24:30 -0400 36)   }
+
+* backend/src/routes/qrRoute.js
+28e70d53 (Caleb Fisher 2022-11-06 19:24:19 -0500  2) const {createQRController, retrieveQRController, redirectQRController, countQRScansController} = require('../controllers/qrController')
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  3) const authMiddleware = require('../middlewares/auth')
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  5) router.post('/createQR', authMiddleware, createQRController)
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  6) router.get('/getQRCodes', authMiddleware, retrieveQRController)
+28e70d53 (Caleb Fisher 2022-11-06 19:24:19 -0500  8) router.get('/count', countQRScansController)
+
+* backend/src/controllers/authController.js
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500   9) function generateAccessToken (user, staySignedIn) {
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  10)     if (staySignedIn) 
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  11)         return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  12)     else 
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  13)         return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "30m"});
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  57)         const staySignedIn = req.body.staySignedIn
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  79)                         const token = generateAccessToken({user: user}, staySignedIn)   
+8d71e774 (Caleb Fisher 2022-11-07 21:08:09 -0500 149)                         ...user,
+
+* backend/src/middlewares/auth.js
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  1) const jwt = require('jsonwebtoken')
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  2) 
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  3) module.exports = (req, res, next) => {
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  4)   const { authorization } = req.headers
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  5)   if (authorization && authorization.startsWith('Bearer ')) {
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  6)     let token = authorization.slice(7)
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  7)     try {
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  8)       token = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  9)       if (token) {
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 10)         req.user = token
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 11)         next()
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 12)       } else {
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 13)         return res.status(401).send({
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 14)           success: false,
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 15)           message: 'Unauthorized'
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 16)         })
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 17)       }
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 18)     } catch (err) {
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 19)       return res.status(401).send({
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 20)         success: false,
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 21)         message: 'Token error'
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 22)       })
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 23)     }
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 24)   } else {
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 25)     return res.status(401).send({
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 26)       success: false,
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 27)       message: 'Authorization needed'
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 28)     })
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 29)   }
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 30) }
+
+* backend/src/routes/updateRoute.js
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 4) const authMiddleware = require('../middlewares/auth')
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 6) router.delete('/deleteQRCodes', authMiddleware, deleteQRController)
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 7) router.patch('/updateQRCodes', authMiddleware, updateQRController)
+
+* frontend/src/components/CreateQRPage/CreateQRForm.js
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  36)     UserService.createQR(user.userID, qrname, link)
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  37)     .then(
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  38)       (response) => {
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  39)         console.log(response);
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  40)         setLoading(true);
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  41)         setTimeout(() => { history.push('/my-qrs'); }, 1500);
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  42)       },
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  43)       (error) => {
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  44)         if (error.response?.data?.message === 'Token error') {
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  45)           setLoading(true);
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  46)           AuthService.logout();
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  47)           setTimeout(() => { history.push('/login') }, 500);
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  48)         } else {
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  49)           const resMessage =
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  50)           (error.response &&
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  51)             error.response.data &&
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  52)             error.response.data.message) ||
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  53)           error.message ||
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  54)           error.toString();
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  55)           console.log(resMessage);
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  56)           console.log(error);
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  57)         }
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  58)       }
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  59)     );
+8dedf467 (Caleb Fisher 2022-11-01 20:35:49 -0400 102)                 Create QR
+
+* frontend/src/services/auth-header.js
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  6)       return { Authorization: 'Bearer ' + user.accessToken };
+
+* frontend/src/services/auth.service.js
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500  6)   login(username, password, staySignedIn) {
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 10)         "password": password,
+2aa7aa8b (Caleb Fisher 2022-11-07 11:57:57 -0500 11)         "staySignedIn": staySignedIn
+8d71e774 (Caleb Fisher 2022-11-07 21:08:09 -0500 16)           localStorage.setItem("user", JSON.stringify({
+8d71e774 (Caleb Fisher 2022-11-07 21:08:09 -0500 17)             username, 
+8d71e774 (Caleb Fisher 2022-11-07 21:08:09 -0500 18)             password, 
+8d71e774 (Caleb Fisher 2022-11-07 21:08:09 -0500 19)             ...response.data
+8d71e774 (Caleb Fisher 2022-11-07 21:08:09 -0500 20)           }));
+8d71e774 (Caleb Fisher 2022-11-07 21:08:09 -0500 56) export default new AuthService();

@@ -1,12 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {
-  Checkbox,
-  Grid,
-  TextField,
-  FormControlLabel,
-  Paper,
-  Button
-} from '@material-ui/core';
 import { useHistory } from "react-router-dom";
 import AuthService from "../../services/auth.service";
 import UserService from "../../services/user.service"
@@ -22,6 +14,7 @@ const ProfileCard = () => {
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState("")
   const [totalCodes, setTotalCodes] = useState(0);
+  const [brokenLinks, setBrokenLinks] = useState(0);
 
   const user = AuthService.getCurrentUser();
 
@@ -32,7 +25,13 @@ const ProfileCard = () => {
       UserService.getUserQRs(user.userID)
         .then(
           (response) => {
-            setTotalCodes(response.data.codes.length)
+            var broken_links = 0;
+
+            for(let i = 0; i < response.data.codes.length; i++) {
+              if(response.data.codes[i]["validLink"] === 0) broken_links++;
+            }
+            setBrokenLinks(broken_links);
+            setTotalCodes(response.data.codes.length);
           },
           (error) => {
             if (error.response?.data?.message === 'Token error') {
@@ -67,7 +66,7 @@ const ProfileCard = () => {
   return (
     <CardContainer>
         <header>
-            <img class="avatar-img" src={avatar}/>
+            <img className="avatar-img" src={avatar} alt="avatar"/>
         </header>
         <div className="flex">
           <Typography variant="h4" className="username">
@@ -85,7 +84,7 @@ const ProfileCard = () => {
             </div>
             <div className="likes">
                 <Typography variant="h5" id="bold-text">
-                  0
+                  {brokenLinks}
                 </Typography>
                 <Typography variant="subtitle1" id="smaller-text">
                   Broken Links

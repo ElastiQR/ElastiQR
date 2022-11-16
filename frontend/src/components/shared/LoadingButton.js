@@ -5,7 +5,7 @@ import {Button , CircularProgress} from '@material-ui/core';
 
 const styles = theme => ({
   button: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
     backgroundColor: "#62D2A2",
     color: "#FFFFFF",
     textTransform: "none",

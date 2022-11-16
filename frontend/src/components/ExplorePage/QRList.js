@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import withStyles from '@material-ui/styles/withStyles'
 import { withRouter } from 'react-router-dom'
 import List from '@material-ui/core/List'
 import { LinearProgress } from '@material-ui/core'
@@ -30,6 +29,7 @@ class QRList extends Component {
     UserService.getUserQRs(user.userID)
     .then(
       (response) => {
+        console.log(response.data.codes);
         this.setState({
           isLoaded: true,
           QRCodes: response.data.codes
@@ -43,7 +43,7 @@ class QRList extends Component {
           this.setState({
             isLoaded: true
           });
-          if (error.response?.status != 400) {
+          if (error.response?.status !== 400) {
             this.setState({
               error
             });
@@ -60,7 +60,7 @@ class QRList extends Component {
       return <div> Error: {error.message}</div>;
     } else if (!isLoaded) {
       return <LinearProgress/>
-    } else if (QRCodes.length == 0) {
+    } else if (QRCodes.length === 0) {
       return <div> You don't have any QR codes.
       Try creating your first one with the button above! </div>
     } else {
@@ -71,7 +71,8 @@ class QRList extends Component {
               id={item.qrID} 
               name={item.qrname} 
               description={item.description} 
-              url={item.qrURL} />
+              url={item.qrURL}
+              validLink={item.validLink}  />
           ))}
         </List>
       );

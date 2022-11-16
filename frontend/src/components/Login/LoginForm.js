@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import { green } from '@material-ui/core/colors'
 import {
   Checkbox,
   Grid,
@@ -22,14 +21,20 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
 
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
+  const [nameError, setNameError] = useState(false);
+  const [passError, setPassError] = useState(false);
+  const [nameHelp, setNameHelp] = useState("");
+  const [passHelp, setPassHelp] = useState("");
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
 
   function handleLogin() {
-    setMessage("");
+    setNameHelp("");
+    setPassHelp("");
+    setPassError(false)
+    setNameError(false);
     setLoading(true);
 
     AuthService.login(username, password, checked).then(
@@ -47,7 +52,13 @@ const LoginForm = () => {
           console.log(error);
 
         setLoading(false);
-        setMessage(resMessage);
+        if (error.response.data === 'Password incorrect!') {
+          setPassError(true);
+          setPassHelp('Incorrect Password!');
+        } else {
+          setNameError(true);
+          setNameHelp('Invalid Username!')
+        }
       }
     );
   }

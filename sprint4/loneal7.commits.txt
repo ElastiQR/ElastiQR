@@ -1,0 +1,111 @@
+backend/src/index.js
+8921ec03 (loganoneal   2022-11-15 22:44:35 -0500  6) const validateLinksService = require ("./services/qrService")
+8921ec03 (loganoneal   2022-11-15 22:44:35 -0500 26) /* Start Background Services */
+8921ec03 (loganoneal   2022-11-15 22:44:35 -0500 27) validateLinksService.start();
+8921ec03 (loganoneal   2022-11-15 22:44:35 -0500 28)
+
+backend/src/services/qrService.js
+8921ec03 (loganoneal 2022-11-15 22:44:35 -0500  1) const mysql = require("mysql")
+8921ec03 (loganoneal 2022-11-15 22:44:35 -0500  2) const db = require("../helpers/database")
+8921ec03 (loganoneal 2022-11-15 22:44:35 -0500  3) const cron = require("node-cron");
+8921ec03 (loganoneal 2022-11-15 22:44:35 -0500  4) const isReachable = require('is-reachable');
+8921ec03 (loganoneal 2022-11-15 22:44:35 -0500  5)
+8921ec03 (loganoneal 2022-11-15 22:44:35 -0500  6)
+1b0c526e (loganoneal 2022-11-16 11:26:17 -0500  7) validateLinksService = cron.schedule("*/5 * * * *", function () {
+8921ec03 (loganoneal 2022-11-15 22:44:35 -0500  8)     console.log("---------------------");
+4399b34e (loganoneal 2022-11-16 10:42:46 -0500  9)     console.log("NODE-CRON: validating all QR links");
+1b0c526e (loganoneal 2022-11-16 11:26:17 -0500 10)     console.log("---------------------");
+8921ec03 (loganoneal 2022-11-15 22:44:35 -0500 11)
+8921ec03 (loganoneal 2022-11-15 22:44:35 -0500 12)     db.getConnection(async (err, connection) => {
+8921ec03 (loganoneal 2022-11-15 22:44:35 -0500 13)         if (err) throw (err)
+8921ec03 (loganoneal 2022-11-15 22:44:35 -0500 14)         sqlSearch = `SELECT * FROM QRCodes`
+8921ec03 (loganoneal 2022-11-15 22:44:35 -0500 15)         search_query = mysql.format(sqlSearch)
+8921ec03 (loganoneal 2022-11-15 22:44:35 -0500 16)
+98c9b63a (loganoneal 2022-11-16 10:35:21 -0500 17)         connection.query(search_query, async (err, result) => {
+8921ec03 (loganoneal 2022-11-15 22:44:35 -0500 18)             if (err) throw (err)
+8921ec03 (loganoneal 2022-11-15 22:44:35 -0500 19)             connection.release()
+4399b34e (loganoneal 2022-11-16 10:42:46 -0500 20)
+4399b34e (loganoneal 2022-11-16 10:42:46 -0500 21)
+8921ec03 (loganoneal 2022-11-15 22:44:35 -0500 22)             for(let i = 0; i < result.length; i++) {
+8921ec03 (loganoneal 2022-11-15 22:44:35 -0500 23)                 var qrID = result[i]['qrID'];
+8921ec03 (loganoneal 2022-11-15 22:44:35 -0500 24)                 var validLink = result[i]['validLink'];
+8921ec03 (loganoneal 2022-11-15 22:44:35 -0500 25)                 var url = result[i]['qrURL'];
+8921ec03 (loganoneal 2022-11-15 22:44:35 -0500 26)                 var reachable = await isReachable(url);
+98c9b63a (loganoneal 2022-11-16 10:35:21 -0500 27)
+4399b34e (loganoneal 2022-11-16 10:42:46 -0500 28)                 if(reachable != validLink) {
+4399b34e (loganoneal 2022-11-16 10:42:46 -0500 29)                     const sqlUpdate = `UPDATE QRCodes SET validLink = ? WHERE qrID = ?`;
+4399b34e (loganoneal 2022-11-16 10:42:46 -0500 30)                     const update_query = mysql.format(sqlUpdate, [reachable, qrID]);
+4399b34e (loganoneal 2022-11-16 10:42:46 -0500 31)                     await connection.query (update_query);
+8921ec03 (loganoneal 2022-11-15 22:44:35 -0500 32)                 }
+8921ec03 (loganoneal 2022-11-15 22:44:35 -0500 33)             }
+8921ec03 (loganoneal 2022-11-15 22:44:35 -0500 34)         })
+8921ec03 (loganoneal 2022-11-15 22:44:35 -0500 35)     })
+8921ec03 (loganoneal 2022-11-15 22:44:35 -0500 36) });
+8921ec03 (loganoneal 2022-11-15 22:44:35 -0500 37)
+8921ec03 (loganoneal 2022-11-15 22:44:35 -0500 38) module.exports = validateLinksService;
+
+frontend/src/components/ExplorePage/QRList.js
+8921ec03 (loganoneal   2022-11-15 22:44:35 -0500 32)         console.log(response.data.codes);
+8921ec03 (loganoneal   2022-11-15 22:44:35 -0500 74)               url={item.qrURL}
+8921ec03 (loganoneal   2022-11-15 22:44:35 -0500 75)               validLink={item.validLink}  />
+
+frontend/src/components/ExplorePage/QRListItem.js
+8921ec03 (loganoneal   2022-11-15 22:44:35 -0500  9) import { ToggleButtonGroup, ToggleButton } from '@mui/material';
+8921ec03 (loganoneal   2022-11-15 22:44:35 -0500 18)   },
+8921ec03 (loganoneal   2022-11-15 22:44:35 -0500 19)   button: {
+8921ec03 (loganoneal   2022-11-15 22:44:35 -0500 20)     color: "#62D2A2",
+8921ec03 (loganoneal   2022-11-15 22:44:35 -0500 21)     textTransform: "none",
+8921ec03 (loganoneal   2022-11-15 22:44:35 -0500 22)     width: "100%",
+8921ec03 (loganoneal   2022-11-15 22:44:35 -0500 23)     height: "100%",
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 32)         <Link style={theme.link}
+8921ec03 (loganoneal   2022-11-15 22:44:35 -0500 39)               url: this.props.url,
+8921ec03 (loganoneal   2022-11-15 22:44:35 -0500 40)               validLink: this.props.validLink
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 44)           <ButtonBase style={theme.buttonBase}>
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 47)               <Typography variant="h6" style={theme.cardTitle}>
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 50)               <Typography variant="body2" style={theme.cardDescription}>
+8921ec03 (loganoneal   2022-11-15 22:44:35 -0500 53)               <ToggleButtonGroup
+8921ec03 (loganoneal   2022-11-15 22:44:35 -0500 54)                 color= "primary"
+8921ec03 (loganoneal   2022-11-15 22:44:35 -0500 55)                 value={this.props.validLink}
+8921ec03 (loganoneal   2022-11-15 22:44:35 -0500 56)                 exclusive
+8921ec03 (loganoneal   2022-11-15 22:44:35 -0500 57)                 aria-label="Platform"
+8921ec03 (loganoneal   2022-11-15 22:44:35 -0500 58)               >
+448948e1 (loganoneal   2022-11-16 11:30:26 -0500 59)                 <ToggleButton value={1}>Link Reachable</ToggleButton>
+448948e1 (loganoneal   2022-11-16 11:30:26 -0500 60)                 <ToggleButton value={0}>Link Broken</ToggleButton>
+8921ec03 (loganoneal   2022-11-15 22:44:35 -0500 61)               </ToggleButtonGroup>
+8921ec03 (loganoneal   2022-11-15 22:44:35 -0500 62)               </CardContent>
+
+frontend/src/components/Main/Main.js
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500  2) import { withRouter } from 'react-router-dom'
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500  3) import theme from '../../theme'
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500  4) import CardContainer from '../shared/CardContainer'
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500  5) import SimpleChart from './LineChart';
+448948e1 (loganoneal   2022-11-16 11:30:26 -0500 17)       QRCodes: [],
+448948e1 (loganoneal   2022-11-16 11:30:26 -0500 18)       brokenLinks: 0
+448948e1 (loganoneal   2022-11-16 11:30:26 -0500 35)         var broken_links = 0;
+448948e1 (loganoneal   2022-11-16 11:30:26 -0500 36)
+448948e1 (loganoneal   2022-11-16 11:30:26 -0500 37)         for(let i = 0; i < response.data.codes.length; i++) {
+448948e1 (loganoneal   2022-11-16 11:30:26 -0500 38)           if(response.data.codes[i]["validLink"] === 0) broken_links++;
+448948e1 (loganoneal   2022-11-16 11:30:26 -0500 39)         }
+448948e1 (loganoneal   2022-11-16 11:30:26 -0500 42)           QRCodes: response.data.codes,
+448948e1 (loganoneal   2022-11-16 11:30:26 -0500 43)           brokenLinks: broken_links
+448948e1 (loganoneal   2022-11-16 11:30:26 -0500 66)     const { QRCodes, brokenLinks} = this.state;
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 69)               <h1 style={{color: theme.palette.button.green, textAlign: 'center'}}>Welcome to ElastiQR</h1>
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 71)                   <div className="followers">
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 78)                   </div>
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 79)                   <div className="likes">
+448948e1 (loganoneal   2022-11-16 11:30:26 -0500 81)                       {brokenLinks}
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 86)                   </div>
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 87)               </div>
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 90)     )
+a3a81e42 (loganoneal   2022-11-06 19:37:45 -0500 94) export default withRouter(Main);
+
+frontend/src/components/Profile/ProfileCard.js
+448948e1 (loganoneal   2022-11-16 11:30:26 -0500  17)   const [brokenLinks, setBrokenLinks] = useState(0);
+448948e1 (loganoneal   2022-11-16 11:30:26 -0500  28)             var broken_links = 0;
+448948e1 (loganoneal   2022-11-16 11:30:26 -0500  29)
+448948e1 (loganoneal   2022-11-16 11:30:26 -0500  30)             for(let i = 0; i < response.data.codes.length; i++) {
+448948e1 (loganoneal   2022-11-16 11:30:26 -0500  31)               if(response.data.codes[i]["validLink"] === 0) broken_links++;
+448948e1 (loganoneal   2022-11-16 11:30:26 -0500  32)             }
+448948e1 (loganoneal   2022-11-16 11:30:26 -0500  33)             setBrokenLinks(broken_links);
+448948e1 (loganoneal   2022-11-16 11:30:26 -0500  34)             setTotalCodes(response.data.codes.length);
+448948e1 (loganoneal   2022-11-16 11:30:26 -0500  87)                   {brokenLinks}

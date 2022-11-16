@@ -1,5 +1,6 @@
 const mysql = require("mysql")
 const db = require("../helpers/database")
+const logger = require("../helpers/logger")
 
 module.exports = {
     createQRController: (req, res)=> {
@@ -21,17 +22,17 @@ module.exports = {
   
         await connection.query (search_query, async (err, result)=> {
           if (err) throw (err)
-          console.log("--------> Search Results")
-          console.log(result.length)
+          logger.info("--------> Search Results")
+          logger.info(result.length)
           if (result.length != 0) {
-            console.log("--------> QR Code already exists")
+            logger.error("--------> QR Code already exists")
             res.sendStatus(409)
           } else {
               await connection.query (insert_query, (err, result)=> {
                 connection.release()
                 if (err) throw (err)
-                console.log("--------> Created new QR Code")
-                console.log(result.insertId)
+                logger.info("--------> Created new QR Code")
+                logger.info(result.insertId)
                 res.sendStatus(201)
               })
           }
@@ -71,9 +72,9 @@ module.exports = {
             const response = { "codes": result }
             res.send(JSON.stringify(response))
 
-            console.log("--------> Requested QR Codes have been found successfully")
+            logger.info("--------> Requested QR Codes have been found successfully")
           } else {
-            console.log("--------> Error, could not find the requested QR Codes")
+            logger.error("--------> Error, could not find the requested QR Codes")
             res.sendStatus(400)
           }
         })
@@ -81,7 +82,7 @@ module.exports = {
     },
     redirectQRController: (req,res)=> {
       const qrID = req.query.qrID;
-      console.log("QR ID: " + qrID);
+      logger.info("QR ID: " + qrID);
 
       db.getConnection(async (err, connection) => {
         if (err) throw (err)
@@ -95,17 +96,17 @@ module.exports = {
           if (err) throw (err)
 
           if (result.length != 0) {
-            console.log("--------> Requested QR Code has been found successfully")
+            logger.info("--------> Requested QR Code has been found successfully")
 
             await connection.query(insert_query, async (err, result)=> {
               if (err) throw (err)
               connection.release()
-              console.log("--------> Scan logged successfully" + result.insertId)
+              logger.info("--------> Scan logged successfully" + result.insertId)
             })
             res.redirect(result[0].qrURL);
           } else {
             connection.release()
-            console.log("--------> Error, could not find the requested QR Code")
+            logger.error("--------> Error, could not find the requested QR Code")
             res.sendStatus(400)
           }
         });
@@ -117,9 +118,9 @@ module.exports = {
 
       db.getConnection(async (err, connection) => {
         if (err) throw (err)
-        sqlSearch = `SELECT COUNT(*) AS quantity FROM QRScans WHERE qrID = ? AND 
-                     accessTime >= DATE_SUB(CURDATE(), INTERVAL ? day)`
-        search_query = mysql.format(sqlSearch, [qrID, daySpan])
+        const sqlSearch = `SELECT COUNT(*) AS quantity FROM QRScans WHERE qrID = ? AND 
+                           accessTime >= DATE_SUB(CURDATE(), INTERVAL ? day)`
+        const search_query = mysql.format(sqlSearch, [qrID, daySpan])
 
         await connection.query(search_query, async (err, result) => {
           if (err) throw (err)
@@ -128,7 +129,62 @@ module.exports = {
           const response = {
             quantity: result[0].quantity
           }
-          res.send(JSON.stringify(response))
+          res.send(JSON.stringify(response));
+        })
+      })
+    },
+    recentActivityController: (req, res) => {
+      const userID = parseInt(req.query.userID)
+
+      db.getConnection(async (err, connection) => {
+        if (err) throw (err)
+        
+        const sqlSearch = "SELECT * FROM users WHERE userID = ? LIMIT 1"
+        const search_query = mysql.format(sqlSearch, [userID])
+
+        await connection.query(search_query, async (err, result) => {
+          if (err) throw (err)
+
+          if (result.length == 0) {
+            logger.error("User attempting to access recent activity without valid ID.")
+          } else {
+            logger.info("-------> Found user")
+
+            const sqlFindActivity = `SELECT 
+              SUM(CASE
+                WHEN accessTime > DATE_SUB(current_timestamp(), INTERVAL 1 day)
+                THEN 1 ELSE 0
+                END) AS first,
+              SUM(CASE
+                WHEN accessTime > DATE_SUB(current_timestamp(), INTERVAL 2 day)
+                THEN 1 ELSE 0
+                END) AS second,
+              SUM(CASE
+                WHEN accessTime > DATE_SUB(current_timestamp(), INTERVAL 3 day)
+                THEN 1 ELSE 0
+                END) AS third,
+              SUM(CASE
+                WHEN accessTime > DATE_SUB(current_timestamp(), INTERVAL 4 day)
+                THEN 1 ELSE 0
+                END) AS fourth,
+              SUM(CASE
+                WHEN accessTime > DATE_SUB(current_timestamp(), INTERVAL 5 day)
+                THEN 1 ELSE 0
+                END) AS fifth
+              FROM QRScans
+              WHERE qrID IN (SELECT qrID FROM QRCodes WHERE userID = ?)`
+            const sum_query = mysql.format(sqlFindActivity, [userID]);
+
+            connection.query(sum_query, async (err, result) => {
+              if (err) throw (err)
+              connection.release();
+
+              logger.info("Responding to recent activity request.")
+              res.send(JSON.stringify({
+                activity: Object.values(result[0])
+              }))
+            })
+          }
         })
       })
     }

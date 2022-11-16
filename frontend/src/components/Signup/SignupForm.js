@@ -3,12 +3,9 @@ import PasswordChecklist from 'react-password-checklist'
 import {
   Checkbox,
   Grid,
-  TextField,
   FormControlLabel,
-  Paper,
   Button,
   Typography,
-  ThemeProvider
 } from '@material-ui/core';
 import { useHistory } from "react-router-dom";
 import AuthService from "../../services/auth.service";
@@ -32,8 +29,9 @@ const SignupForm = () => {
   const [password, setPassword] = useState("");
   const [confirmpassword, setconfirmPassword] = useState("");
 
+  // eslint-disable-next-line no-unused-vars
   const [successful, setSuccessful] = useState(false);
-  const [message, setMessage] = useState();
+  const [message, setMessage] = useState("");
 
   function handleRegister() {
     setMessage("");
@@ -50,7 +48,7 @@ const SignupForm = () => {
           history.push('/login');
         },
         error => {
-          if (error.response.status == 409) {
+          if (error.response.status === 409) {
             setError(true);
             setHelp("Username taken.");
           }

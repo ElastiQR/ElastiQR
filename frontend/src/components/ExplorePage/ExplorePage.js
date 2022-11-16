@@ -7,7 +7,6 @@ import Typography from '@material-ui/core/Typography'
 import theme from '../../theme'
 import QRList from './QRList'
 import CardContainer from '../shared/CardContainer'
-import { mergeClasses } from '@material-ui/styles'
 
 const styles = theme => ({
   button: {

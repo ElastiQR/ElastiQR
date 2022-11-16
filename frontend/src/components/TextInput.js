@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react'
+import React, { Component } from 'react'
 import withStyles from '@material-ui/styles/withStyles'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
@@ -33,15 +33,15 @@ class TextInput extends Component {
         <Grid container spacing={0}>
           <Grid item xs={12}>
             <Typography variant="subtitle1" className={classes.textFieldLabel}>
-              {this.props.label}
+              {label}
             </Typography>
           </Grid>
           <Grid item xs={12} className={classes.flex}>
             <TextField
-              value={this.props.value}
-              onChange={this.props.onChangeValue}
+              value={value}
+              onChange={onChangeValue}
               variant="outlined"
-              color={`${theme.palette.text.green}`}
+              color="primary"
               className={classes.textField}
               error={this.props.error}
               helperText={this.props.helperText}
