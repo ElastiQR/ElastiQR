@@ -14,7 +14,7 @@ validateLinksService = cron.schedule("*/60 * * * * *", function () {
         sqlSearch = `SELECT * FROM QRCodes`
         search_query = mysql.format(sqlSearch)
 
-        await connection.query(search_query, async (err, result) => {
+        connection.query(search_query, async (err, result) => {
             if (err) throw (err)
             connection.release()
         
@@ -23,7 +23,7 @@ validateLinksService = cron.schedule("*/60 * * * * *", function () {
                 var validLink = result[i]['validLink'];
                 var url = result[i]['qrURL'];
                 var reachable = await isReachable(url);
-                
+
                 if(reachable != validLink) {
                     const sqlUpdate = `UPDATE QRCodes SET validLink = ? WHERE qrID = ?`
                     const update_query = mysql.format(sqlUpdate, [reachable, qrID])
@@ -31,7 +31,9 @@ validateLinksService = cron.schedule("*/60 * * * * *", function () {
                     await connection.query (update_query) 
                 }
             }
+            connection.end();
         })
+
     })
 });
 
