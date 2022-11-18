@@ -1,10 +1,11 @@
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import theme from '../../theme'
 import CardContainer from '../shared/CardContainer'
 import SimpleChart from './LineChart';
 import Typography from '@material-ui/core/Typography'
 import '../Profile/ProfileCard.css'
+import { Bar } from "react-chartjs-2";
 import AuthService from "../../services/auth.service"
 import UserService from '../../services/user.service'
 
@@ -62,6 +63,52 @@ class Main extends Component {
     )
   }
 
+  BarChart = () => {
+    const user = AuthService.getCurrentUser()
+    if (!user) {
+      this.setState({ error: 
+        {message: "User needs to login. In the future, we'll want to hide this page until logged in"} 
+      });
+      return;
+    }
+
+    const [five, setfive] = useState(0);
+    const [four, setfour] = useState(0);
+    const [three, setthree] = useState(0);
+    const [yesterday, setyesterday] = useState(0);
+    const [today, settoday] = useState(0);
+  
+    UserService.recentActivity(user.userID)
+    .then(
+      (response) => {
+          console.log(response);
+          setfive(response.data.activity[4]);
+          setfour(response.data.activity[3]);
+          setthree(response.data.activity[2]);
+          setyesterday(response.data.activity[1]);
+          settoday(response.data.activity[0]);
+      }
+    )
+  
+    const labels = ["5 Days Ago", "4 Days Ago", "3 Days Ago", "Yesterday", "Today"];
+    const data = {
+      labels: labels,
+      datasets: [
+        {
+          label: "Your QR Codes' Uses",
+          backgroundColor: "#62D2A2",
+          borderColor: "#62D2A2",
+          data: [five, four, three, yesterday, today],
+        },
+      ],
+    };
+    return (
+      <div style={{width: '90%', padding: 30}}>
+        <Bar data={data} />
+      </div>
+    );
+  };
+
   render() {
     const { QRCodes, brokenLinks} = this.state;
       return (
@@ -85,7 +132,7 @@ class Main extends Component {
                     </Typography>
                   </div>
               </div>
-             <SimpleChart></SimpleChart>
+             <this.BarChart></this.BarChart>
              </CardContainer>
     )
   }

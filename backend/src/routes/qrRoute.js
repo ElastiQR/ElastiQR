@@ -12,6 +12,7 @@ router.post('/createQR', authMiddleware, createQRController)
 router.get('/getQRCodes', authMiddleware, retrieveQRController)
 router.get('/redirect', redirectQRController)
 router.get('/count', countQRScansController)
+router.get('/recent', recentActivityController)
 router.get('/recentActivity', recentActivityController)
 
 module.exports = router

@@ -17,6 +17,18 @@ class UserService {
     }));
   }
 
+  recentActivity(userID) {
+    return axios.get(API_URL + 'qr/recent?' + new URLSearchParams({
+      userID
+    }), { headers: authHeader() })
+  }
+
+  /*recentActivity(userID) {
+    return axios.get(API_URL + 'qr/recent?' + new URLSearchParams({
+      userID
+    }));
+  }*/
+
   createQR(id, name, url, description) {
     return axios.post(API_URL + 'qr/createQR', {
       userID: id,
