@@ -7,11 +7,11 @@ const logger = require("../helpers/logger")
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
 
-function generateAccessToken (user, staySignedIn) {
+function generateAccessToken (user, staySignedIn, expiration = "30m") {
     if (staySignedIn) 
         return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
     else 
-        return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "30m"});
+        return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: `${expiration}`});
 }
 
 module.exports = {
@@ -156,5 +156,75 @@ module.exports = {
             }) 
         })
         logger.info("Processing" + " " + name + ": " + email)
+    },
+    authorizeCLIController: async (req, res) => {
+        const userID = parseInt(req.body.id);
+        const authCode = parseInt(req.body.code);
+        const expiration = req.body.expiration;
+
+        if (!authCode) 
+            res.sendStatus(403);
+
+        db.getConnection(async (err, connection) => {
+            if (err) throw (err)
+
+            const sql_search = 'SELECT authCode FROM users WHERE userID = ? LIMIT 1';
+            const search_query = mysql.format(sql_search, [userID]);
+
+            connection.query(search_query, async (err, result) => {
+                if (err) throw (err)
+                connection.release()
+
+                if (result[0].authCode !== authCode) {
+                    console.log(result[0].authCode);
+                    console.log(authCode);
+                    logger.error('authorization failed')
+                    res.sendStatus(403);
+                } else {
+                    logger.info('authorizing...')
+                    const accessToken = generateAccessToken({user: userID}, false, expiration);
+                    res.send(JSON.stringify({ accessToken }));
+                }
+            })
+        })
+    },
+    updateAuthCodeController: async (req, res) => {
+        const username = req.body.name;
+        const authCode = req.body.code;
+        var userID;
+
+        db.getConnection(async (err, connection) => {
+            if (err) throw (err)
+
+            const sql_search = 'SELECT * FROM users WHERE username = ? LIMIT 1';
+            const search_query = mysql.format(sql_search, [username]);
+            const sql_update = 'UPDATE users SET authCode = ? WHERE username = ?'
+            const update_query = mysql.format(sql_update, [authCode, username])
+
+            connection.query(search_query, async (err, result) => {
+                if (err) throw (err)
+
+                if (result.length == 0) {
+                    logger.error("Couldn't find user.")
+                    connection.release()
+                    res.sendStatus(400);
+                } else {
+                    console.log("Processing")
+                    userID = result[0].userID;
+                    connection.query(update_query, async (err, result) => {
+                        if (err) throw (err)
+                        connection.release()
+
+                        logger.info("Updating auth code");
+                        res.status(200).send(JSON.stringify({
+                            id: userID
+                        }));
+                    })
+                }
+            })
+        })
+    },
+    verifyTokenController: async (req, res) => {
+        res.sendStatus(200);
     }
 }

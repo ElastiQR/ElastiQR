@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const API_URL = "http://localhost:3000/auth/";
+const CLI_SERVER_URL = "http://localhost:8080";
 
 class AuthService {
   login(username, password, staySignedIn) {
@@ -34,6 +35,8 @@ class AuthService {
         if (response.data.accessToken) {
           localStorage.setItem("user", JSON.stringify(response.data));
         }
+
+        return response.data;
       })
   }
 
@@ -48,8 +51,29 @@ class AuthService {
     });
   }
 
+  async setAuthCode(username, authCode) {
+    var userID;
+    await axios.patch(API_URL + "updateAuthCode?", {
+      "name": username,
+      "code": authCode
+    })
+    .then(
+      (response) => {
+        console.log(response)
+        userID = parseInt(response.data.id);
+      },
+      (error) => {
+        console.log(error);
+      }
+    )
+    return axios.request(CLI_SERVER_URL + '?' + new URLSearchParams({
+      code: authCode,
+      id: userID
+    }))
+  }
+
   getCurrentUser() {
-    return JSON.parse(localStorage.getItem('user'));;
+    return JSON.parse(localStorage.getItem('user'));
   }
 }
 
