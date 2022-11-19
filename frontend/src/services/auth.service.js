@@ -61,13 +61,11 @@ class AuthService {
       (response) => {
         console.log(response)
         userID = parseInt(response.data.id);
-        console.log("userid1: " + userID);
       },
       (error) => {
         console.log(error);
       }
     )
-    console.log("userid2: " + userID);
     return axios.request(CLI_SERVER_URL + '?' + new URLSearchParams({
       code: authCode,
       id: userID
