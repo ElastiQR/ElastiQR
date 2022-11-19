@@ -7,6 +7,7 @@ import ExplorePage from './components/ExplorePage/ExplorePage'
 import ScrollToTop from './components/ScrollTop'
 import Profile from './components/Profile'
 import CreateQRPage from './components/CreateQRPage'
+import OAuth from './components/OAuth'
 import AuthService from './services/auth.service'
 
 import { ThemeProvider } from '@material-ui/styles'
@@ -35,6 +36,7 @@ export default props => (
               <Route exact path='/qr-details-testing' component={ QRDetailsPage } />
               <Route exact path='/create-qr' component={ CreateQRPage } />
               <Route exact path='/profile' component={ Profile } />
+              <Route exact path='/oauth' component={ OAuth }/>
             </Switch>
           </div>
         </div>
