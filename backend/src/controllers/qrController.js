@@ -103,7 +103,7 @@ module.exports = {
               connection.release()
               logger.info("--------> Scan logged successfully" + result.insertId)
             })
-            res.redirect(result[0].qrURL);
+            res.status(301).redirect(result[0].qrURL);
           } else {
             connection.release()
             logger.error("--------> Error, could not find the requested QR Code")
