@@ -160,7 +160,7 @@ class QRDetailsPage extends Component {
     this.setState({ error: false, help: "" });
     const regex = new RegExp(
       // eslint-disable-next-line no-useless-escape
-      /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/
+      /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gi
       );
     if (!regex.test(this.state.link)) {
       this.setState({error: true, help: "Invalid URL"});
@@ -224,7 +224,9 @@ class QRDetailsPage extends Component {
                 <Grid item xs={12} className={`${classes.flex} ${classes.header}`}>
                   <QRCode
                     size={144}
-                    value={this.state.link}
+                    value={'http://localhost:3000/qr/redirect?' + new URLSearchParams({
+                      qrID: this.props.location.state.id
+                    })}
                     viewBox={`0 0 144 144`}
                     fgColor={this.state.qrColor}
                     bgColor={theme.palette.background.lightGray}
