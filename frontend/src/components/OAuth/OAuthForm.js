@@ -6,7 +6,8 @@ import {
   FormControlLabel,
   Typography
 } from '@material-ui/core';
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
+import queryString from 'query-string'
 import AuthService from "../../services/auth.service";
 import LoadingButton from '../shared/LoadingButton';
 import theme from '../../theme';
@@ -25,6 +26,8 @@ const OAuthForm = () => {
   const [nameHelp, setNameHelp] = useState("");
   const [passHelp, setPassHelp] = useState("");
 
+  const location = useLocation();
+
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
@@ -35,12 +38,12 @@ const OAuthForm = () => {
     setPassError(false);
     setNameError(false);
     setLoading(true);
+    const redirect_uri = queryString.parse(location.search).redirect_uri;
 
     AuthService.login(username, password).then(
       (response) => {
-        AuthService.setAuthCode(username, Math.floor(Math.random()*1000)).then(
+        AuthService.setAuthCode(username, Math.floor(Math.random()*1000), redirect_uri).then(
           () => {
-            console.log("closing");
             window.open("about:blank", "_self");
             window.close();
           },
