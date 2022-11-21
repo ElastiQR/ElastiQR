@@ -15,8 +15,8 @@ const options = yargs
     .option('help', {
         alias: 'help', 
         describe: 'Provides a help menu.', 
-        type: "boolean", demandOption: 
-        false
+        type: "boolean", 
+        demandOption: false
     })
     .option('exp', {
         alias: 'expiresIn', 
@@ -34,18 +34,11 @@ const main = async () => {
 
     if (argv.help) {
         yargs.showHelp();
-    } else if (argv.file == null) {
-        const file = './.tmp-cli/token.json';
+    } else {
+        const file = (argv.file == null) ? './.tmp-cli/token.json' : argv.file;
         cli.spinner('Waiting for login through browser');
         if (await getToken(file, expiration) == true) {
             cli.spinner(`Successful! You can find your access token at ${file}`, true);
-        } else {
-            cli.spinner('Failed!', true);
-        }
-    } else {
-        cli.spinner('Waiting for login through browser');
-        if (await getToken(argv.file, expiration) == true) {
-            cli.spinner(`Successful! You can find your access token at ${argv.file}`, true);
         } else {
             cli.spinner('Failed!', true);
         }
