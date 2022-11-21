@@ -7,6 +7,7 @@ const axios = require('axios');
 
 const API_URL = 'http://localhost:3000/auth';
 const CLIENT_URL = 'http://localhost:3001';
+const PORT = 8080;
 
 const storeToken = async (token, file) => {
     return fs.ensureDir(path.dirname(file))
@@ -14,7 +15,7 @@ const storeToken = async (token, file) => {
                 const userAuthInfo = JSON.stringify({token});
                 const newFile = path.join(path.dirname(file), path.basename(file));
                 fs.writeFile(newFile, userAuthInfo, 'utf8', (err) => {
-                    if (err) throw (err)
+                    if (err) throw (err);
                 });
             })
 }
@@ -41,14 +42,14 @@ const verify = (token) => {
         (response) => {
             return response.status;
         },
-        (error) => { throw (error) }
+        (error) => { throw (error); }
     )
 }
 
 module.exports = {
     getToken: async (file, expiration) => {
         return new Promise((resolve, reject) => {
-            fs.readFile(file, 'utf8', (err, token) => {
+            fs.readFile(file, 'utf8', async (err, token) => {
                 if (err !== null || token === '') {
                     const server = http.createServer(async (req, res) => {
                         res.setHeader("Access-Control-Allow-Origin", CLIENT_URL);
@@ -65,8 +66,8 @@ module.exports = {
                                     await storeToken(accessToken, file);
                                 }
                             );
-                        } catch (err) {
-                            console.log(err);
+                        } catch (error) {
+                            console.log(error);
                             reject('Error with CLI authorization.');
                         }
                         res.end();
@@ -75,22 +76,30 @@ module.exports = {
                         req.socket.destroy();
                         server.close();
                         resolve(true);
-                    }).listen(8080);
-                    open(CLIENT_URL + '/#/oauth');
+                    }).listen(PORT);
+
+                    await open(CLIENT_URL + '/#/oauth?' + new URLSearchParams({ 
+                        redirect_uri: `http://localhost:${PORT}` 
+                    }), (process.platform == 'darwin') ? { newInstance: true } : {} );
                 } else {
                     let parsedToken = JSON.parse(token);
-                    verify(parsedToken.token)
-                    .then(
-                        (status) => {
-                            if (status === 200) {
-                                console.log('Saved Token is valid.');
-                                resolve(true);
-                            } else {
-                                console.log('Expired or Invalid token.');
-                                reject('Expired or Invalid Token');
+                    try {
+                        verify(parsedToken.token)
+                        .then(
+                            (status) => {
+                                if (status === 200) {
+                                    console.log('Saved Token is valid.');
+                                    resolve(true);
+                                } else {
+                                    console.log('Expired or Invalid token.');
+                                    reject('Expired or Invalid Token');
+                                }
                             }
-                        }
-                    )
+                        );
+                    } catch (error) {
+                        console.log(error);
+                        reject('Token verification failed.');
+                    }
                 }
             })
         });

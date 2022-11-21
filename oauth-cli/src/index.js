@@ -37,8 +37,11 @@ const main = async () => {
     } else if (argv.file == null) {
         const file = './.tmp-cli/token.json';
         cli.spinner('Waiting for login through browser');
-        await getToken(file, expiration);
-        cli.spinner('Successful! You can find your access token at ./.tmp-cli/token.json', true);
+        if (await getToken(file, expiration) == true) {
+            cli.spinner(`Successful! You can find your access token at ${file}`, true);
+        } else {
+            cli.spinner('Failed!', true);
+        }
     } else {
         cli.spinner('Waiting for login through browser');
         if (await getToken(argv.file, expiration) == true) {

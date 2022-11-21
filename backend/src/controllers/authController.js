@@ -209,7 +209,6 @@ module.exports = {
                     connection.release()
                     res.sendStatus(400);
                 } else {
-                    console.log("Processing")
                     userID = result[0].userID;
                     connection.query(update_query, async (err, result) => {
                         if (err) throw (err)

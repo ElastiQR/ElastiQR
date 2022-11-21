@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
+import queryString from 'query-string'
 import AuthService from "../../services/auth.service";
 import { GoogleLogin } from "react-google-login";
 import { gapi } from "gapi-script";
@@ -9,6 +10,8 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 
 const GoogleLoginButton = () => {
+
+  const location = useLocation();
 
   useEffect(() => {
     const initClient = () => {
@@ -21,38 +24,39 @@ const GoogleLoginButton = () => {
   });
 
   const handleGoogleLogin = async googleData => {
-      AuthService.googleLogin(googleData)
-      .then(
-        (response) => {
-          console.log(response);
-          AuthService.setAuthCode(response.email, Math.floor(Math.random()*1000)).then(
-            () => {
-              window.open("about:blank", "_self");
-              window.close();
-            },
-            error => {
-              const resMessage =
-                (error.response &&
-                  error.response.data &&
-                  error.response.data.message) ||
-                error.message ||
-                error.toString();
-                console.log(resMessage);
-                console.log(error);
-            }
-          );
-        },
-        (error) => {
-          const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-          console.log(resMessage);
-          console.log(error);
-        }
-      )
+    const redirect_uri = queryString.parse(location.search).redirect_uri;
+    AuthService.googleLogin(googleData)
+    .then(
+      (response) => {
+        console.log(response);
+        AuthService.setAuthCode(response.email, Math.floor(Math.random()*1000), redirect_uri).then(
+          () => {
+            window.open("about:blank", "_self");
+            window.close();
+          },
+          error => {
+            const resMessage =
+              (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+              error.message ||
+              error.toString();
+              console.log(resMessage);
+              console.log(error);
+          }
+        );
+      },
+      (error) => {
+        const resMessage =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+        console.log(resMessage);
+        console.log(error);
+      }
+    )
   }
 
   return (
