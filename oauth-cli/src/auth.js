@@ -80,7 +80,7 @@ module.exports = {
 
                     await open(CLIENT_URL + '/#/oauth?' + new URLSearchParams({ 
                         redirect_uri: `http://localhost:${PORT}` 
-                    }), (process.platform == 'darwin') ? { newInstance: true } : {} );
+                    }));
                 } else {
                     let parsedToken = JSON.parse(token);
                     try {
@@ -101,7 +101,7 @@ module.exports = {
                         reject('Token verification failed.');
                     }
                 }
-            })
+            });
         });
     }
 }
