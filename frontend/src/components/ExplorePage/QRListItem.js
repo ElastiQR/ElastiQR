@@ -21,6 +21,9 @@ const styles = theme => ({
     textTransform: "none",
     width: "100%",
     height: "100%",
+  },
+  toggleButton: {
+    marginTop: "1rem"
   }
 })
 
@@ -55,6 +58,7 @@ class QRListItem extends Component {
                 value={this.props.validLink}
                 exclusive
                 aria-label="Platform"
+                className={classes.toggleButton}
               >
                 <ToggleButton value={1}>Link Reachable</ToggleButton>
                 <ToggleButton value={0}>Link Broken</ToggleButton>
