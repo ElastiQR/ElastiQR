@@ -74,7 +74,8 @@ const styles = theme => ({
     marginLeft: 32,
     [theme.breakpoints.down("sm")]: {
       display: "none"
-    }
+    },
+    width: "150%",
   },
   tabItem: {
     paddingTop: 20,
@@ -217,6 +218,7 @@ class Navbar extends Component {
                   </div>
                 </React.Fragment>
               )}
+              <div style={{width: "100%"}}></div>
               <div className={AuthService.getCurrentUser() ? classes.logOutContainer : classes.noLogOutContainer}>
                 <LogOutButton className={classes.logOutButton}/>
               </div>
