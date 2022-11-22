@@ -1,0 +1,126 @@
+ElastiQR/frontend/src/components/Main/Main.js
+
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500   1) import React, { Component, useState } from 'react'
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500   8) import { Bar } from "react-chartjs-2";
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500   9) import AuthService from "../../services/auth.service"
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  10) import UserService from '../../services/user.service'
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  13)   constructor(props) {
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  14)     super(props);
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  15)     this.state = {
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  16)       error: null,
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  17)       isLoaded: false,
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  20)     };
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  21)   }
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  22)
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  23)   componentDidMount() {
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  24)     const user = AuthService.getCurrentUser()
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  25)     if (!user) {
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  26)       this.setState({ error: 
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  27)         {message: "User needs to login. In the future, we'll want to hide this page until    
+logged in"}
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  28)       });
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  29)       return;
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  30)     }
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  31)
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  32)     //const [total, setTotal] = useState(0);
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  33)     UserService.getUserQRs(user.userID)
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  34)     .then(
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  35)       (response) => {
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  41)         this.setState({
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  42)           isLoaded: true,
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  45)         });
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  46)         //setTotal(QRCodes.length);
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  47)       },
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  48)       (error) => {
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  49)         if (error.response?.data?.message === 'Token error') {
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  50)           AuthService.logout();
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  51)           setTimeout(() => { this.props.history.push('/login') }, 500)
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  52)         } else {
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  53)           this.setState({
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  54)             isLoaded: true
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  55)           });
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  57)             this.setState({
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  58)               error
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  59)             });
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  60)           }
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  61)         }
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  62)       }
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  63)     )
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  64)   }
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500  65)
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500  66)   BarChart = () => {
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500  67)     const user = AuthService.getCurrentUser()
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500  68)     if (!user) {
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500  69)       this.setState({ error:
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500  70)         {message: "User needs to login. In the future, we'll want to hide this page until    
+logged in"}
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500  71)       });
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500  72)       return;
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500  73)     }
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500  74)
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500  75)     const [five, setfive] = useState(0);
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500  76)     const [four, setfour] = useState(0);
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500  77)     const [three, setthree] = useState(0);
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500  78)     const [yesterday, setyesterday] = useState(0);
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500  79)     const [today, settoday] = useState(0);
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500  80)
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500  81)     UserService.recentActivity(user.userID)
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500  82)     .then(
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500  83)       (response) => {
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500  84)           console.log(response);
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500  85)           setfive(response.data.activity[4]);
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500  86)           setfour(response.data.activity[3]);
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500  87)           setthree(response.data.activity[2]);
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500  88)           setyesterday(response.data.activity[1]);
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500  89)           settoday(response.data.activity[0]);
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500  90)       }
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500  91)     )
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500  92)
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500  93)     const labels = ["5 Days Ago", "4 Days Ago", "3 Days Ago", "Yesterday", "Today"];
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500  94)     const data = {
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500  95)       labels: labels,
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500  96)       datasets: [
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500  97)         {
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500  98)           label: "Your QR Codes' Uses",
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500  99)           backgroundColor: "#62D2A2",
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500 100)           borderColor: "#62D2A2",
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500 101)           data: [five, four, three, yesterday, today],
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500 102)         },
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500 103)       ],
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500 104)     };
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500 105)     return (
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500 106)       <div style={{width: '90%', padding: 30}}>
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500 107)         <Bar data={data} />
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500 108)       </div>
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500 109)     );
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500 110)   };
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500 111)
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500 114)       return (
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500 115)              <CardContainer>
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500 135)              <this.BarChart></this.BarChart>
+e6facddb (jacobking61  2022-11-07 20:48:30 -0500 136)              </CardContainer>
+
+ElastiQR/frontend/src/services/user.service.js
+
+5c9db375 (jacobking61  2022-11-07 19:21:17 -0500 13)   countQR(id, span) {
+5c9db375 (jacobking61  2022-11-07 19:21:17 -0500 15)       qrID: id,
+5c9db375 (jacobking61  2022-11-07 19:21:17 -0500 16)       span
+5c9db375 (jacobking61  2022-11-07 19:21:17 -0500 17)     }));
+5c9db375 (jacobking61  2022-11-07 19:21:17 -0500 18)   }
+5c9db375 (jacobking61  2022-11-07 19:21:17 -0500 19)
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500 20)   recentActivity(userID) {
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500 21)     return axios.get(API_URL + 'qr/recent?' + new URLSearchParams({
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500 22)       userID
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500 23)     }), { headers: authHeader() })
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500 24)   }
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500 25)
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500 26)   /*recentActivity(userID) {
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500 27)     return axios.get(API_URL + 'qr/recent?' + new URLSearchParams({
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500 28)       userID
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500 29)     }));
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500 30)   }*/
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500 31)
+
+ElastiQR/backend/src/routes/qrRoute.js
+
+52a3cffa (jacobking61  2022-11-17 20:01:13 -0500 15) router.get('/recent', recentActivityController)
