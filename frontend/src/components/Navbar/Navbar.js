@@ -217,6 +217,7 @@ class Navbar extends Component {
                   </div>
                 </React.Fragment>
               )}
+              <div style={{width: "100%"}}></div>
               <div className={AuthService.getCurrentUser() ? classes.logOutContainer : classes.noLogOutContainer}>
                 <LogOutButton className={classes.logOutButton}/>
               </div>
