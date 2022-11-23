@@ -23,6 +23,10 @@ QR codes links are working and tracks usage across QR codes so that users can se
 - As an ElastiQR user I want to be able to login with Google so that I dont have to use my person credentials. 
 - As an ElastiQR user I want to be able to see all my QR codes at once so that I can keep track of them. 
 - As an ElastiQR user I want to see traffic across QR codes so that I can analyze where traffic is coming from. 
+- As an ElastiQR user I want to be able to customize my QR codes by adding company logo and colors.
+- As an ElastiQR user I want to use Oath to automate QR creation pipelines.
+ 
+
 
 ### Technologies
 - Frontend: ReactJS, Material UI
