@@ -22,6 +22,6 @@ ElastiQR provides a dynamic QR solution so that users are able to alter the link
 8. **Cloud SQL** As a user, I want my data to be secured and persist between sessions so that I can pick up where I left off at a later date and coordinate with other members of my team.
 
 ## Technologies to be used
-Frontend: JavaScript, React, Material UI
-Backend & OAuth CLI: JavaScript, Node.js, Express
-Database: MySQL, GCP Cloud SQL
+- Frontend: JavaScript, React, Material UI
+- Backend & OAuth CLI: JavaScript, Node.js, Express
+- Database: MySQL, GCP Cloud SQL
