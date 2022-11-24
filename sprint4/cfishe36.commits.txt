@@ -1,0 +1,594 @@
+* oauth-cli/bin/init.js
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500 1) #! /usr/bin/env node
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500 2) var shell = require('shelljs');
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500 3) shell.exec('node src/index.js');
+
+* oauth-cli/src/index.js
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  1) const cli = require('cli');
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  2) const yargs = require('yargs');
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  3) const { getToken } = require('./auth');
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  4) 
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  5) const usage = "node src/index.js --file FILE --expiresIn TIME[120s, 2h, 1d]";
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  6) 
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  7) const options = yargs
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  8)     .usage(usage)
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  9)     .option('f', { 
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500 10)         alias: 'file', 
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500 11)         describe: 'A file to store your access token.', 
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500 12)         type: 'string', 
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500 13)         demandOption: false 
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500 14)     })
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500 15)     .option('help', {
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500 16)         alias: 'help', 
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500 17)         describe: 'Provides a help menu.', 
+eac7e464 (Caleb Fisher 2022-11-21 16:27:16 -0500 18)         type: "boolean", 
+eac7e464 (Caleb Fisher 2022-11-21 16:27:16 -0500 19)         demandOption: false
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500 20)     })
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500 21)     .option('exp', {
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500 22)         alias: 'expiresIn', 
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500 23)         describe: 'Valid period for access token (ex: 120s, 2h, 1d).', 
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500 24)         type: "string", 
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500 25)         demandOption: false 
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500 26)     })
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500 27)     .help(true)
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500 28)     .argv;
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500 29) 
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500 30) const argv = require('yargs/yargs')(process.argv.slice(2)).argv;
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500 31) 
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500 32) const main = async () => {
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500 33)     const expiration = (argv.expiration == null) ? '365d' : argv.expiration;
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500 34) 
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500 35)     if (argv.help) {
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500 36)         yargs.showHelp();
+eac7e464 (Caleb Fisher 2022-11-21 16:27:16 -0500 37)     } else {
+eac7e464 (Caleb Fisher 2022-11-21 16:27:16 -0500 38)         const file = (argv.file == null) ? './.tmp-cli/token.json' : argv.file;
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500 39)         cli.spinner('Waiting for login through browser');
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 40)         if (await getToken(file, expiration) == true) {
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 41)             cli.spinner(`Successful! You can find your access token at ${file}`, true);
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 42)         } else {
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 43)             cli.spinner('Failed!', true);
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 44)         }
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500 45)     }
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500 46) }
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500 47) 
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500 48) main();
+
+* oauth-cli/src/auth.js
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500   1) const fs = require('fs-extra');
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500   2) var http = require('http');
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500   3) const open = require('open');
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500   4) const url = require('url');
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500   5) const path = require('path');
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500   6) const axios = require('axios');
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500   7) 
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500   8) const API_URL = 'http://localhost:3000/auth';
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500   9) const CLIENT_URL = 'http://localhost:3001';
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500  10) const PORT = 8080;
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  11) 
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  12) const storeToken = async (token, file) => {
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  13)     return fs.ensureDir(path.dirname(file))
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  14)             .then(() => {
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  15)                 const userAuthInfo = JSON.stringify({token});
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  16)                 const newFile = path.join(path.dirname(file), path.basename(file));
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  17)                 fs.writeFile(newFile, userAuthInfo, 'utf8', (err) => {
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500  18)                     if (err) throw (err);
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  19)                 });
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  20)             })
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  21) }
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  22) 
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  23) const authorize = async (userID, authCode, expiration) => {
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  24)     return await axios.post(API_URL + '/authorizeCLI', {
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  25)         id: userID,
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  26)         code : authCode,
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  27)         expiration
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  28)     }).then( 
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  29)         (response) => { 
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  30)             return response.data.accessToken; 
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  31)         },
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  32)         (error) => { throw (error); } 
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  33)     );
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  34) }
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  35) 
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  36) const verify = (token) => {
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  37)     return axios({
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  38)         method: 'post',
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  39)         url: API_URL + '/verify',
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  40)         headers: { Authorization : 'Bearer ' + token }
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  41)     }).then(
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  42)         (response) => {
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  43)             return response.status;
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  44)         },
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500  45)         (error) => { throw (error); }
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  46)     )
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  47) }
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  48) 
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  49) module.exports = {
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  50)     getToken: async (file, expiration) => {
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  51)         return new Promise((resolve, reject) => {
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500  52)             fs.readFile(file, 'utf8', async (err, token) => {
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  53)                 if (err !== null || token === '') {
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  54)                     const server = http.createServer(async (req, res) => {
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  55)                         res.setHeader("Access-Control-Allow-Origin", CLIENT_URL);
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  56)                         const parsedUrl = url.parse(req.url, true);
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  57)                         const queryAsObject = parsedUrl.query;
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  58)                         const authCode = queryAsObject.code;
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  59)                         const userID = parseInt(queryAsObject.id);
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  60) 
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  61)                         try {
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  62)                             await authorize(userID, authCode, expiration)
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  63)                             .then(
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  64)                                 async (result) => { 
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  65)                                     const accessToken = result; 
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  66)                                     await storeToken(accessToken, file);
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  67)                                 }
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  68)                             );
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500  69)                         } catch (error) {
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500  70)                             console.log(error);
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  71)                             reject('Error with CLI authorization.');
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  72)                         }
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  73)                         res.end();
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  74)                 
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  75)                         req.socket.end();
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  76)                         req.socket.destroy();
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  77)                         server.close();
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  78)                         resolve(true);
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500  79)                     }).listen(PORT);
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500  80) 
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500  81)                     await open(CLIENT_URL + '/#/oauth?' + new URLSearchParams({ 
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500  82)                         redirect_uri: `http://localhost:${PORT}` 
+eac7e464 (Caleb Fisher 2022-11-21 16:27:16 -0500  83)                     }));
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  84)                 } else {
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  85)                     let parsedToken = JSON.parse(token);
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500  86)                     try {
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500  87)                         verify(parsedToken.token)
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500  88)                         .then(
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500  89)                             (status) => {
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500  90)                                 if (status === 200) {
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500  91)                                     console.log('Saved Token is valid.');
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500  92)                                     resolve(true);
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500  93)                                 } else {
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500  94)                                     console.log('Expired or Invalid token.');
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500  95)                                     reject('Expired or Invalid Token');
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500  96)                                 }
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500  97)                             }
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500  98)                         );
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500  99)                     } catch (error) {
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 100)                         console.log(error);
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 101)                         reject('Token verification failed.');
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 102)                     }
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500 103)                 }
+eac7e464 (Caleb Fisher 2022-11-21 16:27:16 -0500 104)             });
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500 105)         });
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500 106)     }
+0062c766 (Caleb Fisher 2022-11-19 17:10:47 -0500 107) }
+
+* backend/Dockerfile
+3720ee17 (Caleb Fisher 2022-11-20 17:26:59 -0500 1) FROM node:16-alpine
+3720ee17 (Caleb Fisher 2022-11-20 17:26:59 -0500 2) WORKDIR /app
+3720ee17 (Caleb Fisher 2022-11-20 17:26:59 -0500 3) COPY package.json ./
+3720ee17 (Caleb Fisher 2022-11-20 17:26:59 -0500 4) RUN npm install
+3720ee17 (Caleb Fisher 2022-11-20 17:26:59 -0500 5) COPY ./ ./
+3720ee17 (Caleb Fisher 2022-11-20 17:26:59 -0500 6) EXPOSE 3000
+3720ee17 (Caleb Fisher 2022-11-20 17:26:59 -0500 7) CMD ["npm", "run", "start"]
+
+* frontend/Dockerfile
+3720ee17 (Caleb Fisher 2022-11-20 17:26:59 -0500 1) FROM node:16
+3720ee17 (Caleb Fisher 2022-11-20 17:26:59 -0500 2) WORKDIR /app
+3720ee17 (Caleb Fisher 2022-11-20 17:26:59 -0500 3) COPY package.json ./
+3720ee17 (Caleb Fisher 2022-11-20 17:26:59 -0500 4) RUN npm install --legacy-peer-deps
+3720ee17 (Caleb Fisher 2022-11-20 17:26:59 -0500 5) COPY ./ ./
+3720ee17 (Caleb Fisher 2022-11-20 17:26:59 -0500 6) EXPOSE 3001
+3720ee17 (Caleb Fisher 2022-11-20 17:26:59 -0500 7) CMD ["npm", "run", "start"]
+
+* docker-compose.yml
+3720ee17 (Caleb Fisher 2022-11-20 17:26:59 -0500  1) version: '3.8'
+3720ee17 (Caleb Fisher 2022-11-20 17:26:59 -0500  2) 
+3720ee17 (Caleb Fisher 2022-11-20 17:26:59 -0500  3) services:
+3720ee17 (Caleb Fisher 2022-11-20 17:26:59 -0500  4)   backend:
+3720ee17 (Caleb Fisher 2022-11-20 17:26:59 -0500  5)     build: ./backend
+3720ee17 (Caleb Fisher 2022-11-20 17:26:59 -0500  6)     container_name: backend
+3720ee17 (Caleb Fisher 2022-11-20 17:26:59 -0500  7)     ports:
+3720ee17 (Caleb Fisher 2022-11-20 17:26:59 -0500  8)       - '3000:3000'
+3720ee17 (Caleb Fisher 2022-11-20 17:26:59 -0500  9)     volumes:
+3720ee17 (Caleb Fisher 2022-11-20 17:26:59 -0500 10)       - ./backend:/app
+3720ee17 (Caleb Fisher 2022-11-20 17:26:59 -0500 11)       - /app/node_modules
+3720ee17 (Caleb Fisher 2022-11-20 17:26:59 -0500 12) 
+3720ee17 (Caleb Fisher 2022-11-20 17:26:59 -0500 13)   frontend:
+3720ee17 (Caleb Fisher 2022-11-20 17:26:59 -0500 14)     build: ./frontend
+3720ee17 (Caleb Fisher 2022-11-20 17:26:59 -0500 15)     container_name: frontend
+3720ee17 (Caleb Fisher 2022-11-20 17:26:59 -0500 16)     ports:
+3720ee17 (Caleb Fisher 2022-11-20 17:26:59 -0500 17)       - '3001:3001'
+3720ee17 (Caleb Fisher 2022-11-20 17:26:59 -0500 18)     volumes:
+3720ee17 (Caleb Fisher 2022-11-20 17:26:59 -0500 19)       - ./frontend:/app
+3720ee17 (Caleb Fisher 2022-11-20 17:26:59 -0500 20)       - /app/node_modules
+3720ee17 (Caleb Fisher 2022-11-20 17:26:59 -0500 21)     stdin_open: true
+3720ee17 (Caleb Fisher 2022-11-20 17:26:59 -0500 22)     tty: true
+
+* backend/src/helpers/logger.js
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500  1) const winston = require('winston');
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500  2) const { combine, timestamp, json } = winston.format;
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500  3) 
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500  4) const logger = winston.createLogger({
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500  5)   level: 'info',
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500  6)   format: combine(timestamp(), json()),
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500  7)   transports: [
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500  8)     new winston.transports.File({
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500  9)       filename: './logs/backend-info.log',
+3bb6d835 (Caleb Fisher 2022-11-14 21:23:46 -0500 10)       options: { flags : 'w' }
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500 11)     }),
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500 12)     new winston.transports.File({
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500 13)       filename: './logs/backend-error.log',
+3bb6d835 (Caleb Fisher 2022-11-14 21:23:46 -0500 14)       level: 'error',
+3bb6d835 (Caleb Fisher 2022-11-14 21:23:46 -0500 15)       options: { flags: 'w' }
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500 16)     })
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500 17)   ],
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500 18) });
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500 19) 
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500 20) module.exports = logger;
+
+* backend/src/controllers/qrController.js
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500   3) const logger = require("../helpers/logger")
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500  25)           logger.info("--------> Search Results")
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500  26)           logger.info(result.length)
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500  28)             logger.error("--------> QR Code already exists")
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500  34)                 logger.info("--------> Created new QR Code")
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500  35)                 logger.info(result.insertId)
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500  75)             logger.info("--------> Requested QR Codes have been found successfully")
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500  77)             logger.error("--------> Error, could not find the requested QR Codes")
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500  85)       logger.info("QR ID: " + qrID);
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500  99)             logger.info("--------> Requested QR Code has been found successfully")
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500 104)               logger.info("--------> Scan logged successfully" + result.insertId)
+dc03658f (Caleb Fisher 2022-11-20 17:25:09 -0500 106)             res.status(301).redirect(result[0].qrURL);
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500 109)             logger.error("--------> Error, could not find the requested QR Code")
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 121)         const sqlSearch = `SELECT COUNT(*) AS quantity FROM QRScans WHERE qrID = ? AND 
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 122)                            accessTime >= DATE_SUB(CURDATE(), INTERVAL ? day)`
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 123)         const search_query = mysql.format(sqlSearch, [qrID, daySpan])
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 132)           res.send(JSON.stringify(response));
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 133)         })
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 134)       })
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 135)     },
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 136)     recentActivityController: (req, res) => {
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 137)       const userID = parseInt(req.query.userID)
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 138) 
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 139)       db.getConnection(async (err, connection) => {
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 140)         if (err) throw (err)
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 141)         
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 142)         const sqlSearch = "SELECT * FROM users WHERE userID = ? LIMIT 1"
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 143)         const search_query = mysql.format(sqlSearch, [userID])
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 144) 
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 145)         await connection.query(search_query, async (err, result) => {
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 146)           if (err) throw (err)
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 147) 
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 148)           if (result.length == 0) {
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 149)             logger.error("User attempting to access recent activity without valid ID.")
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 150)           } else {
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 151)             logger.info("-------> Found user")
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 152) 
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 153)             const sqlFindActivity = `SELECT 
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 154)               SUM(CASE
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 155)                 WHEN accessTime > DATE_SUB(current_timestamp(), INTERVAL 1 day)
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 156)                 THEN 1 ELSE 0
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 157)                 END) AS first,
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 158)               SUM(CASE
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 159)                 WHEN accessTime > DATE_SUB(current_timestamp(), INTERVAL 2 day)
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 160)                 THEN 1 ELSE 0
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 161)                 END) AS second,
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 162)               SUM(CASE
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 163)                 WHEN accessTime > DATE_SUB(current_timestamp(), INTERVAL 3 day)
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 164)                 THEN 1 ELSE 0
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 165)                 END) AS third,
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 166)               SUM(CASE
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 167)                 WHEN accessTime > DATE_SUB(current_timestamp(), INTERVAL 4 day)
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 168)                 THEN 1 ELSE 0
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 169)                 END) AS fourth,
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 170)               SUM(CASE
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 171)                 WHEN accessTime > DATE_SUB(current_timestamp(), INTERVAL 5 day)
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 172)                 THEN 1 ELSE 0
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 173)                 END) AS fifth
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 174)               FROM QRScans
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 175)               WHERE qrID IN (SELECT qrID FROM QRCodes WHERE userID = ?)`
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 176)             const sum_query = mysql.format(sqlFindActivity, [userID]);
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 177) 
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 178)             connection.query(sum_query, async (err, result) => {
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 179)               if (err) throw (err)
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 180)               connection.release();
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 181) 
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 182)               logger.info("Responding to recent activity request.")
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 183)               res.send(JSON.stringify({
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 184)                 activity: Object.values(result[0])
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 185)               }))
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 186)             })
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 187)           }
+
+* backend/src/controllers/authController.js
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500   6) const logger = require("../helpers/logger")
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500  10) function generateAccessToken (user, staySignedIn, expiration = "30m") {
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500  14)         return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: `${expiration}`});
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500  34)             logger.info("------> Search Results")
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500  35)             logger.info(result.length)
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500  39)                 logger.error("------> User already exists")
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500  45)                     logger.info ("--------> Created new User")
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500  46)                     logger.info(result.insertId)
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500  71)                 logger.error("--------> User does not exist")
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500  78)                         logger.info("---------> Login Successful")
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500  79)                         logger.info("---------> Generating accessToken")
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500  81)                         logger.info(token)
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500  87)                         logger.error("User attempted to login with incorrect password.")
+6798dbb5 (Caleb Fisher 2022-11-15 22:26:23 -0500  88)                         res.status(400).send("Password incorrect!")
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500 127)                         logger.info("---------> Creating Google User")
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500 128)                         logger.info(results.insertId)
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500 134)                         logger.info("Confirming and Retrieving Google User Info...")
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500 146)                     logger.info("---------> Login Successful")
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500 147)                     logger.info("---------> Generating accessToken")
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500 149)                     logger.info(accessToken)
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500 158)         logger.info("Processing" + " " + name + ": " + email)
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 159)     },
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 160)     authorizeCLIController: async (req, res) => {
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 161)         const userID = parseInt(req.body.id);
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 162)         const authCode = parseInt(req.body.code);
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 163)         const expiration = req.body.expiration;
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 164) 
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 165)         if (!authCode) 
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 166)             res.sendStatus(403);
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 167) 
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 168)         db.getConnection(async (err, connection) => {
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 169)             if (err) throw (err)
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 170) 
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 171)             const sql_search = 'SELECT authCode FROM users WHERE userID = ? LIMIT 1';
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 172)             const search_query = mysql.format(sql_search, [userID]);
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 173) 
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 174)             connection.query(search_query, async (err, result) => {
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 175)                 if (err) throw (err)
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 176)                 connection.release()
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 177) 
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 178)                 if (result[0].authCode !== authCode) {
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 179)                     console.log(result[0].authCode);
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 180)                     console.log(authCode);
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 181)                     logger.error('authorization failed')
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 182)                     res.sendStatus(403);
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 183)                 } else {
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 184)                     logger.info('authorizing...')
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 185)                     const accessToken = generateAccessToken({user: userID}, false, expiration);
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 186)                     res.send(JSON.stringify({ accessToken }));
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 187)                 }
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 188)             })
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 189)         })
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 190)     },
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 191)     updateAuthCodeController: async (req, res) => {
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 192)         const username = req.body.name;
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 193)         const authCode = req.body.code;
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 194)         var userID;
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 195) 
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 196)         db.getConnection(async (err, connection) => {
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 197)             if (err) throw (err)
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 198) 
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 199)             const sql_search = 'SELECT * FROM users WHERE username = ? LIMIT 1';
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 200)             const search_query = mysql.format(sql_search, [username]);
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 201)             const sql_update = 'UPDATE users SET authCode = ? WHERE username = ?'
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 202)             const update_query = mysql.format(sql_update, [authCode, username])
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 203) 
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 204)             connection.query(search_query, async (err, result) => {
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 205)                 if (err) throw (err)
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 206) 
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 207)                 if (result.length == 0) {
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 208)                     logger.error("Couldn't find user.")
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 209)                     connection.release()
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 210)                     res.sendStatus(400);
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 211)                 } else {
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 212)                     userID = result[0].userID;
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 213)                     connection.query(update_query, async (err, result) => {
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 214)                         if (err) throw (err)
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 215)                         connection.release()
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 216) 
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 217)                         logger.info("Updating auth code");
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 218)                         res.status(200).send(JSON.stringify({
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 219)                             id: userID
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 220)                         }));
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 221)                     })
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 222)                 }
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 223)             })
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 224)         })
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 225)     },
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 226)     verifyTokenController: async (req, res) => {
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 227)         res.sendStatus(200);
+
+* backend/src/routes/qrRoute.js
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500  2) const {
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500  3)     createQRController, 
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500  4)     retrieveQRController, 
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500  5)     redirectQRController, 
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500  6)     countQRScansController,
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500  7)     recentActivityController
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500  8) } = require('../controllers/qrController')
+f4eb5540 (Caleb Fisher 2022-11-16 00:27:27 -0500 16) router.get('/recentActivity', recentActivityController)
+04b6ad19 (Caleb Fisher 2022-11-14 21:16:26 -0500 18) module.exports = router
+
+* backend/src/routes/authRoute.js
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500  4)         googleLoginController,
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500  5)         authorizeCLIController,
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500  6)         updateAuthCodeController,
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500  7)         verifyTokenController
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500  9) const authMiddleware = require('../middlewares/auth');
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 14) router.post('/authorizeCLI', authorizeCLIController)
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 15) router.patch('/updateAuthCode', updateAuthCodeController)
+6da46e84 (Caleb Fisher 2022-11-19 17:12:42 -0500 16) router.post('/verify', authMiddleware, verifyTokenController)
+
+* frontend/src/services/user.service.js
+6798dbb5 (Caleb Fisher 2022-11-15 22:26:23 -0500  4) const API_URL = 'http://localhost:3000/';
+6798dbb5 (Caleb Fisher 2022-11-15 22:26:23 -0500  8)     return axios.get(API_URL + 'qr/getQRCodes?' + new URLSearchParams({
+6798dbb5 (Caleb Fisher 2022-11-15 22:26:23 -0500 14)     return axios.get(API_URL + 'qr/count?' + new URLSearchParams({
+38f1a4be (Caleb Fisher 2022-11-15 09:29:16 -0500 32)   createQR(id, name, url, description) {
+6798dbb5 (Caleb Fisher 2022-11-15 22:26:23 -0500 33)     return axios.post(API_URL + 'qr/createQR', {
+38f1a4be (Caleb Fisher 2022-11-15 09:29:16 -0500 36)       url,
+38f1a4be (Caleb Fisher 2022-11-15 09:29:16 -0500 37)       description
+6798dbb5 (Caleb Fisher 2022-11-15 22:26:23 -0500 42)     return axios.patch(API_URL + 'update/updateQRCodes', {
+
+* frontend/src/services/auth.service.js
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500 37) 
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500 38)         return response.data;
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 53)   async setAuthCode(username, authCode, redirect_uri) {
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500 54)     var userID;
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500 55)     await axios.patch(API_URL + "updateAuthCode?", {
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500 56)       "name": username,
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500 57)       "code": authCode
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500 58)     })
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500 59)     .then(
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500 60)       (response) => {
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500 61)         console.log(response)
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500 62)         userID = parseInt(response.data.id);
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500 63)       },
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500 64)       (error) => {
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500 65)         console.log(error);
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500 66)       }
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500 67)     )
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 68)     return axios.request(redirect_uri + '?' + new URLSearchParams({
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500 69)       code: authCode,
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500 70)       id: userID
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500 71)     }))
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500 72)   }
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500 73) 
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500 75)     return JSON.parse(localStorage.getItem('user'));
+
+* frontend/src/components/OAuth/GoogleLoginButton.js
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500 12) const GoogleLoginButton = () => {
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500 13) 
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 14)   const location = useLocation();
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500 25) 
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500 26)   const handleGoogleLogin = async googleData => {
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 27)     const redirect_uri = queryString.parse(location.search).redirect_uri;
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 28)     AuthService.googleLogin(googleData)
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 29)     .then(
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 30)       (response) => {
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 31)         console.log(response);
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 32)         AuthService.setAuthCode(response.email, Math.floor(Math.random()*1000), redirect_uri).then(
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 33)           () => {
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 34)             window.open("about:blank", "_self");
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 35)             window.close();
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 36)           },
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 37)           error => {
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 38)             const resMessage =
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 39)               (error.response &&
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 40)                 error.response.data &&
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 41)                 error.response.data.message) ||
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 42)               error.message ||
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 43)               error.toString();
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 44)               console.log(resMessage);
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 45)               console.log(error);
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 46)           }
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 47)         );
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 48)       },
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 49)       (error) => {
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 50)         const resMessage =
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 51)         (error.response &&
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 52)           error.response.data &&
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 53)           error.response.data.message) ||
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 54)         error.message ||
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 55)         error.toString();
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 56)         console.log(resMessage);
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 57)         console.log(error);
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 58)       }
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500 59)     )
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500 60)   }
+
+* frontend/src/components/OAuth/index.js
+
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  87) class OAuth extends Component {
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  94) 
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  95)   render() {
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  96)     return (
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  97)           <CardContainer>           
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  98)             <OAuthForm />
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  99)             <GoogleLoginButton />
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500 100)           </CardContainer>
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500 101)     );
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500 102)   }
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500 103) }
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500 104) 
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500 105) export default withRouter(withStyles(styles)(OAuth));
+
+* frontend/src/components/OAuth/OAuthForm.js
+
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  16) const OAuthForm = () => {
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  17) 
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  25)   const [passError, setPassError] = useState(false);
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  26)   const [nameHelp, setNameHelp] = useState("");
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  27)   const [passHelp, setPassHelp] = useState("");
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  28) 
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500  29)   const location = useLocation();
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500  30) 
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  31)   const handleChange = (event) => {
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  32)     setChecked(event.target.checked);
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  33)   };
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  34) 
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  35)   function handleLogin() {
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  36)     setNameHelp("");
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  37)     setPassHelp("");
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  38)     setPassError(false);
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  39)     setNameError(false);
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  40)     setLoading(true);
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500  41)     const redirect_uri = queryString.parse(location.search).redirect_uri;
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  42) 
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  43)     AuthService.login(username, password).then(
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  44)       (response) => {
+aab48cd5 (Caleb Fisher 2022-11-20 22:26:53 -0500  45)         AuthService.setAuthCode(username, Math.floor(Math.random()*1000), redirect_uri).then(
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  46)           () => {
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  47)             window.open("about:blank", "_self");
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  48)             window.close();
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  49)           },
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  50)           error => {
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  51)             const resMessage =
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  52)               (error.response &&
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  53)                 error.response.data &&
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  54)                 error.response.data.message) ||
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  55)               error.message ||
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  56)               error.toString();
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  57)               console.log(resMessage);
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  58)               console.log(error);
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  59)   
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  60)             setLoading(false);
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  61)           }
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  62)         );
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  63)       },
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  64)       (error) => {
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  65)         const resMessage =
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  66)         (error.response &&
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  67)           error.response.data &&
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  68)           error.response.data.message) ||
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  69)         error.message ||
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  70)         error.toString();
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  71)         console.log(resMessage);
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  72)         console.log(error);
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  73) 
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  74)         setLoading(false);
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  75)         if (error.response.data === 'Password incorrect!') {
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  76)           setPassError(true);
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  77)           setPassHelp('Incorrect Password!');
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  78)         } else {
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  79)           setNameError(true);
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  80)           setNameHelp('Invalid Username!')
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  81)         }
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  82)       }
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  83)     )
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  84)   }
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500  85) 
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500 146) export default OAuthForm;
+
+* frontend/src/components/QRDetailsPage.js
+6798dbb5 (Caleb Fisher 2022-11-15 22:26:23 -0500   1) import React, { Component } from 'react'
+29dbb71c (Caleb Fisher 2022-11-16 00:26:20 -0500 160)     this.setState({ error: false, help: "" });
+6798dbb5 (Caleb Fisher 2022-11-15 22:26:23 -0500 162)       // eslint-disable-next-line no-useless-escape
+dc03658f (Caleb Fisher 2022-11-20 17:25:09 -0500 163)       /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gi
+6798dbb5 (Caleb Fisher 2022-11-15 22:26:23 -0500 164)       );
+dc03658f (Caleb Fisher 2022-11-20 17:25:09 -0500 227)                     value={'http://localhost:3000/qr/redirect?' + new URLSearchParams({
+dc03658f (Caleb Fisher 2022-11-20 17:25:09 -0500 228)                       qrID: this.props.location.state.id
+dc03658f (Caleb Fisher 2022-11-20 17:25:09 -0500 229)                     })}
+
+* frontend/src/routes.js
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500 10) import OAuth from './components/OAuth'
+3178bd0f (Caleb Fisher 2022-11-19 17:11:57 -0500 39)               <Route exact path='/oauth' component={ OAuth }/>
+
+* frontend/src/components/CreateQRPage/CreateQRForm.js
+6798dbb5 (Caleb Fisher 2022-11-15 22:26:23 -0500  29)       // eslint-disable-next-line no-useless-escape
+dc03658f (Caleb Fisher 2022-11-20 17:25:09 -0500  30)       /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gi
+6798dbb5 (Caleb Fisher 2022-11-15 22:26:23 -0500  31)       );
+38f1a4be (Caleb Fisher 2022-11-15 09:29:16 -0500  38)     UserService.createQR(user.userID, qrname, link, description)

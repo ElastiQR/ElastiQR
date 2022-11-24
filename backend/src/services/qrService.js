@@ -30,8 +30,6 @@ validateLinksService = cron.schedule("*/2 * * * *", function () {
         if (err) throw (err)
 
         getQRs(connection, async function(err,qrs) {
-            console.log(qrs);
-
             for(let i = 0; i < qrs.length; i++) {
                 var qrID = qrs[i]['qrID'];
                 var validLink = qrs[i]['validLink'];
