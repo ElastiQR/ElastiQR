@@ -1,0 +1,319 @@
+frontend/src/theme.js:
+75514c57 (VaughanEric 2022-11-14 21:33:49 -0500  92)     },
+75514c57 (VaughanEric 2022-11-14 21:33:49 -0500  93)     textInput: {
+75514c57 (VaughanEric 2022-11-14 21:33:49 -0500  94)       padding: "4px"
+75514c57 (VaughanEric 2022-11-14 21:33:49 -0500  95)     },
+75514c57 (VaughanEric 2022-11-14 21:33:49 -0500  96)     passwordChecklist: {
+75514c57 (VaughanEric 2022-11-14 21:33:49 -0500  97)       margin: "1rem 0 0.5rem"
+75514c57 (VaughanEric 2022-11-14 21:33:49 -0500  98)     },
+75514c57 (VaughanEric 2022-11-14 21:33:49 -0500  99)     notifications: {
+75514c57 (VaughanEric 2022-11-14 21:33:49 -0500 100)       marginBottom: "0.5rem"
+75514c57 (VaughanEric 2022-11-14 21:33:49 -0500 101)     },
+6d061182 (VaughanEric 2022-11-15 09:33:29 -0500 102)     keepLoggedIn: {
+6d061182 (VaughanEric 2022-11-15 09:33:29 -0500 103)       marginBottom: "0.25rem"
+6d061182 (VaughanEric 2022-11-15 09:33:29 -0500 104)     },
+75514c57 (VaughanEric 2022-11-14 21:33:49 -0500 105)     logInSignUpButton: {
+75514c57 (VaughanEric 2022-11-14 21:33:49 -0500 106)       backgroundColor: "#62D2A2",
+75514c57 (VaughanEric 2022-11-14 21:33:49 -0500 107)       color: "#FFFFFF",
+75514c57 (VaughanEric 2022-11-14 21:33:49 -0500 108)       textTransform: "none",
+75514c57 (VaughanEric 2022-11-14 21:33:49 -0500 109)       width: "100%",
+75514c57 (VaughanEric 2022-11-14 21:33:49 -0500 110)       height: "100%",
+75514c57 (VaughanEric 2022-11-14 21:33:49 -0500 111)       "&:hover": {
+75514c57 (VaughanEric 2022-11-14 21:33:49 -0500 112)         backgroundColor: "#AAAAAA"
+75514c57 (VaughanEric 2022-11-14 21:33:49 -0500 113)       },
+75514c57 (VaughanEric 2022-11-14 21:33:49 -0500 114)       margin: "1rem 4px 4px 4px"
+75514c57 (VaughanEric 2022-11-14 21:33:49 -0500 115)     },
+75514c57 (VaughanEric 2022-11-14 21:33:49 -0500 116)     logInSignUpButtonContainer: {
+75514c57 (VaughanEric 2022-11-14 21:33:49 -0500 117)       borderTop: "solid rgb(206, 206, 206) 1px",
+75514c57 (VaughanEric 2022-11-14 21:33:49 -0500 118)       display: "flex",
+75514c57 (VaughanEric 2022-11-14 21:33:49 -0500 119)       justifyContent: "center"
+6d061182 (VaughanEric 2022-11-15 09:33:29 -0500 120)     },
+6d061182 (VaughanEric 2022-11-15 09:33:29 -0500 121)     googleContainer: {
+6d061182 (VaughanEric 2022-11-15 09:33:29 -0500 122)       borderTop: "solid rgb(206, 206, 206) 1px",
+6d061182 (VaughanEric 2022-11-15 09:33:29 -0500 123)       display: "flex",
+6d061182 (VaughanEric 2022-11-15 09:33:29 -0500 124)       justifyContent: "center",
+6d061182 (VaughanEric 2022-11-15 09:33:29 -0500 125)       marginTop: "1rem"
+6d061182 (VaughanEric 2022-11-15 09:33:29 -0500 126)     },
+6d061182 (VaughanEric 2022-11-15 09:33:29 -0500 127)     googleLogIn: {
+6d061182 (VaughanEric 2022-11-15 09:33:29 -0500 128)       backgroundColor: "#FFFFFF",
+6d061182 (VaughanEric 2022-11-15 09:33:29 -0500 129)       color: "#696969",
+6d061182 (VaughanEric 2022-11-15 09:33:29 -0500 130)       textTransform: "none",
+6d061182 (VaughanEric 2022-11-15 09:33:29 -0500 131)       width: "100%",
+6d061182 (VaughanEric 2022-11-15 09:33:29 -0500 132)       height: "100%",
+6d061182 (VaughanEric 2022-11-15 09:33:29 -0500 133)       "&:hover": {
+6d061182 (VaughanEric 2022-11-15 09:33:29 -0500 134)         backgroundColor: "#AAAAAA",
+6d061182 (VaughanEric 2022-11-15 09:33:29 -0500 135)         color: "#FFFFFF"
+6d061182 (VaughanEric 2022-11-15 09:33:29 -0500 136)       },
+6d061182 (VaughanEric 2022-11-15 09:33:29 -0500 137)       margin: "1rem 4px 4px 4px",
+6d061182 (VaughanEric 2022-11-15 09:33:29 -0500 138)       border: "1px solid #62D2A2"
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500 139)     },
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500 140)     navbarLogOutButton: {
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500 141)       color: "#757575",
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500 142)       "&:hover": {
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500 143)         background: "none"
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500 144)       }
+
+frontend/src/components/TextInput.js:
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500 29)     const { classes, label, value, onChangeValue, error, helperText, required, type } = this.props;
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500 48)               required={this.props.required}
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500 49)               type={this.props.type}
+
+frontend/src/components/QRDetailsPage.js:
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500   9) import { ChromePicker } from 'react-color'
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500  10) import Accordion from '@material-ui/core/Accordion'
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500  11) import AccordionSummary from '@material-ui/core/AccordionSummary'
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500  12) import AccordionDetails from '@material-ui/core/AccordionDetails'
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500  13) import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500  91)   },
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500  92)   accordion: {
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500  93)     width: "80%"
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500  94)   },
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500  95)   accordionSummary: {
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500  96)     "&:hover": {
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500  97)       backgroundColor: theme.palette.button.mediumGray,
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500  98)       color: theme.palette.text.white
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500  99)     },
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 100)     color: theme.palette.neutral.main
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 101)   },
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 102)   accordionDetails: {
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 103)     borderTop: `1px solid ${theme.palette.neutral.main}`
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 104)   },
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 105)   colorSelection: {
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 106)     margin: "0.25rem 0 1rem"
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 107)   },
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 108)   addLogo: {
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 109)     margin: "2.5rem 0 1rem"
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 127)       help: "",
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 128)       qrColor: "#000000",
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 129)       qrLogo: ""
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 131) 
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 132) //    const input = document.getElementById('qrlogo');
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 133) //    input.addEventListener('input', this.handleQRLogoChange)
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 136) 
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 145)   handleQRColorChange = color => {
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 146)     this.setState({qrColor: color.hex})
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 147)   }
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 148) 
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 149)   handleQRLogoChange = event => {
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 150)     var reader = new FileReader();
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 151)     reader.readAsDataURL(event.target.files[0]);
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 152)     reader.onloadend = e => {
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 153)       this.setState({qrLogo: reader.result})
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 154)     }
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 155)   }
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 156) 
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 231)                     fgColor={this.state.qrColor}
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 233)                     logoImage={this.state.qrLogo}
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 234)                     logoWidth={40}
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 235)                     logoHeight={40}
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 249)                 <Grid item xs={12} className={`${classes.flex} ${classes.header}`}>
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 250)                   <Accordion className={classes.accordion}>
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 251)                     <AccordionSummary expandIcon={<ExpandMoreIcon />} className={classes.accordionSummary}>
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 252)                       <Typography variant="subtitle1">
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 253)                         Download Options
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 254)                       </Typography>
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 255)                     </AccordionSummary>
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 256)                     <AccordionDetails className={classes.accordionDetails}>
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 257)                       <Grid container>
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 258)                         <Grid item xs={12} className={classes.flex}>
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 259)                           <Typography variant="h6" className={classes.colorSelection}>
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 260)                             Select Color
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 261)                           </Typography>
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 262)                         </Grid>
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 263)                         <Grid item xs={12} className={classes.flex}>
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 264)                           <ChromePicker 
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 265)                             color={this.state.qrColor}
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 266)                             onChange={this.handleQRColorChange}
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 267)                           />
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 268)                         </Grid>
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 269)                         <Grid item xs={12} className={classes.flex}>
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 270)                           <Typography variant="h6" className={classes.addLogo}>
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 271)                             Add Logo
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 272)                           </Typography>
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 273)                         </Grid>
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 274)                         <Grid item xs={12} className={classes.flex}>
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 275)                           <Button variant="contained" component="label" className={`${classes.button} ${classes.grayButton}`}>
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 276)                             <Typography variant="subtitle1">
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 277)                               Upload Image
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 278)                             </Typography>
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 279)                             <input type="file" accept="image/*" hidden id="qrlogo" onChange={this.handleQRLogoChange} />
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 280)                           </Button>
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 281)                         </Grid>
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 282)                       </Grid> 
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 283)                     </AccordionDetails>
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 284)                   </Accordion>
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 285)                 </Grid>
+4febb6ed (VaughanEric  2022-11-16 17:52:09 -0500 286) 
+
+frontend/src/components/Signup/SignupForm.js:
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500   7)   Button,
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500   8)   Typography,
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500  13) import TextInput from '../TextInput';
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500  74)         <Typography variant="h4" style={theme.listTitle}>
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500  75)           Create Account
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500  76)         </Typography>
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500  77)       </Grid>
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500  78)       <Grid item xs={12} style={theme.flex, theme.textInput}>
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500  79)         <TextInput
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500  80)           label="Username"
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500  81)           value={username}
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500  82)           onChangeValue={e => setUsername(e.target.value)}
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500  83)           required={false}
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500  84)           error={fieldError}
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500  85)           helperText={help}
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500  86)         />
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500  87)       </Grid>
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500  88)       <Grid item xs={12} style={theme.flex, theme.textInput}>
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500  89)         <TextInput
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500  90)           label="Password"
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500  91)           onChangeValue={e => setPassword(e.target.value)}
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500  92)           required={false}
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500  93)           type={'password'}
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500  94)         />
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500  95)       </Grid>
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500  96)       <Grid item xs={12} style={theme.flex, theme.textInput}>
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500  97)         <TextInput
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500  98)           label="Confirm Password"
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500  99)           onChangeValue={e => setconfirmPassword(e.target.value)}
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500 100)           required={false}
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500 101)           type={'password'}
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500 102)         />
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500 103)       </Grid>
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500 104)       <Grid item xs={12} style={theme.flex}>
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500 109)           style={theme.passwordChecklist}
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500 110)         />
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500 111)       </Grid>
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500 113)         <FormControlLabel
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500 114)           control={
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500 115)             <Checkbox
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500 116)               checked={checked}
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500 117)               onChange={handleChange}
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500 118)               label={'Receive Notifications'}
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500 119)               inputProps={{ 'aria-label': 'primary checkbox' }}
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500 121)           }
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500 122)           label="Receive Notifications"
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500 123)           style={theme.notifications}
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500 124)         />
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500 125)       </Grid>
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500 126)       <Grid item xs={12} style={theme.logInSignUpButtonContainer}>
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500 127)         <Button disabled={formValid} onClick={handleRegister} style={theme.logInSignUpButton}>
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500 128)           <Typography variant="h6">
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500 129)             Sign Up
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500 130)           </Typography>
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500 131)         </Button>
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500 132)       </Grid>
+75514c57 (VaughanEric  2022-11-14 21:33:49 -0500 133)     </div>
+
+frontend/src/components/Navbar/Navbar.js:
+04affc1b frontend/src/components/Navbar/Navbar.js (VaughanEric  2022-11-16 11:46:01 -0500  16) import AuthService from "../../services/auth.service";
+04affc1b frontend/src/components/Navbar/Navbar.js (VaughanEric  2022-11-16 11:46:01 -0500  17) import { Button, Link as MaterialLink } from "@material-ui/core";
+04affc1b frontend/src/components/Navbar/Navbar.js (VaughanEric  2022-11-16 11:46:01 -0500  18) import Menu from "../Menu";
+04affc1b frontend/src/components/Navbar/Navbar.js (VaughanEric  2022-11-16 11:46:01 -0500  19) import { useHistory } from "react-router-dom";
+04affc1b frontend/src/components/Navbar/Navbar.js (VaughanEric  2022-11-16 11:46:01 -0500  20) import LogOutButton from './LogOutButton';
+04affc1b frontend/src/components/Navbar/Navbar.js (VaughanEric  2022-11-16 11:46:01 -0500  22) const logo = require("../../images/qr_logo.png");
+04affc1b frontend/src/components/Navbar/Navbar.js (VaughanEric  2022-11-16 11:46:01 -0500  41)     },
+04affc1b frontend/src/components/Navbar/Navbar.js (VaughanEric  2022-11-16 11:46:01 -0500  42)     width: "100%"
+b23f7824 frontend/src/components/Navbar/Navbar.js (VaughanEric  2022-11-21 21:57:59 -0500  77)     },
+b23f7824 frontend/src/components/Navbar/Navbar.js (VaughanEric  2022-11-21 21:57:59 -0500  78)     width: "150%",
+04affc1b frontend/src/components/Navbar/Navbar.js (VaughanEric  2022-11-16 11:46:01 -0500  84)   },
+04affc1b frontend/src/components/Navbar/Navbar.js (VaughanEric  2022-11-16 11:46:01 -0500  85)   logOutContainer: {
+04affc1b frontend/src/components/Navbar/Navbar.js (VaughanEric  2022-11-16 11:46:01 -0500  86)     display: "flex",
+04affc1b frontend/src/components/Navbar/Navbar.js (VaughanEric  2022-11-16 11:46:01 -0500  87)     justifyContent: "right",
+04affc1b frontend/src/components/Navbar/Navbar.js (VaughanEric  2022-11-16 11:46:01 -0500  88)     alignItems: "center",
+04affc1b frontend/src/components/Navbar/Navbar.js (VaughanEric  2022-11-16 11:46:01 -0500  89)     width: "40%"
+04affc1b frontend/src/components/Navbar/Navbar.js (VaughanEric  2022-11-16 11:46:01 -0500  90)   },
+04affc1b frontend/src/components/Navbar/Navbar.js (VaughanEric  2022-11-16 11:46:01 -0500  91)   noLogOutContainer: {
+b23f7824 frontend/src/components/Navbar/Navbar.js (VaughanEric  2022-11-21 21:57:59 -0500 221)               <div style={{width: "100%"}}></div>
+04affc1b frontend/src/components/Navbar/Navbar.js (VaughanEric  2022-11-16 11:46:01 -0500 222)               <div className={AuthService.getCurrentUser() ? classes.logOutContainer : classes.noLogOutContainer}>
+04affc1b frontend/src/components/Navbar/Navbar.js (VaughanEric  2022-11-16 11:46:01 -0500 223)                 <LogOutButton className={classes.logOutButton}/>
+04affc1b frontend/src/components/Navbar/Navbar.js (VaughanEric  2022-11-16 11:46:01 -0500 224)               </div>
+
+frontend/src/components/Navbar/LogOutButton.js:
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500  1) import React, { useState } from 'react'
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500  2) import Button from '@material-ui/core/Button'
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500  3) import { useHistory } from 'react-router-dom'
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500  4) import AuthService from '../../services/auth.service'
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500  5) import CircularProgress from '@material-ui/core/CircularProgress'
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500  6) import theme from '../../theme'
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500  7) 
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500  8) const LogOutButton = () => {
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500  9)   let history = useHistory();
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500 10)   const [loading, setLoading] = useState(false);
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500 11)   const [name, setName] = useState("");
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500 12)   const user = AuthService.getCurrentUser();
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500 13) 
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500 14)   const signOut = () => {
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500 15)     if (!user.accessToken) {
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500 16)       console.log("User is not logged in. You shouldn't be here.");
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500 17)       return;
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500 18)     }
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500 19)     setLoading(true);
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500 20)     setName("")
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500 21)     AuthService.logout();
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500 22)     setTimeout(() => { 
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500 23)       history.push('/login');
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500 24)       setLoading(false); 
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500 25)     }, 1000);
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500 26)   }
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500 27) 
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500 28)   if (user) {
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500 29)     return <Button onClick={signOut} style={theme.navbarLogOutButton}>Log Out</Button>
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500 30)   } else if (loading) {
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500 31)     return <Button style={theme.navbarLogOutButton}>
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500 32)       <CircularProgress size="1.5rem" color="primary" />
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500 33)     </Button>
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500 34)   } else {
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500 35)     return <></>
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500 36)   }
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500 37) }
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500 38) 
+04affc1b (VaughanEric 2022-11-16 11:46:01 -0500 39) export default LogOutButton;
+
+frontend/src/components/Login/LoginForm.js:
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500   7)   Typography
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500  13) import TextInput from '../TextInput';
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500  69)         <Typography variant="h4" style={theme.listTitle}>
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500  70)           ElastiQR
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500  71)         </Typography>
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500  73)       <Grid item xs={12} style={theme.flex, theme.textInput}>
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500  74)         <TextInput
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500  75)           label="Username"
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500  76)           value={username}
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500  77)           onChangeValue={e => setUsername(e.target.value)}
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500  78)           required={false}
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500  79)         />
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500  80)       </Grid>
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500  81)       <Grid item xs={12} style={theme.flex, theme.textInput}>
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500  82)         <TextInput
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500  83)           label="Password"
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500  84)           value={password}
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500  85)           onChangeValue={e => setPassword(e.target.value)}
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500  86)           required={false}
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500  87)           type={'password'}
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500  88)         />
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500 101)           style={theme.keepLoggedIn}
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500 104)       <Grid item xs={12} style={theme.logInSignUpButtonContainer}>
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500 110)           fullWidth
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500 111)           style={theme.logInSignUpButton}
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500 112)         >
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500 113)           <Typography variant="h6">
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500 114)             Login
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500 115)           </Typography>
+
+frontend/src/components/Login/GoogleLoginButton.js:
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500  8) import Button from '@material-ui/core/Button'
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500  9) import Typography from '@material-ui/core/Typography'
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500 45)     <Grid item xs={12} style={theme.googleContainer} >
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500 47)         render={(renderProps) => (
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500 48)           <Button style={theme.googleLogIn} onClick={renderProps.onClick} disabled={renderProps.disabled}>
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500 49)             <Typography variant="h6">
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500 50)               Login with Google
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500 51)             </Typography>
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500 52)           </Button>
+6d061182 (VaughanEric  2022-11-15 09:33:29 -0500 53)         )}
+
+frontend/src/components/ExplorePage/QRListItem.js:
+ff9018b6 (VaughanEric  2022-11-21 22:04:23 -0500 24)   },
+ff9018b6 (VaughanEric  2022-11-21 22:04:23 -0500 25)   toggleButton: {
+ff9018b6 (VaughanEric  2022-11-21 22:04:23 -0500 26)     marginTop: "1rem"
+ff9018b6 (VaughanEric  2022-11-21 22:04:23 -0500 61)                 className={classes.toggleButton}
