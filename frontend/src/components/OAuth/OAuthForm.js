@@ -2,11 +2,10 @@ import React, {useState} from 'react';
 import {
   Checkbox,
   Grid,
-  TextField,
   FormControlLabel,
   Typography
 } from '@material-ui/core';
-import { useHistory, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import queryString from 'query-string'
 import AuthService from "../../services/auth.service";
 import LoadingButton from '../shared/LoadingButton';

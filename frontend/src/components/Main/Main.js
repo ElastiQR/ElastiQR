@@ -2,6 +2,7 @@ import React, { Component, useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import theme from '../../theme'
 import CardContainer from '../shared/CardContainer'
+// eslint-disable-next-line no-unused-vars
 import SimpleChart from './LineChart';
 import Typography from '@material-ui/core/Typography'
 import '../Profile/ProfileCard.css'

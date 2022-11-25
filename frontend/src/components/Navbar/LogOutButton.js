@@ -8,7 +8,6 @@ import theme from '../../theme'
 const LogOutButton = () => {
   let history = useHistory();
   const [loading, setLoading] = useState(false);
-  const [name, setName] = useState("");
   const user = AuthService.getCurrentUser();
 
   const signOut = () => {
@@ -17,7 +16,6 @@ const LogOutButton = () => {
       return;
     }
     setLoading(true);
-    setName("")
     AuthService.logout();
     setTimeout(() => { 
       history.push('/login');

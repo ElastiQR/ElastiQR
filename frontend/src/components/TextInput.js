@@ -43,10 +43,10 @@ class TextInput extends Component {
               variant="outlined"
               color="primary"
               className={classes.textField}
-              error={this.props.error}
-              helperText={this.props.helperText}
-              required={this.props.required}
-              type={this.props.type}
+              error={error}
+              helperText={helperText}
+              required={required}
+              type={type}
             />
           </Grid>
         </Grid>

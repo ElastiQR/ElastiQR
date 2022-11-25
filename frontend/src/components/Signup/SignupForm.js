@@ -31,6 +31,8 @@ const SignupForm = () => {
 
   // eslint-disable-next-line no-unused-vars
   const [successful, setSuccessful] = useState(false);
+  
+  // eslint-disable-next-line no-unused-vars
   const [message, setMessage] = useState("");
 
   function handleRegister() {
@@ -75,7 +77,7 @@ const SignupForm = () => {
           Create Account
         </Typography>
       </Grid>
-      <Grid item xs={12} style={theme.flex, theme.textInput}>
+      <Grid item xs={12} style={{...theme.flex, ...theme.textInput}}>
         <TextInput
           label="Username"
           value={username}
@@ -85,7 +87,7 @@ const SignupForm = () => {
           helperText={help}
         />
       </Grid>
-      <Grid item xs={12} style={theme.flex, theme.textInput}>
+      <Grid item xs={12} style={{...theme.flex, ...theme.textInput}}>
         <TextInput
           label="Password"
           onChangeValue={e => setPassword(e.target.value)}
@@ -93,7 +95,7 @@ const SignupForm = () => {
           type={'password'}
         />
       </Grid>
-      <Grid item xs={12} style={theme.flex, theme.textInput}>
+      <Grid item xs={12} style={{...theme.flex, ...theme.textInput}}>
         <TextInput
           label="Confirm Password"
           onChangeValue={e => setconfirmPassword(e.target.value)}

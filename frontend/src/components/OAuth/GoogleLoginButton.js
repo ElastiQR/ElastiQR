@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import { useHistory, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import queryString from 'query-string'
 import AuthService from "../../services/auth.service";
 import { GoogleLogin } from "react-google-login";
