@@ -14,9 +14,8 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import AuthService from "../../services/auth.service";
-import { Button, Link as MaterialLink } from "@material-ui/core";
+import { Link as MaterialLink } from "@material-ui/core";
 import Menu from "../Menu";
-import { useHistory } from "react-router-dom";
 import LogOutButton from './LogOutButton';
 
 const logo = require("../../images/qr_logo.png");

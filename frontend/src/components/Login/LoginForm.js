@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {
   Checkbox,
   Grid,
-  TextField,
   FormControlLabel,
   Typography
 } from '@material-ui/core';
@@ -70,21 +69,25 @@ const LoginForm = () => {
           ElastiQR
         </Typography>
       </Grid>
-      <Grid item xs={12} style={theme.flex, theme.textInput}>
+      <Grid item xs={12} style={{...theme.flex, ...theme.textInput}}>
         <TextInput
           label="Username"
           value={username}
           onChangeValue={e => setUsername(e.target.value)}
           required={false}
+          error={nameError}
+          helperText={nameHelp}
         />
       </Grid>
-      <Grid item xs={12} style={theme.flex, theme.textInput}>
+      <Grid item xs={12} style={{...theme.flex, ...theme.textInput}}>
         <TextInput
           label="Password"
           value={password}
           onChangeValue={e => setPassword(e.target.value)}
           required={false}
           type={'password'}
+          error={passError}
+          helperText={passHelp}
         />
       </Grid>
       <Grid item xs={12}  style={theme.flex}>
