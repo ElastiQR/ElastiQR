@@ -4,7 +4,9 @@ const {
     retrieveQRController, 
     redirectQRController, 
     countQRScansController,
-    recentActivityController
+    recentActivityController,
+    deleteQRController, 
+    updateQRController
 } = require('../controllers/qrController')
 const authMiddleware = require('../middlewares/auth')
 
@@ -14,5 +16,7 @@ router.get('/redirect', redirectQRController)
 router.get('/count', countQRScansController)
 router.get('/recent', recentActivityController)
 router.get('/recentActivity', recentActivityController)
+router.delete('/deleteQRCodes', authMiddleware, deleteQRController)
+router.patch('/updateQRCodes', authMiddleware, updateQRController)
 
 module.exports = router

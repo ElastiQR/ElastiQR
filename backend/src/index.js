@@ -9,7 +9,7 @@ require('dotenv').config({ path: require('find-config')('.env') })
 
 /* Import Routes */
 const authRouter = require('./routes/authRoute')
-const updateRouter = require('./routes/updateRoute')
+const updateRouter = require('./routes/qrRoute')
 const qrRouter = require('./routes/qrRoute')
 
 /* Declare App */
