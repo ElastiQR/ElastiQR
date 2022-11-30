@@ -1,0 +1,73 @@
+backend/src/index.js
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 12) const updateRouter = require('./routes/qrRoute')
+
+backend/src/routes/qrRoute.js
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 190)     },
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 191) 
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 192)     deleteQRController: (req, res)=> {
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 193)       const qrname = req.body.name
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 194)       const userID = req.body.userID
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 195)   
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 196)       db.getConnection ( async (err, connection)=> {
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 197)         if (err) throw (err)
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 198)   
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 199)         const sqlSearch = `SELECT * FROM QRCodes 
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 200)                            where qrname = ? AND userID = ? LIMIT 1`
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 201)         const search_query = mysql.format(sqlSearch, [qrname, userID])
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 202)         const sqlDelete = `DELETE FROM QRCodes WHERE qrname = ? AND userID = ?`
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 203)         const delete_query = mysql.format(sqlDelete, [qrname, userID])
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 204)   
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 205)         await connection.query (search_query, async (err, result)=> {
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 206)           if (err) throw (err)
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 207) 
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 208)           logger.info("--------> Search Results")
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 209)           logger.info(result.length)
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 210)           if (result.length == 0) {
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 211)             logger.info("--------> QR Code does not exist")
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 212)             res.sendStatus(409)
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 213)           } else {
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 214)               await connection.query (delete_query, (err, result)=> {
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 215)                 connection.release()
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 216)                 if (err) throw (err)
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 217)                 logger.info("--------> Deleted QR Code")
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 218)                 res.sendStatus(200) 
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 219)               })
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 220)           }
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 221)         }) 
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 222)       })
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 223)     },
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 224) 
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 225)     updateQRController: (req, res)=> {
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 226)       const qrname = req.body.name
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 227)       const qrURL = req.body.url 
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 228)       const description = req.body.description
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 229)       const qrID = req.body.qrID
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 230) 
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 231)       db.getConnection ( async (err, connection)=> {
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 232)         if (err) throw (err)
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 233)   
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 234)         const sqlUpdate = `UPDATE QRCodes SET qrname = ?, qrURL = ?, description = ?  
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 235)                            WHERE qrID = ?`
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 236)         const update_query = mysql.format(sqlUpdate, [qrname, qrURL, description, qrID])
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 237) 
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 238)         await connection.query (update_query, async (err, result)=> {
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 239)           if (err) throw (err)
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 240)           connection.release();
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 241) 
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 242)           if (!result.affectedRows) {
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 243)             logger.error("-------> Couldn't find the requested QR code")
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 244)             res.sendStatus(400);
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 245)           } 
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 246)           else {
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 247)             logger.info("--------> Updated QR Code")
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 248)             res.sendStatus(200);
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 249)           }
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 250)         }) 
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 251)       })
+
+backend/src/controllers/qrController.js
+249809c7 (hcurl        2022-11-30 13:50:44 -0500  7)     recentActivityController,
+249809c7 (hcurl        2022-11-30 13:50:44 -0500  8)     deleteQRController, 
+249809c7 (hcurl        2022-11-30 13:50:44 -0500  9)     updateQRController
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 19) router.delete('/deleteQRCodes', authMiddleware, deleteQRController)
+249809c7 (hcurl        2022-11-30 13:50:44 -0500 20) router.patch('/updateQRCodes', authMiddleware, updateQRController)
