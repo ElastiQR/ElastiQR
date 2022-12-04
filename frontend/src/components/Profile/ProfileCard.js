@@ -100,7 +100,7 @@ const ProfileCard = () => {
                 size="small"
                 color="primary"
               >
-                Sign Out
+                Log Out
               </LoadingButton>
         </div>
     </CardContainer>
