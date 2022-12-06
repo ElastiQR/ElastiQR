@@ -1,12 +1,13 @@
-<h1 align="center">ElastiQR</h1>
-  
-<p align="center">
-  <picture>
-    <img src="./frontend/public/../src/images/qr_logo.png" width="250" alt="ElastiQR Logo"/>
-  </picture>
-    <br>
-    <strong>A dynamic QR solution for businesses and individuals</strong>
-</p>
+<div align="center">
+  <h1>ElastiQR</h1>
+  <p>
+    <picture>
+      <img src="./frontend/public/../src/images/qr_logo.png" width="250" alt="ElastiQR Logo"/>
+    </picture>
+      <br>
+      <strong>A dynamic QR solution for businesses and individuals</strong>
+  </p>
+</div>
 
 ## Contributors
 - Eric Vaughan (VaughanEric)
