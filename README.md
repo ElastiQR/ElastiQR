@@ -14,8 +14,6 @@ ElastiQR provides a dynamic QR solution so that users are able to alter the link
 
 ## Instructions about how to download, install, and run the product
 
-[ Need to figure out how we're distributing .env files. ]
-
 ### Standard Method: NPM
 
 ```shell
