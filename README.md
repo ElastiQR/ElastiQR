@@ -1,6 +1,12 @@
-# ElastiQR
+<div align="center">
+  <h1>ElastiQR</h1>
+  <p>
+      <img src="./frontend/public/../src/images/qr_logo.png" width="250" alt="ElastiQR Logo"/>
+      <br>
+      <strong>A dynamic QR solution for businesses and individuals</strong>
+  </p>
+</div>
 
-[<img src="./frontend/public/../src/images/qr_logo.png" width="250"/>](./frontend/public/../src/images/qr_logo.png.png)
 ## Contributors
 - Eric Vaughan (VaughanEric)
 - Logan O'Neal (LoganOneal)
@@ -13,8 +19,6 @@
 ElastiQR provides a dynamic QR solution so that users are able to alter the link that is stored in their QR codes. We give users a range of applications from elastic marketing campaigns to business cards. ElastiQR also aims to provide a collection of user insights such as origin tracking, scan activity, and link validation. For businesses wanting to heavily utilize our services, we provide functionality to automate interactions with our services so that their QR Codes can shape around everchanging business needs.
 
 ## Instructions about how to download, install, and run the product
-
-[ Need to figure out how we're distributing .env files. ]
 
 ### Standard Method: NPM
 

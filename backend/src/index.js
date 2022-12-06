@@ -36,6 +36,6 @@ const port = 3000;
 app.listen(port, ()=> console.log(`Server Started on port ${port}...`))
 
 db.getConnection( (err, connection)=> {
-  if (err) throw (err)
-  console.log ("DB connected successful: " + connection.threadId)
+  if (err) console.log('Database connection failed. Functionality Limited.');
+  else console.log ("DB connected successful: " + connection.threadId);
 })
