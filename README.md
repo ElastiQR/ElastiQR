@@ -1,6 +1,13 @@
 # ElastiQR
 
-[<img src="./frontend/public/../src/images/qr_logo.png" width="250"/>](./frontend/public/../src/images/qr_logo.png.png)
+<p align="center">
+  <picture>
+    <img src="./frontend/public/../src/images/qr_logo.png" width="250" alt="ElastiQR Logo"/>
+  </picture>
+    <br>
+    <strong>A dynamic QR solution for businesses and individuals</strong>
+</p>
+
 ## Contributors
 - Eric Vaughan (VaughanEric)
 - Logan O'Neal (LoganOneal)
