@@ -1,5 +1,5 @@
-# ElastiQR
-
+<h1 align="center">ElastiQR</h1>
+  
 <p align="center">
   <picture>
     <img src="./frontend/public/../src/images/qr_logo.png" width="250" alt="ElastiQR Logo"/>
