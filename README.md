@@ -1,9 +1,7 @@
 <div align="center">
   <h1>ElastiQR</h1>
   <p>
-    <picture>
       <img src="./frontend/public/../src/images/qr_logo.png" width="250" alt="ElastiQR Logo"/>
-    </picture>
       <br>
       <strong>A dynamic QR solution for businesses and individuals</strong>
   </p>
